@@ -51,6 +51,30 @@ public class RackGenerator : MonoBehaviour
         {
             GameObject ball = Instantiate(m_ballPrefab, m_rack.transform);
             ball.transform.localPosition = new Vector3( m_15BallsPositionList[i].y, m_ballRadius, m_15BallsPositionList[i].x);
+            //random rotation
+            ball.transform.Rotate(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+        }
+
+        //set the materials for the balls
+        if ( m_ballMaterials.Count != 15)
+        {
+            throw new System.Exception("Ball materials count is not 15 when generating 15-balls-rack");
+        }
+
+        // read the comments below to understand the array "ballsNumberOrder"
+        int[] ballsNumberOrder = new int[15] { 1,9,6,2,8,14,10,7,15,5,3,11,12,4,13};
+        // this array is storing the number on the balls
+        // and the index show the order of the balls
+        // below "rack" is using index to show the how the index refers to the position of the ball
+        // (14) (13) (12) (11) (10)
+        //  (9)  (8)  (7)  (6)
+        //   (5)  (4)  (3)
+        //    (2)  (1)
+        //     (0) 
+
+        for (int i = 0; i < 15; i++)
+        {
+            m_rack.transform.GetChild(i).GetComponent<Renderer>().material = m_ballMaterials[ballsNumberOrder[i]-1];
         }
     }
 
