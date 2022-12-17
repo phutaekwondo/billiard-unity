@@ -1,8 +1,8 @@
-using UnityEngine; 
+using System.Collections;
 using System.Collections.Generic;
-using System;
+using UnityEngine;
 
-public class RackGenerator 
+public class RackGenerator : MonoBehaviour
 {
     Color RED = Color.red;
     Color YELLOW = Color.yellow;
@@ -18,7 +18,10 @@ public class RackGenerator
     float m_ballRadius;
     List<Vector2> m_ballsPositionList = new List<Vector2>();
 
-    public RackGenerator(){}
+    public List<Vector2> GetBallsPositionList()
+    {
+        return m_ballsPositionList;
+    }
 
     private void GenerateBallsPositionList()
     {
@@ -29,13 +32,28 @@ public class RackGenerator
         //    ()()
         //     () --> this ball will be (0,0)
 
-        Vector2 firstBall = new Vector2(0,0);
-        List<Vector2> currentRow = new List<Vector2>();
-        currentRow.Add(firstBall);
+        m_ballsPositionList.Clear();
+        m_ballsPositionList.Add( new Vector2(0,0) ); // row 1 already has 1 ball
 
-        for (int row = 1; row <= 5; row++)
+        for (int row = 2; row <= 5; row++)
         {
+            float xForFirtBallInRow = (row-1) * m_ballRadius * 2 * Mathf.Sin(Mathf.PI/3);
+            float yForFirtBallInRow = (row-1) * m_ballRadius * 2 * Mathf.Sin(Mathf.PI/3);
 
+            Vector2 firstBallPositionInRow = new Vector2(xForFirtBallInRow, yForFirtBallInRow);
+
+            m_ballsPositionList.Add(firstBallPositionInRow);
+
+            for ( int ball = 2; ball <= row; ball++)
+            {
+                Vector2 currentBallPosition = new Vector2( firstBallPositionInRow.x + (ball -1) * m_ballRadius * 2 , firstBallPositionInRow.y);
+                m_ballsPositionList.Add(currentBallPosition);
+            }
         }
+    }
+
+    private void Start() {
+        m_ballRadius = 0.5f;
+        GenerateBallsPositionList();
     }
 }
