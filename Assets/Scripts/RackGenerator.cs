@@ -15,56 +15,70 @@ public class RackGenerator : MonoBehaviour
     Color WHITE = Color.white;
     Color BLACK = Color.black;
 
-    public Material m_ballMaterial = null; // Drag and drop the ball material here
     public GameObject m_ballPrefab = null; // Drag and drop the ball prefab here
     public GameObject m_rack = null; // Drag and drop the rack prefab here
 
+    public List<Material> m_ballMaterials = new List<Material>(); // Drag and drop the materials here
+
     float m_ballRadius;
-    List<Vector2> m_ballsPositionList = new List<Vector2>();
+    List<Vector2> m_15BallsPositionList = new List<Vector2>();
 
     private void Start() {
         //set the ball radius
         if (m_ballPrefab != null)
         {
-            m_ballRadius = m_ballPrefab.GetComponent<SphereCollider>().radius;
+            m_ballRadius = m_ballPrefab.transform.localScale.x / 2;
         }
         else{
             throw new System.Exception("Ball prefab is null");
         }
 
-        GenerateBallsPositionList();
+        Debug.Log("Ball radius: " + m_ballRadius);
+
+        Generate15BallsPositionList();
+        GenerateRack15Balls();
     }
 
-    public List<Vector2> GetBallsPositionList()
+    private void GenerateRack15Balls()
     {
-        return m_ballsPositionList;
+        if (m_rack == null)
+        {
+            throw new System.Exception("Rack prefab is null");
+        }
+
+        //generate 15 balls in m_rack with the positions in m_ballsPositionList
+        for (int i = 0; i < 15; i++)
+        {
+            GameObject ball = Instantiate(m_ballPrefab, m_rack.transform);
+            ball.transform.localPosition = new Vector3( m_15BallsPositionList[i].y, m_ballRadius, m_15BallsPositionList[i].x);
+        }
     }
 
-    private void GenerateBallsPositionList()
+    private void Generate15BallsPositionList()
     {
-        //generate 15 balls positio
+        //generate 15 balls position
         // ()()()()()
         //  ()()()()
         //   ()()()
         //    ()()
         //     () --> this ball will be (0,0)
 
-        m_ballsPositionList.Clear();
-        m_ballsPositionList.Add( new Vector2(0,0) ); // row 1 already has 1 ball
+        m_15BallsPositionList.Clear();
+        m_15BallsPositionList.Add( new Vector2(0,0) ); // row 1 already has 1 ball
 
         for (int row = 2; row <= 5; row++)
         {
-            float xForFirtBallInRow = (row-1) * m_ballRadius * 2 * Mathf.Sin(Mathf.PI/3);
+            float xForFirtBallInRow = - (row-1) * m_ballRadius * 2 * Mathf.Cos(Mathf.PI/3);
             float yForFirtBallInRow = (row-1) * m_ballRadius * 2 * Mathf.Sin(Mathf.PI/3);
 
             Vector2 firstBallPositionInRow = new Vector2(xForFirtBallInRow, yForFirtBallInRow);
 
-            m_ballsPositionList.Add(firstBallPositionInRow);
+            m_15BallsPositionList.Add(firstBallPositionInRow);
 
             for ( int ball = 2; ball <= row; ball++)
             {
                 Vector2 currentBallPosition = new Vector2( firstBallPositionInRow.x + (ball -1) * m_ballRadius * 2 , firstBallPositionInRow.y);
-                m_ballsPositionList.Add(currentBallPosition);
+                m_15BallsPositionList.Add(currentBallPosition);
             }
         }
     }
