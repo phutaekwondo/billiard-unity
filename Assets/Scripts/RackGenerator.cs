@@ -15,8 +15,25 @@ public class RackGenerator : MonoBehaviour
     Color WHITE = Color.white;
     Color BLACK = Color.black;
 
+    public Material m_ballMaterial = null; // Drag and drop the ball material here
+    public GameObject m_ballPrefab = null; // Drag and drop the ball prefab here
+    public GameObject m_rack = null; // Drag and drop the rack prefab here
+
     float m_ballRadius;
     List<Vector2> m_ballsPositionList = new List<Vector2>();
+
+    private void Start() {
+        //set the ball radius
+        if (m_ballPrefab != null)
+        {
+            m_ballRadius = m_ballPrefab.GetComponent<SphereCollider>().radius;
+        }
+        else{
+            throw new System.Exception("Ball prefab is null");
+        }
+
+        GenerateBallsPositionList();
+    }
 
     public List<Vector2> GetBallsPositionList()
     {
@@ -52,8 +69,4 @@ public class RackGenerator : MonoBehaviour
         }
     }
 
-    private void Start() {
-        m_ballRadius = 0.5f;
-        GenerateBallsPositionList();
-    }
 }
