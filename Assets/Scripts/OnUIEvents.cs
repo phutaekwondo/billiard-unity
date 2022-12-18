@@ -46,9 +46,13 @@ public class OnUIEvents : MonoBehaviour
     {
         m_screenManager.ActivatePanel( ScreenManager.PanelType.MainMenu );
     }
-
     public void OnPlayButtonClicked()
     {
         m_screenManager.EnterGamePlay();
     }
+    public void OnPauseButtonClicked()
+    {
+        m_screenManager.ActivatePanel( ScreenManager.PanelType.MainMenu );
+    }
+
 }

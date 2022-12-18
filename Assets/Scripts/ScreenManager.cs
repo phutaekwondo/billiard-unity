@@ -12,6 +12,7 @@ public class ScreenManager : MonoBehaviour
         MainMenu,
         Options,
         QuitComfirmation,
+        GameplayHub,
     }
 
     private void Start() {
@@ -25,7 +26,7 @@ public class ScreenManager : MonoBehaviour
 
     public void EnterGamePlay()
     {
-        DeactivateAllPanels();
+        ActivatePanel( PanelType.GameplayHub );
     }
 
     public void DeactivateAllPanels()
