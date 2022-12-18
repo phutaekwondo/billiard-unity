@@ -9,7 +9,7 @@ public class RackGenerator : MonoBehaviour
     Color GREEN = Color.green;
     Color BLUE = Color.blue;
     Color PURPLE = Color.magenta;
-    Color ORANGE = Color.cyan;
+    Color ORANGE = new Color(1.0f, 0.5f, 0.0f, 1.0f);
     Color BROWN = new Color(0.5f, 0.25f, 0.0f, 1.0f);
     Color PINK = new Color(1.0f, 0.0f, 1.0f, 1.0f);
     Color WHITE = Color.white;
@@ -46,8 +46,14 @@ public class RackGenerator : MonoBehaviour
         {
             throw new System.Exception("Ball materials count is not 15 when setting color");
         }
-        //set color red for m_ballMaterials[0]
-        m_ballMaterials[0].color = Color.red;
+        m_ballMaterials[0].color = m_ballMaterials[8].color = YELLOW;
+        m_ballMaterials[1].color = m_ballMaterials[9].color = BLUE;
+        m_ballMaterials[2].color = m_ballMaterials[10].color = RED;
+        m_ballMaterials[3].color = m_ballMaterials[11].color = PURPLE;
+        m_ballMaterials[4].color = m_ballMaterials[12].color = ORANGE;
+        m_ballMaterials[5].color = m_ballMaterials[13].color = GREEN;
+        m_ballMaterials[6].color = m_ballMaterials[14].color = BROWN;
+        m_ballMaterials[7].color = BLACK;
     }
 
     private void GenerateRack15Balls()
