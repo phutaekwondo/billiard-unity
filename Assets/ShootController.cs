@@ -11,12 +11,23 @@ public class ShootController : MonoBehaviour
     public GameObject m_cueBall; // drag and drop the CueBall in the inspector
     public GameObject m_rack; // drag and drop the Rack in the inspector
 
-    public float k_maxPower = 1.0f;
+    public float m_maxPower = 1.0f;
+    public float m_powerIncreaseRate = 0.2f;
     private float m_power = 0.0f;
 
+    private ShootControllerState m_state = null;
+
+    private void Start() {
+        if ( m_state == null )
+        {
+            m_state = new ShootControllerState_Static( this );
+        }
+    }
+
     private void Update() {
-        SetPowerbarMask( m_power / k_maxPower );
+        m_state = m_state.HandleInput();
         HandleInput();
+        SetPowerbarMask( m_power / m_maxPower );
     }
     private void HandleInput()
     {
@@ -29,6 +40,23 @@ public class ShootController : MonoBehaviour
             }
         }
     }
+
+    public void IncreasePower()
+    {
+        m_power += m_powerIncreaseRate * m_maxPower * Time.deltaTime;
+        if ( m_power > m_maxPower ) m_power = m_maxPower;
+    }
+
+    public void ResetPower()
+    {
+        m_power = 0.0f;
+    }
+
+    public bool IsBallsMoving()
+    {
+        return false;
+    }
+
     private void Shoot()
     {
         //get the vector from the aim point to the ball
@@ -50,47 +78,69 @@ public class ShootController : MonoBehaviour
 
     abstract class ShootControllerState
     {
-        ShootController m_shootController = null;
+        protected ShootController m_shootController = null;
 
         //constructor
-        public ShootControllerState(ShootController shootController, ScreenManager screenManager)
+        public ShootControllerState(ShootController shootController)
         {
             m_shootController = shootController;
         }
 
-        public virtual void HandleInput(){}
+        public abstract ShootControllerState HandleInput();
     }
 
     class ShootControllerState_Static : ShootControllerState
     {
-        public ShootControllerState_Static(ShootController shootController, ScreenManager screenManager) : base(shootController, screenManager)
+        public ShootControllerState_Static(ShootController shootController) : base(shootController)
         {
         }
 
-        public override void HandleInput()
+        public override ShootControllerState HandleInput()
         {
+            if (Input.GetMouseButtonDown(0))
+            {
+                return new ShootControllerState_IncreasePower(m_shootController);
+            }
+            return this;
         }
     }
 
     class ShootControllerState_IncreasePower : ShootControllerState
     {
-        public ShootControllerState_IncreasePower(ShootController shootController, ScreenManager screenManager) : base(shootController, screenManager)
+        public ShootControllerState_IncreasePower(ShootController shootController) : base(shootController)
         {
         }
 
-        public override void HandleInput()
+        public override ShootControllerState HandleInput()
         {
+            if (Input.GetMouseButton(0))
+            {
+                m_shootController.IncreasePower();
+                return this;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                m_shootController.Shoot();
+                m_shootController.ResetPower();
+                return new ShootControllerState_BallsMoving(m_shootController);
+            }
+            return this;
         }
     }
 
     class ShootControllerState_BallsMoving : ShootControllerState
     {
-        public ShootControllerState_BallsMoving(ShootController shootController, ScreenManager screenManager) : base(shootController, screenManager)
+        public ShootControllerState_BallsMoving(ShootController shootController) : base(shootController)
         {
         }
 
-        public override void HandleInput()
+        public override ShootControllerState HandleInput()
         {
+            if (!m_shootController.IsBallsMoving())
+            {
+                return new ShootControllerState_Static(m_shootController);
+            }
+            return this;
         }
     }
 }
