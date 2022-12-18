@@ -33,8 +33,6 @@ public class RackGenerator : MonoBehaviour
             throw new System.Exception("Ball prefab is null");
         }
 
-        Debug.Log("Ball radius: " + m_ballRadius);
-
         SetColorForMaterials();
         Generate15BallsPositionList();
         GenerateRack15Balls();
