@@ -9,24 +9,10 @@ public class ShootController : MonoBehaviour
     public ScreenManager m_screenManager = null; // drag and drop the ScreenManager in the inspector
     public GameObject m_aimPoint; // drag and drop the AimPoint in the inspector
     public GameObject m_cueBall; // drag and drop the CueBall in the inspector
+    public GameObject m_rack; // drag and drop the Rack in the inspector
 
     public float k_maxPower = 1.0f;
     private float m_power = 0.0f;
-
-    private void Start() {
-        if (m_powerbarMask == null) {
-            throw new System.Exception("PowerbarMask not found");
-        }
-        if(m_screenManager == null) {
-            throw new System.Exception("ScreenManager not found");
-        }
-        if(m_aimPoint == null) {
-            throw new System.Exception("AimPoint not found");
-        }
-        if(m_cueBall == null) {
-            throw new System.Exception("CueBall not found");
-        }
-    }
 
     private void Update() {
         SetPowerbarMask( m_power / k_maxPower );
