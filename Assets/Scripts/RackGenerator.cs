@@ -4,17 +4,6 @@ using UnityEngine;
 
 public class RackGenerator : MonoBehaviour
 {
-    Color RED = Color.red;
-    Color YELLOW = Color.yellow;
-    Color GREEN = Color.green;
-    Color BLUE = Color.blue;
-    Color PURPLE = Color.magenta;
-    Color ORANGE = Color.cyan;
-    Color BROWN = new Color(0.5f, 0.25f, 0.0f, 1.0f);
-    Color PINK = new Color(1.0f, 0.0f, 1.0f, 1.0f);
-    Color WHITE = Color.white;
-    Color BLACK = Color.black;
-
     public GameObject m_ballPrefab = null; // Drag and drop the ball prefab here
     public GameObject m_rack = null; // Drag and drop the rack prefab here
 
