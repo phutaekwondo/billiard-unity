@@ -24,8 +24,19 @@ public class RackGenerator : MonoBehaviour
 
         Debug.Log("Ball radius: " + m_ballRadius);
 
+        SetColorForMaterials();
         Generate15BallsPositionList();
         GenerateRack15Balls();
+    }
+
+    void SetColorForMaterials()
+    {
+        if (m_ballMaterials.Count != 15)
+        {
+            throw new System.Exception("Ball materials count is not 15 when setting color");
+        }
+        //set color red for m_ballMaterials[0]
+        m_ballMaterials[0].color = Color.red;
     }
 
     private void GenerateRack15Balls()
