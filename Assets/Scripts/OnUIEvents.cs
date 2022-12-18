@@ -52,7 +52,7 @@ public class OnUIEvents : MonoBehaviour
     }
     public void OnPauseButtonClicked()
     {
-        m_screenManager.ActivatePanel( ScreenManager.PanelType.MainMenu );
+        m_screenManager.ExitGamePlay();
     }
 
 }

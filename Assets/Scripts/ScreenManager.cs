@@ -28,6 +28,10 @@ public class ScreenManager : MonoBehaviour
     {
         ActivatePanel( PanelType.GameplayHub );
     }
+    public void ExitGamePlay()
+    {
+        ActivatePanel( PanelType.MainMenu );
+    }
 
     public void DeactivateAllPanels()
     {
