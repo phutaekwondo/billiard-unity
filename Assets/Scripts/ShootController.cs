@@ -33,8 +33,6 @@ public class ShootController : MonoBehaviour
 
         m_isBallsMoving = IsBallsMoving_Calculate();
 
-        Debug.Log(m_isBallsMoving);
-
         // handle state input and update state
         m_state = m_state.HandleInput();
         // handle input
