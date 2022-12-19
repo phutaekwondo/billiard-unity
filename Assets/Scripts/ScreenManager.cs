@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ScreenManager : MonoBehaviour
 {
+    public GameplayManager m_gameplayManager = null; // drag and drop the GameManager in the inspector
+
     // a public list of UI panels
     public List<GameObject> m_panels; // drag and drop the panels in the inspector
+
 
     public enum PanelType
     {
@@ -19,6 +22,11 @@ public class ScreenManager : MonoBehaviour
         if ( m_panels.Count != PanelType.GetNames( typeof( PanelType ) ).Length ) {
             throw new System.Exception( "Not Enough panel in m_panels" );
         }
+        
+        if (m_gameplayManager == null)
+        {
+            m_gameplayManager = FindObjectOfType<GameplayManager>();
+        }
 
         // activate the main menu panel
         ActivatePanel( PanelType.MainMenu );
@@ -26,12 +34,12 @@ public class ScreenManager : MonoBehaviour
 
     public void EnterGamePlay()
     {
-        Physics.autoSimulation = true;
+        m_gameplayManager.EnterGamePlay();
         ActivatePanel( PanelType.GameplayHub );
     }
     public void ExitGamePlay()
     {
-        Physics.autoSimulation = false;
+        m_gameplayManager.ExitGamePlay();
         ActivatePanel( PanelType.MainMenu );
     }
 
