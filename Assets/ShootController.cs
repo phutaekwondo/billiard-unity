@@ -10,10 +10,13 @@ public class ShootController : MonoBehaviour
     public GameObject m_aimPoint; // drag and drop the AimPoint in the inspector
     public GameObject m_cueBall; // drag and drop the CueBall in the inspector
     public GameObject m_rack; // drag and drop the Rack in the inspector
+    public LineRenderer m_aimLineRenderer; // drag and drop the LineRenderer in the inspector
 
     public float m_maxPower = 1.0f;
     public float m_powerIncreaseRate = 0.2f;
     private float m_power = 0.0f;
+
+    private bool m_isBallsMoving = false;
 
     private ShootControllerState m_state = null;
 
@@ -25,8 +28,16 @@ public class ShootController : MonoBehaviour
     }
 
     private void Update() {
+        m_isBallsMoving = IsBallsMoving_Calculate();
+
+        Debug.Log(m_isBallsMoving);
+
+        // handle state input and update state
         m_state = m_state.HandleInput();
+        // handle input
         HandleInput();
+
+        // update the powerbar mask
         SetPowerbarMask( m_power / m_maxPower );
     }
     private void HandleInput()
@@ -39,6 +50,16 @@ public class ShootController : MonoBehaviour
                 m_screenManager.ExitGamePlay();
             }
         }
+    }
+
+    public void ShowAim()
+    {
+        m_aimLineRenderer.enabled = true;
+    }
+
+    public void HideAim()
+    {
+        m_aimLineRenderer.enabled = false;
     }
 
     public void IncreasePower()
@@ -54,12 +75,12 @@ public class ShootController : MonoBehaviour
 
     public bool IsBallsMoving()
     {
-        return false;
+        return m_isBallsMoving;
     }
 
-    public bool IsBallsMoving_Calculate()
+    private bool IsBallsMoving_Calculate()
     {
-        float speedThreshord = 0.1f;
+        float speedThreshord = 0.01f;
 
         //return true if cue ball is moving
         if ( m_cueBall.GetComponent<Rigidbody>().velocity.magnitude > speedThreshord )
@@ -115,6 +136,7 @@ public class ShootController : MonoBehaviour
     {
         public ShootControllerState_Static(ShootController shootController) : base(shootController)
         {
+            m_shootController.ShowAim();
         }
 
         public override ShootControllerState HandleInput()
@@ -131,6 +153,7 @@ public class ShootController : MonoBehaviour
     {
         public ShootControllerState_IncreasePower(ShootController shootController) : base(shootController)
         {
+            m_shootController.ShowAim();
         }
 
         public override ShootControllerState HandleInput()
@@ -154,6 +177,7 @@ public class ShootController : MonoBehaviour
     {
         public ShootControllerState_BallsMoving(ShootController shootController) : base(shootController)
         {
+            shootController.HideAim();
         }
 
         public override ShootControllerState HandleInput()

@@ -26,10 +26,12 @@ public class ScreenManager : MonoBehaviour
 
     public void EnterGamePlay()
     {
+        Physics.autoSimulation = true;
         ActivatePanel( PanelType.GameplayHub );
     }
     public void ExitGamePlay()
     {
+        Physics.autoSimulation = false;
         ActivatePanel( PanelType.MainMenu );
     }
 
