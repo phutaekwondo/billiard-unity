@@ -12,6 +12,8 @@ public class ShootController : MonoBehaviour
     public GameObject m_rack; // drag and drop the Rack in the inspector
     public LineRenderer m_aimLineRenderer; // drag and drop the LineRenderer in the inspector
 
+    public bool m_isEnabled = true;
+
     public float m_maxPower = 1.0f;
     public float m_powerIncreaseRate = 0.2f;
     private float m_power = 0.0f;
@@ -26,8 +28,9 @@ public class ShootController : MonoBehaviour
             m_state = new ShootControllerState_Static( this );
         }
     }
-
     private void Update() {
+        if ( !m_isEnabled ) return;
+
         m_isBallsMoving = IsBallsMoving_Calculate();
 
         Debug.Log(m_isBallsMoving);
@@ -50,6 +53,16 @@ public class ShootController : MonoBehaviour
                 m_screenManager.ExitGamePlay();
             }
         }
+    }
+
+    public void Enable() 
+    {
+        m_isEnabled = true;
+    }
+
+    public void Disable()
+    {
+        m_isEnabled = false;
     }
 
     public void ShowAim()
