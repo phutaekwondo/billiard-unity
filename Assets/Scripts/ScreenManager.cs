@@ -29,7 +29,9 @@ public class ScreenManager : MonoBehaviour
         }
 
         // activate the main menu panel
+        m_gameplayManager.ExitGamePlay();
         ActivatePanel( PanelType.MainMenu );
+
     }
 
     public void EnterGamePlay()
@@ -37,7 +39,7 @@ public class ScreenManager : MonoBehaviour
         m_gameplayManager.EnterGamePlay();
         ActivatePanel( PanelType.GameplayHub );
     }
-    public void ExitGamePlay()
+    public void PauseGamePlay()
     {
         m_gameplayManager.ExitGamePlay();
         ActivatePanel( PanelType.MainMenu );

@@ -52,7 +52,7 @@ public class OnUIEvents : MonoBehaviour
     }
     public void OnPauseButtonClicked()
     {
-        m_screenManager.ExitGamePlay();
+        m_screenManager.PauseGamePlay();
     }
 
 }

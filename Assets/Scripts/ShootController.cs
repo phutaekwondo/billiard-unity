@@ -48,7 +48,7 @@ public class ShootController : MonoBehaviour
         {
             if (m_screenManager)
             {
-                m_screenManager.ExitGamePlay();
+                m_screenManager.PauseGamePlay();
             }
         }
     }
@@ -56,11 +56,13 @@ public class ShootController : MonoBehaviour
     public void Enable() 
     {
         m_isEnabled = true;
+        ShowAim();
     }
 
     public void Disable()
     {
         m_isEnabled = false;
+        HideAim();
     }
 
     public void ShowAim()
