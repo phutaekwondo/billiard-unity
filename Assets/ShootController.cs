@@ -57,10 +57,32 @@ public class ShootController : MonoBehaviour
         return false;
     }
 
+    public bool IsBallsMoving_Calculate()
+    {
+        float speedThreshord = 0.1f;
+
+        //return true if cue ball is moving
+        if ( m_cueBall.GetComponent<Rigidbody>().velocity.magnitude > speedThreshord )
+        {
+            return true;
+        }
+
+        // return true if any other ball is moving
+        foreach ( Transform ball in m_rack.transform )
+        {
+            if ( ball.GetComponent<Rigidbody>().velocity.magnitude > speedThreshord )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void Shoot()
     {
         //get the vector from the aim point to the ball
-        Vector3 direction = m_aimPoint.transform.position - transform.position;
+        Vector3 direction = m_aimPoint.transform.position - m_cueBall.transform.position;
         //normalize the vector
         direction.Normalize();
         //multiply the vector by the power

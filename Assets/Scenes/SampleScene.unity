@@ -6705,7 +6705,7 @@ MonoBehaviour:
   m_screenManager: {fileID: 2139609564}
   m_aimPoint: {fileID: 1707453244}
   m_cueBall: {fileID: 2010333558}
-  m_rack: {fileID: 0}
+  m_rack: {fileID: 667043940}
   m_maxPower: 1
   m_powerIncreaseRate: 0.5
 --- !u!1 &1413955239
@@ -9476,6 +9476,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124683948243506057, guid: 00f70206384947b45b1a1ed906139b2f,
+        type: 3}
+      propertyPath: m_Drag
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1124683948243506062, guid: 00f70206384947b45b1a1ed906139b2f,
         type: 3}
