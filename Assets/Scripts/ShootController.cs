@@ -36,8 +36,6 @@ public class ShootController : MonoBehaviour
 
         // handle state input and update state
         m_state = m_state.Update();
-        // handle input
-        HandleInput();
 
         // update aim visibility depend on the ability to shoot
         if ( m_isAbleToShoot )
@@ -51,6 +49,9 @@ public class ShootController : MonoBehaviour
 
         // update the powerbar mask
         SetPowerbarMask( m_power / m_maxPower );
+
+        // handle input
+        HandleInput();
     }
     private void HandleInput()
     {
