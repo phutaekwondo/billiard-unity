@@ -121,6 +121,7 @@ public class ShootController : MonoBehaviour
 
         //get the vector from the aim point to the ball
         Vector3 direction = m_aimPoint.transform.position - m_cueBall.transform.position;
+        direction.y = 0;
         //normalize the vector
         direction.Normalize();
         //multiply the vector by the power
