@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 87286686}
   - component: {fileID: 87286685}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Corner7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 159508950}
   - component: {fileID: 159508949}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Corner5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1729,7 +1729,7 @@ GameObject:
   - component: {fileID: 392966734}
   - component: {fileID: 392966733}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: Corner2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2141,7 +2141,7 @@ GameObject:
   - component: {fileID: 504898808}
   - component: {fileID: 504898807}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: Corner8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2891,7 +2891,7 @@ GameObject:
   - component: {fileID: 633814682}
   - component: {fileID: 633814681}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Corner3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3215,7 +3215,7 @@ GameObject:
   - component: {fileID: 658281438}
   - component: {fileID: 658281437}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Corner1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3672,7 +3672,7 @@ GameObject:
   - component: {fileID: 718679244}
   - component: {fileID: 718679243}
   m_Layer: 0
-  m_Name: Cube (5)
+  m_Name: SidePocket2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4617,7 +4617,7 @@ GameObject:
   - component: {fileID: 933198489}
   - component: {fileID: 933198488}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: SidePocket1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4902,7 +4902,7 @@ GameObject:
   - component: {fileID: 946632697}
   - component: {fileID: 946632696}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Half1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5496,7 +5496,7 @@ GameObject:
   - component: {fileID: 1047104167}
   - component: {fileID: 1047104166}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Half2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6051,7 +6051,7 @@ GameObject:
   - component: {fileID: 1295742874}
   - component: {fileID: 1295742873}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Long
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6450,7 +6450,7 @@ MonoBehaviour:
   m_aimLineRenderer: {fileID: 613303567}
   m_gameplayManager: {fileID: 2139609565}
   m_maxPower: 1
-  m_powerIncreaseRate: 0.5
+  m_powerIncreaseRate: 0.7
 --- !u!1 &1413955239
 GameObject:
   m_ObjectHideFlags: 0
@@ -6683,7 +6683,7 @@ GameObject:
   - component: {fileID: 1457602681}
   - component: {fileID: 1457602680}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: Corner6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6910,7 +6910,7 @@ GameObject:
   - component: {fileID: 1520352715}
   - component: {fileID: 1520352714}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: SidePocket3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8675,6 +8675,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1124683949593781405}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2010333564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010333558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed6c05667b75ae64aa218985cda915c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2012118289
 GameObject:
   m_ObjectHideFlags: 0
@@ -8986,7 +8998,7 @@ GameObject:
   - component: {fileID: 2046370609}
   - component: {fileID: 2046370608}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: Corner4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9426,7 +9438,7 @@ GameObject:
   - component: {fileID: 2112624389}
   - component: {fileID: 2112624388}
   m_Layer: 0
-  m_Name: Cube (5)
+  m_Name: SidePocket4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
