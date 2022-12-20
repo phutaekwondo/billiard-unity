@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6705,8 +6705,8 @@ MonoBehaviour:
   m_screenManager: {fileID: 2139609564}
   m_aimPoint: {fileID: 1707453244}
   m_cueBall: {fileID: 2010333558}
-  m_rack: {fileID: 667043940}
   m_aimLineRenderer: {fileID: 613303567}
+  m_gameplayManager: {fileID: 2139609565}
   m_maxPower: 1
   m_powerIncreaseRate: 0.5
 --- !u!1 &1413955239
@@ -9431,6 +9431,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_shootController: {fileID: 1397757576}
+  m_cueBall: {fileID: 2010333558}
+  m_rack: {fileID: 667043940}
 --- !u!1001 &1124683949593781405
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,8 +9,8 @@ public class ShootController : MonoBehaviour
     public ScreenManager m_screenManager = null; // drag and drop the ScreenManager in the inspector
     public GameObject m_aimPoint; // drag and drop the AimPoint in the inspector
     public GameObject m_cueBall; // drag and drop the CueBall in the inspector
-    public GameObject m_rack; // drag and drop the Rack in the inspector
     public LineRenderer m_aimLineRenderer; // drag and drop the LineRenderer in the inspector
+    public GameplayManager m_gameplayManager; // drag and drop the GameplayManager in the inspector
 
     private bool m_isEnabled = true;
     private bool m_isAbleToShoot = true;
@@ -18,8 +18,6 @@ public class ShootController : MonoBehaviour
     public float m_maxPower = 1.0f;
     public float m_powerIncreaseRate = 0.2f;
     private float m_power = 0.0f;
-
-    private bool m_isBallsMoving = false;
 
     private ShootControllerState m_state = null;
 
@@ -31,8 +29,6 @@ public class ShootController : MonoBehaviour
     }
     private void Update() {
         if ( !m_isEnabled ) return;
-
-        m_isBallsMoving = IsBallsMoving_Calculate();
 
         // handle state input and update state
         m_state = m_state.Update();
@@ -116,29 +112,7 @@ public class ShootController : MonoBehaviour
 
     public bool IsBallsMoving()
     {
-        return m_isBallsMoving;
-    }
-
-    private bool IsBallsMoving_Calculate()
-    {
-        float speedThreshord = 0.01f;
-
-        //return true if cue ball is moving
-        if ( m_cueBall.GetComponent<Rigidbody>().velocity.magnitude > speedThreshord )
-        {
-            return true;
-        }
-
-        // return true if any other ball is moving
-        foreach ( Transform ball in m_rack.transform )
-        {
-            if ( ball.GetComponent<Rigidbody>().velocity.magnitude > speedThreshord )
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return m_gameplayManager.IsBallsMoving();
     }
 
     private void Shoot()
