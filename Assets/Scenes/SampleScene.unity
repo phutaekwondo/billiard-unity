@@ -5349,7 +5349,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1013875488}
   m_Layer: 0
-  m_Name: Surface
+  m_Name: SurfaceCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5837,7 +5837,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1092788169}
   m_Layer: 0
-  m_Name: Borders
+  m_Name: BordersCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6145,7 +6145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1302051292}
   m_Layer: 0
-  m_Name: Rails
+  m_Name: RailsCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8688,7 +8688,7 @@ GameObject:
   - component: {fileID: 2012118292}
   - component: {fileID: 2012118291}
   m_Layer: 0
-  m_Name: BottomSurface
+  m_Name: BottomSurfaceCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
