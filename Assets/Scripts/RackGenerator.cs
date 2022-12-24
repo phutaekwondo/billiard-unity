@@ -69,10 +69,7 @@ public class RackGenerator : MonoBehaviour
             ball.transform.Rotate(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
 
             //set the tag of the ball is "TargetBall"
-            if (i == 0)
-            {
-                ball.tag = "TargetBall";
-            }
+            ball.tag = "TargetBall";
         }
 
         //set the materials for the balls
