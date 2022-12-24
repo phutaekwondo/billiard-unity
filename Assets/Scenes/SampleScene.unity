@@ -6450,7 +6450,7 @@ MonoBehaviour:
   m_aimLineRenderer: {fileID: 613303567}
   m_gameplayManager: {fileID: 2139609565}
   m_maxPower: 1
-  m_powerIncreaseRate: 0.7
+  m_powerIncreaseRate: 1.2
 --- !u!1 &1413955239
 GameObject:
   m_ObjectHideFlags: 0
