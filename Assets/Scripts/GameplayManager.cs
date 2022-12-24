@@ -25,8 +25,18 @@ public class GameplayManager : MonoBehaviour
     {
         float speedThreshord = 0.01f;
 
+        bool IsMovingBall(GameObject ball)
+        {
+            //if ball not on the table, it is not moving
+            if ( ball.transform.position.y < 0.0f )
+            {
+                return false;
+            }
+            return ball.GetComponent<Rigidbody>().velocity.magnitude > speedThreshord;
+        }
+
         //return true if cue ball is moving
-        if ( m_cueBall.GetComponent<Rigidbody>().velocity.magnitude > speedThreshord )
+        if ( IsMovingBall(m_cueBall) )
         {
             return true;
         }
@@ -34,7 +44,7 @@ public class GameplayManager : MonoBehaviour
         // return true if any other ball is moving
         foreach ( Transform ball in m_rack.transform )
         {
-            if ( ball.GetComponent<Rigidbody>().velocity.magnitude > speedThreshord )
+            if ( IsMovingBall(ball.gameObject) )
             {
                 return true;
             }

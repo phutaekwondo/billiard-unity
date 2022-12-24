@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+public delegate void ShootControllerEventHandler();
+
 public class ShootController : MonoBehaviour
 {
     public Image m_powerbarMask; // drag and drop the PowerbarMask in the inspector
@@ -9,6 +11,8 @@ public class ShootController : MonoBehaviour
     public GameObject m_cueBall; // drag and drop the CueBall in the inspector
     public LineRenderer m_aimLineRenderer; // drag and drop the LineRenderer in the inspector
     public GameplayManager m_gameplayManager; // drag and drop the GameplayManager in the inspector
+
+    public event ShootControllerEventHandler m_OnShoot;
 
     private bool m_isEnabled = true;
     private bool m_isAbleToShoot = true;
@@ -126,6 +130,9 @@ public class ShootController : MonoBehaviour
         direction *= m_power;
         //apply the force to the cue ball
         m_cueBall.GetComponent<Rigidbody>().AddForce( direction, ForceMode.Impulse );
+
+        //emit the event
+        m_OnShoot?.Invoke();
     }
     private void SetPowerbarMask(float value)
     {

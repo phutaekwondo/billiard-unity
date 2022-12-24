@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CueBall
   - TargetBall
+  - BottomSurface
   layers:
   - Default
   - TransparentFX
