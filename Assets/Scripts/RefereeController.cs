@@ -23,7 +23,7 @@ public class RefereeController : MonoBehaviour
         // Debug.Log(m_state.GetType());
 
         //log the is foul
-        Debug.Log(m_isFoul);
+        // Debug.Log(m_isFoul);
     }
 
     private void OnBottomSurfaceCollision(string senderTag, string collisionObjectTag)

@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     {
         m_state = m_state.Update();
         //log the type of state
-        Debug.Log(m_state.GetType());
+        // Debug.Log(m_state.GetType());
     }
     
     private void OnChoosingPositionFinished()
