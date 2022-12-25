@@ -1,4 +1,7 @@
 using UnityEngine;
+// import class MouseTrackingHelper from MouseTrackingHelper.cs
+using static MouseTrackingHelper;
+
 
 public class AimLineTracker : MonoBehaviour
 {
@@ -39,14 +42,16 @@ public class AimLineTracker : MonoBehaviour
 
     void UpdateAimPointPosition() 
     {
-        float yAimPointToCamera = Camera.main.transform.position.y - m_aimPoint.transform.position.y;
+        // float yAimPointToCamera = Camera.main.transform.position.y - m_aimPoint.transform.position.y;
 
-        //update the aim point position based on the mouse position
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = yAimPointToCamera;
-        Vector3 screenToWorldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
+        // //update the aim point position based on the mouse position
+        // Vector3 mousePosition = Input.mousePosition;
+        // mousePosition.z = yAimPointToCamera;
+        // Vector3 screenToWorldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
 
-        Vector3 aimPointPosition = screenToWorldPoint ;
+        // Vector3 aimPointPosition = screenToWorldPoint ;
+
+        Vector3 aimPointPosition = MouseTrackingHelper.GetMousePositionWithY(m_aimPoint.transform.position.y);
 
         m_aimPoint.transform.position = aimPointPosition;
     }

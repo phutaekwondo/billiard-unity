@@ -6510,6 +6510,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60acaf0bf726d084abccd13977af7b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_cueBall: {fileID: 2010333558}
+  m_gameplayManager: {fileID: 2139609565}
 --- !u!114 &1397757578
 MonoBehaviour:
   m_ObjectHideFlags: 0

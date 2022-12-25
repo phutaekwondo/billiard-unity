@@ -9,9 +9,21 @@ public class GameplayManager : MonoBehaviour
     private bool m_isInGameplay = false;
     private bool m_isBallsMoving = false;
 
+    private float m_defaultBallsY = 0.0f;
+
+    private void Start() 
+    {
+        m_defaultBallsY = m_cueBall.transform.position.y;
+    }
+
     private void Update() 
     {
         m_isBallsMoving = IsBallsMoving_Calculate();
+    }
+
+    public float GetDefaultBallsY()
+    {
+        return m_defaultBallsY;
     }
 
     public bool IsInGameplay { get { return m_isInGameplay; } }
