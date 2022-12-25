@@ -124,6 +124,11 @@ public class PlayerController : MonoBehaviour
                 return new PlayerControllerState_WaitingForBallsStop(m_playerController);
             }
 
+            if ( !m_refereeController.IsFoul() )
+            {
+                return new PlayerControllerState_Aiming(m_playerController);
+            }
+
             return this;
         }
     }

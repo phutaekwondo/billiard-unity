@@ -32,7 +32,6 @@ public class CueBallPositionController : MonoBehaviour
         //hanlde input
         if ( Input.GetMouseButtonDown(0) )
         {
-            Debug.Log("Mouse button down");
             m_OnChoosingPositionFinished.Invoke();
         }
     }
@@ -49,8 +48,6 @@ public class CueBallPositionController : MonoBehaviour
         //avoid cueball is overlap with other game objects
 
         //avoid cueball is out of table
-
-        m_OnChoosingPositionFinished?.Invoke();
     }
 
     public bool IsEnabled() 

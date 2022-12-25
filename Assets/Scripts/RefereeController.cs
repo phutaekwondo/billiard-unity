@@ -6,6 +6,7 @@ using UnityEngine;
 public class RefereeController : MonoBehaviour
 {
     public CollisionChecker m_bottomSurfaceCollisionChecker; //drag CollisionChecker into this field in the inspector
+    public CueBallPositionController m_cueBallPositionController; //drag CueBallPositionController into this field in the inspector
 
     private RefereeControllerState m_state;
     private bool m_isFoul = false;
@@ -14,6 +15,13 @@ public class RefereeController : MonoBehaviour
     {
         m_state = new RefereeControllerState_WaitingForPlayerShoot(this);
         m_bottomSurfaceCollisionChecker.m_onCollision += OnBottomSurfaceCollision;
+
+        m_cueBallPositionController.m_OnChoosingPositionFinished += OnChoosingPositionFinished;
+    }
+
+    private void OnChoosingPositionFinished()
+    {
+        m_state = new RefereeControllerState_WaitingForPlayerShoot(this);
     }
 
     private void Update() 

@@ -1991,6 +1991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bottomSurfaceCollisionChecker: {fileID: 2012118295}
+  m_cueBallPositionController: {fileID: 1397757577}
 --- !u!4 &421370890
 Transform:
   m_ObjectHideFlags: 0
