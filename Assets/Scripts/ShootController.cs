@@ -89,14 +89,20 @@ public class ShootController : MonoBehaviour
         HideAim();
     }
 
+    private void SetAimVisibility( bool isVisible )
+    {
+        m_aimLineRenderer.enabled = isVisible;
+        m_aimPoint.SetActive(isVisible);
+    }
+
     public void ShowAim()
     {
-        m_aimLineRenderer.enabled = true;
+        SetAimVisibility( true );
     }
 
     public void HideAim()
     {
-        m_aimLineRenderer.enabled = false;
+        SetAimVisibility( false );
     }
 
     public void IncreasePower()
