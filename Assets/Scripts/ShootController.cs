@@ -93,6 +93,8 @@ public class ShootController : MonoBehaviour
     {
         m_aimLineRenderer.enabled = isVisible;
         m_aimPoint.SetActive(isVisible);
+        //set mouse cursor visibility
+        Cursor.visible = !isVisible;
     }
 
     public void ShowAim()
