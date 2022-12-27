@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    public ShootController m_shootController = null; // drag and drop the shoot controller in the inspector
+    public PlayerController m_playerController = null; // drag and drop the player controller in the inspector
     public GameObject m_cueBall = null;
     public GameObject m_rack = null;
 
@@ -64,13 +64,13 @@ public class GameplayManager : MonoBehaviour
     {
         m_isInGameplay = true;
         Physics.autoSimulation = true;
-        m_shootController.Enable();
+        m_playerController.Enable();
     }
 
     public void ExitGamePlay()
     {
         m_isInGameplay = false;
         Physics.autoSimulation = false;
-        m_shootController.Disable();
+        m_playerController.Disable();
     }
 }

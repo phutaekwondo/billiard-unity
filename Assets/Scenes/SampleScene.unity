@@ -6469,7 +6469,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1397757574}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6492,7 +6492,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_powerbarMask: {fileID: 938458308}
-  m_screenManager: {fileID: 2139609564}
   m_aimPoint: {fileID: 1707453244}
   m_cueBall: {fileID: 2010333558}
   m_aimLineRenderer: {fileID: 613303567}
@@ -6527,6 +6526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_gameplayManager: {fileID: 2139609565}
   m_refereeController: {fileID: 421370889}
+  m_screenManager: {fileID: 2139609564}
 --- !u!1 &1413955239
 GameObject:
   m_ObjectHideFlags: 0
@@ -9847,7 +9847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c405aa6a9cb7d21459ce9c71a817aa3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_shootController: {fileID: 1397757576}
+  m_playerController: {fileID: 1397757578}
   m_cueBall: {fileID: 2010333558}
   m_rack: {fileID: 667043940}
 --- !u!1 &2146864657

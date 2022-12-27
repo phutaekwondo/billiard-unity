@@ -7,11 +7,13 @@ public class PlayerController : MonoBehaviour
 {
     public GameplayManager m_gameplayManager; // drag GameplayManager into this field in the inspector
     public RefereeController m_refereeController; // drag RefereeController into this field in the inspector
+    public ScreenManager m_screenManager; // drag ScreenManager into this field in the inspector
 
     protected ShootController m_shootController;
     protected CueBallPositionController m_cueBallPositionController;
 
     private PlayerControllerState m_state;
+    private bool m_isEnabled = true;
 
     private void Start() 
     {
@@ -24,11 +26,38 @@ public class PlayerController : MonoBehaviour
 
     private void Update() 
     {
+        if ( !m_isEnabled ) return;
         m_state = m_state.Update();
         //log the type of state
         // Debug.Log(m_state.GetType());
+
+        HandleInput();
     }
-    
+
+    public void Disable()
+    {
+        m_isEnabled = false;
+        m_shootController.Disable();
+        m_cueBallPositionController.Disable();
+    }
+    public void Enable()
+    {
+        m_isEnabled = true;
+        m_state.SetEnablements();
+    }
+
+    private void HandleInput()
+    {
+        // if ESC is pressed, go to the main menu
+        if ( Input.GetKeyDown( KeyCode.Escape ) )
+        {
+            if (m_screenManager)
+            {
+                m_screenManager.PauseGamePlay();
+            }
+        }
+    }
+
     private void OnChoosingPositionFinished()
     {
         m_state = new PlayerControllerState_Aiming(this);
@@ -55,8 +84,9 @@ public class PlayerController : MonoBehaviour
             m_cueBallPositionController = playerController.m_cueBallPositionController;
             m_gameplayManager = playerController.m_gameplayManager;
             m_refereeController = playerController.m_refereeController;
+            SetEnablements();
         }
-
+        public abstract void SetEnablements();
         public virtual PlayerControllerState Update()
         {
             if ( m_gameplayManager.IsBallsMoving() )
@@ -78,13 +108,17 @@ public class PlayerController : MonoBehaviour
     {
         public PlayerControllerState_Aiming(PlayerController playerController) : base(playerController)
         {
-            m_shootController.Enable();
-            m_cueBallPositionController.Disable();
         }
 
         public override PlayerControllerState Update()
         {
             return base.Update();
+        }
+
+        public override void SetEnablements()
+        {
+            m_shootController.Enable();
+            m_cueBallPositionController.Disable();
         }
     }
 
@@ -92,8 +126,6 @@ public class PlayerController : MonoBehaviour
     {
         public PlayerControllerState_WaitingForBallsStop(PlayerController playerController) : base(playerController)
         {
-            m_shootController.Disable();
-            m_cueBallPositionController.Disable();
         }
 
         public override PlayerControllerState Update()
@@ -108,14 +140,17 @@ public class PlayerController : MonoBehaviour
             }
             return this;
         }
+        public override void SetEnablements()
+        {
+            m_shootController.Disable();
+            m_cueBallPositionController.Disable();
+        }
     }
 
     class PlayerControllerState_ChoosingCueBallPosition : PlayerControllerState
     {
         public PlayerControllerState_ChoosingCueBallPosition(PlayerController playerController) : base(playerController)
         {
-            m_shootController.Disable();
-            m_cueBallPositionController.Enable();
         }
         public override PlayerControllerState Update()
         {
@@ -130,6 +165,11 @@ public class PlayerController : MonoBehaviour
             }
 
             return this;
+        }
+        public override void SetEnablements()
+        {
+            m_shootController.Disable();
+            m_cueBallPositionController.Enable();
         }
     }
 }

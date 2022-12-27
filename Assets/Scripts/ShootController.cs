@@ -6,7 +6,6 @@ public delegate void ShootControllerEventHandler();
 public class ShootController : MonoBehaviour
 {
     public Image m_powerbarMask; // drag and drop the PowerbarMask in the inspector
-    public ScreenManager m_screenManager = null; // drag and drop the ScreenManager in the inspector
     public GameObject m_aimPoint; // drag and drop the AimPoint in the inspector
     public GameObject m_cueBall; // drag and drop the CueBall in the inspector
     public LineRenderer m_aimLineRenderer; // drag and drop the LineRenderer in the inspector
@@ -47,21 +46,8 @@ public class ShootController : MonoBehaviour
 
         // update the powerbar mask
         SetPowerbarMask( m_power / m_maxPower );
+    }
 
-        // handle input
-        HandleInput();
-    }
-    private void HandleInput()
-    {
-        // if ESC is pressed, go to the main menu
-        if ( Input.GetKeyDown( KeyCode.Escape ) )
-        {
-            if (m_screenManager)
-            {
-                m_screenManager.PauseGamePlay();
-            }
-        }
-    }
 
     public bool IsAbleToShoot()
     {
