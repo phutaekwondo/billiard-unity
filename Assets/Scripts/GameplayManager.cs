@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
@@ -72,5 +73,22 @@ public class GameplayManager : MonoBehaviour
         m_isInGameplay = false;
         Physics.autoSimulation = false;
         m_playerController.Disable();
+    }
+
+    public void Pause()
+    {
+        ExitGamePlay();
+    }
+
+    public void Restart()
+    {
+        //NEED TO IMPLEMENT
+        //Reset the table
+        EnterGamePlay();
+    }
+
+    public void Resume()
+    {
+        EnterGamePlay();
     }
 }

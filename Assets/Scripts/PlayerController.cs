@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameManager m_gameManager = null; // drag and drop the GameManager in the inspector
     public GameplayManager m_gameplayManager; // drag GameplayManager into this field in the inspector
     public RefereeController m_refereeController; // drag RefereeController into this field in the inspector
     public ScreenManager m_screenManager; // drag ScreenManager into this field in the inspector
@@ -50,11 +51,8 @@ public class PlayerController : MonoBehaviour
     {
         // if ESC is pressed, go to the main menu
         if ( Input.GetKeyDown( KeyCode.Escape ) )
-        {
-            if (m_screenManager)
-            {
-                m_screenManager.PauseGamePlay();
-            }
+        {   
+            m_gameManager.PauseGameplay();
         }
     }
 

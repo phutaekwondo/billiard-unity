@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ScreenManager : MonoBehaviour
 {
-    public GameplayManager m_gameplayManager = null; // drag and drop the GameManager in the inspector
+    private GameplayManager m_gameplayManager = null; // drag and drop the GameManager in the inspector
 
     // a public list of UI panels
     public List<GameObject> m_panels; // drag and drop the panels in the inspector
@@ -15,6 +15,7 @@ public class ScreenManager : MonoBehaviour
         Options,
         QuitComfirmation,
         GameplayHub,
+        PauseMenu,
     }
 
     private void Start() {
