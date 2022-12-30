@@ -37,6 +37,12 @@ public class RackGenerator : MonoBehaviour
         GenerateRack15Balls();
     }
 
+    public void ResetRack() 
+    {
+        //destroy all target balls
+        //generate new rack of balls
+    }
+
     void SetColorForMaterials()
     {
         if (m_ballMaterials.Count != 15)

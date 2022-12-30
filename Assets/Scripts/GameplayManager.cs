@@ -6,6 +6,7 @@ public class GameplayManager : MonoBehaviour
     public PlayerController m_playerController = null; // drag and drop the player controller in the inspector
     public GameObject m_cueBall = null;
     public GameObject m_rack = null;
+    public RackGenerator m_rackGenerator = null; 
 
     private bool m_isInGameplay = false;
     private bool m_isBallsMoving = false;
@@ -83,7 +84,11 @@ public class GameplayManager : MonoBehaviour
     public void Restart()
     {
         //NEED TO IMPLEMENT
-        //Reset the table
+        //Reset the rack
+        m_rackGenerator.ResetRack();
+        //reset position of cue ball
+        //...
+
         EnterGamePlay();
     }
 
