@@ -15,7 +15,7 @@ https://dotnet.microsoft.com/en-us/download/visual-studio-sdks?cid=msbuild-devel
 
 # Project Managament (Issues Tracking)
 
-https://phutaekwondo2001.atlassian.net/jira/software/projects/BU/boards/3
+https://trello.com/b/pbLy6PS1/billiard-unity
 
 # Start Working
 
