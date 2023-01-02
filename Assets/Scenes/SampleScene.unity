@@ -10740,6 +10740,7 @@ MonoBehaviour:
   m_playerController: {fileID: 1397757578}
   m_cueBall: {fileID: 2010333558}
   m_rack: {fileID: 667043940}
+  m_rackGenerator: {fileID: 667043942}
 --- !u!1 &2146864657
 GameObject:
   m_ObjectHideFlags: 0

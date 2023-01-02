@@ -40,7 +40,15 @@ public class RackGenerator : MonoBehaviour
     public void ResetRack() 
     {
         //destroy all target balls
+        foreach (Transform ball in m_rack.transform)
+        {
+            if (ball.tag == "TargetBall")
+            {
+                Destroy(ball.gameObject);
+            }
+        }
         //generate new rack of balls
+        GenerateRack15Balls();
     }
 
     void SetColorForMaterials()

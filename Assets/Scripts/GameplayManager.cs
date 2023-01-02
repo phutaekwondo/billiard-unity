@@ -86,7 +86,6 @@ public class GameplayManager : MonoBehaviour
         //NEED TO IMPLEMENT
         //Reset the rack
         m_rackGenerator.ResetRack();
-        //reset position of cue ball
         //...
 
         EnterGamePlay();
