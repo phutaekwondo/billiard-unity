@@ -16,11 +16,13 @@ public class RackGenerator : MonoBehaviour
 
     public GameObject m_ballPrefab = null; // Drag and drop the ball prefab here
     public GameObject m_rack = null; // Drag and drop the rack prefab here
+    public GameplayManager m_gameplayManager = null; // Drag and drop the GameplayManager here
 
     public List<Material> m_ballMaterials = new List<Material>(); // Drag and drop the materials here
 
     float m_ballRadius;
     List<Vector2> m_15BallsPositionList = new List<Vector2>();
+    bool isReseting = false;
 
     private void Start() {
         //set the ball radius
@@ -32,9 +34,21 @@ public class RackGenerator : MonoBehaviour
             throw new System.Exception("Ball prefab is null");
         }
 
+        m_gameplayManager.m_OnGameplayRestart += ResetRack;
+
         SetColorForMaterials();
         Generate15BallsPositionList();
         GenerateRack15Balls();
+    }
+
+    private void LateUpdate() {
+        if (isReseting)
+        {
+            //generate new rack of balls
+            GenerateRack15Balls();
+
+            isReseting = false;
+        }
     }
 
     public void ResetRack() 
@@ -47,8 +61,8 @@ public class RackGenerator : MonoBehaviour
                 Destroy(ball.gameObject);
             }
         }
-        //generate new rack of balls
-        GenerateRack15Balls();
+
+        isReseting = true; // generate new rack of balls in LateUpdate()
     }
 
     void SetColorForMaterials()

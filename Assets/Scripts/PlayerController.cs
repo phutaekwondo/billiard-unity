@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
         m_shootController.m_OnShoot += OnShoot;
         m_cueBallPositionController = GetComponent<CueBallPositionController>();
         m_cueBallPositionController.m_OnChoosingPositionFinished += OnChoosingPositionFinished;
+        m_gameplayManager.m_OnGameplayRestart += Restart;
         m_state = new PlayerControllerState_Aiming(this);
     }
 
@@ -33,6 +34,11 @@ public class PlayerController : MonoBehaviour
         // Debug.Log(m_state.GetType());
 
         HandleInput();
+    }
+
+    public void Restart()
+    {
+        m_state = new PlayerControllerState_Aiming(this);
     }
 
     public void Disable()

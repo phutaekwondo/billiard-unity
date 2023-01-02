@@ -2220,6 +2220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bottomSurfaceCollisionChecker: {fileID: 2012118295}
   m_cueBallPositionController: {fileID: 1397757577}
+  m_gameplayManager: {fileID: 2139609565}
 --- !u!4 &421370890
 Transform:
   m_ObjectHideFlags: 0
@@ -3889,6 +3890,7 @@ MonoBehaviour:
   m_ballPrefab: {fileID: 1124683948243506062, guid: 00f70206384947b45b1a1ed906139b2f,
     type: 3}
   m_rack: {fileID: 667043940}
+  m_gameplayManager: {fileID: 2139609565}
   m_ballMaterials:
   - {fileID: 2100000, guid: 18c1de50322fc6548abcfc46b96cd840, type: 2}
   - {fileID: 2100000, guid: 79cac993e09df9e4c8aa8aeade4ab7a9, type: 2}
