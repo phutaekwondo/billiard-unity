@@ -1,9 +1,31 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private void Start() 
-    {
+    public GameplayManager m_gameplayManager = null; // drag and drop the GameplayManager in the inspector
+    public ScreenManager m_screenManager = null; // drag and drop the ScreenManager in the inspector
 
+    private void Start() {
+        m_gameplayManager = GetComponent<GameplayManager>();
+        m_screenManager = GetComponent<ScreenManager>();
+    }
+
+    public void PauseGameplay()
+    {
+        m_gameplayManager.Pause();
+        m_screenManager.ActivatePanel( ScreenManager.PanelType.PauseMenu );
+    }
+
+    public void RestartGameplay()
+    {
+        m_gameplayManager.Restart();
+        m_screenManager.ActivatePanel( ScreenManager.PanelType.GameplayHub );
+    }
+
+    public void ResumeGameplay()
+    {
+        m_gameplayManager.Resume();
+        m_screenManager.ActivatePanel( ScreenManager.PanelType.GameplayHub );
     }
 }

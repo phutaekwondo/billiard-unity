@@ -7,6 +7,7 @@ public class RefereeController : MonoBehaviour
 {
     public CollisionChecker m_bottomSurfaceCollisionChecker; //drag CollisionChecker into this field in the inspector
     public CueBallPositionController m_cueBallPositionController; //drag CueBallPositionController into this field in the inspector
+    public GameplayManager m_gameplayManager; //drag GameplayManager into this field in the inspector
 
     private RefereeControllerState m_state;
     private bool m_isFoul = false;
@@ -16,7 +17,14 @@ public class RefereeController : MonoBehaviour
         m_state = new RefereeControllerState_WaitingForPlayerShoot(this);
         m_bottomSurfaceCollisionChecker.m_onCollision += OnBottomSurfaceCollision;
 
+        m_gameplayManager.m_OnGameplayRestart += Restart;
+
         m_cueBallPositionController.m_OnChoosingPositionFinished += OnChoosingPositionFinished;
+    }
+
+    private void Restart()
+    {
+        m_state = new RefereeControllerState_WaitingForPlayerShoot(this);
     }
 
     private void OnChoosingPositionFinished()
@@ -27,11 +35,6 @@ public class RefereeController : MonoBehaviour
     private void Update() 
     {
         m_state = m_state.Update();
-        //log the type of state
-        // Debug.Log(m_state.GetType());
-
-        //log the is foul
-        // Debug.Log(m_isFoul);
     }
 
     private void OnBottomSurfaceCollision(string senderTag, string collisionObjectTag)

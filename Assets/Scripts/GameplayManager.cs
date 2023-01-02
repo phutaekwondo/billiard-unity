@@ -1,15 +1,26 @@
+using System;
 using UnityEngine;
 
+public delegate void OnGameplayEvent();
 public class GameplayManager : MonoBehaviour
 {
     public PlayerController m_playerController = null; // drag and drop the player controller in the inspector
     public GameObject m_cueBall = null;
     public GameObject m_rack = null;
+    public RackGenerator m_rackGenerator = null; 
+
+    public event OnGameplayEvent m_OnGameplayRestart;
 
     private bool m_isInGameplay = false;
     private bool m_isBallsMoving = false;
 
     private float m_defaultBallsY = 0.032f;
+    private Vector3 m_defaultCueBallPosition;
+
+    private void Start() 
+    {
+        m_defaultCueBallPosition = m_cueBall.transform.position;
+    }
 
     private void Update() 
     {
@@ -72,5 +83,32 @@ public class GameplayManager : MonoBehaviour
         m_isInGameplay = false;
         Physics.autoSimulation = false;
         m_playerController.Disable();
+    }
+
+    public void Pause()
+    {
+        ExitGamePlay();
+    }
+
+    public void Restart()
+    {
+        //NEED TO IMPLEMENT
+        m_OnGameplayRestart.Invoke();
+
+        //reset the cueBall
+        m_cueBall.transform.position = m_defaultCueBallPosition;
+
+        //stop the cueBall
+        m_cueBall.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        m_cueBall.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        //...
+
+        EnterGamePlay();
+    }
+
+    public void Resume()
+    {
+        EnterGamePlay();
     }
 }
