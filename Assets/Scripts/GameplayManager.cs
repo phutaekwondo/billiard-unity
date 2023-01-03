@@ -94,7 +94,6 @@ public class GameplayManager : MonoBehaviour
 
     public void Restart()
     {
-        //NEED TO IMPLEMENT
         m_OnGameplayRestart.Invoke();
 
         //reset the cueBall
