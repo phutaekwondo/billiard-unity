@@ -27,8 +27,6 @@ public class PlayerController : MonoBehaviour
     {
         if ( !m_isEnabled ) return;
         m_state = m_state.Update();
-
-        HandleInput();
     }
 
     public void Restart()
@@ -46,15 +44,6 @@ public class PlayerController : MonoBehaviour
     {
         m_isEnabled = true;
         m_state.SetEnablements();
-    }
-
-    private void HandleInput()
-    {
-        // if ESC is pressed, go to the main menu
-        // if ( Input.GetKeyDown( KeyCode.Escape ) )
-        // {   
-        //     m_gameManager.PauseGameplay();
-        // }
     }
 
     private void OnChoosingPositionFinished()
