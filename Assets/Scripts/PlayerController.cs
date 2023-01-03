@@ -27,8 +27,6 @@ public class PlayerController : MonoBehaviour
     {
         if ( !m_isEnabled ) return;
         m_state = m_state.Update();
-        //log the type of state
-        // Debug.Log(m_state.GetType());
 
         HandleInput();
     }
