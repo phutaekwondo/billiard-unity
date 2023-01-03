@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using static MouseTrackingHelper;
 
@@ -43,13 +44,18 @@ public class CueBallPositionController : MonoBehaviour
         //Move the ball with the mouse
         Vector3 mousePosition = GetMousePositionWithY(m_defaultBallsY);
         Vector3 cueBallPositionUpdate = new Vector3(mousePosition.x, m_defaultBallsY, mousePosition.z);
-        m_cueBall.transform.position = cueBallPositionUpdate;
+        cueBallPositionUpdate = NearestAvailablePosition(cueBallPositionUpdate);
 
+        m_cueBall.transform.position = cueBallPositionUpdate;
+    }
+
+    private Vector3 NearestAvailablePosition(Vector3 cueBallPositionUpdate)
+    {
+        //avoid cueball is out of table
         //avoid cueball is overlap with other game objects
         //NEED TO IMPLEMENT
 
-        //avoid cueball is out of table
-        //NEED TO IMPLEMENT
+        return cueBallPositionUpdate; //just a placeholder
     }
 
     public bool IsEnabled() 
