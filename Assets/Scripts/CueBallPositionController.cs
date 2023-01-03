@@ -46,8 +46,10 @@ public class CueBallPositionController : MonoBehaviour
         m_cueBall.transform.position = cueBallPositionUpdate;
 
         //avoid cueball is overlap with other game objects
+        //NEED TO IMPLEMENT
 
         //avoid cueball is out of table
+        //NEED TO IMPLEMENT
     }
 
     public bool IsEnabled() 
