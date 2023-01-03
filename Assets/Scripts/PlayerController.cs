@@ -51,10 +51,10 @@ public class PlayerController : MonoBehaviour
     private void HandleInput()
     {
         // if ESC is pressed, go to the main menu
-        if ( Input.GetKeyDown( KeyCode.Escape ) )
-        {   
-            m_gameManager.PauseGameplay();
-        }
+        // if ( Input.GetKeyDown( KeyCode.Escape ) )
+        // {   
+        //     m_gameManager.PauseGameplay();
+        // }
     }
 
     private void OnChoosingPositionFinished()

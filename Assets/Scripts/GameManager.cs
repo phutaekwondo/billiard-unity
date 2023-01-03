@@ -10,6 +10,26 @@ public class GameManager : MonoBehaviour
         m_screenManager = GetComponent<ScreenManager>();
     }
 
+    private void Update() 
+    {
+        HandleGlobalInput();
+    }
+
+    private void HandleGlobalInput()
+    {
+        if ( Input.GetKeyDown( KeyCode.Escape ) )
+        {   
+            if ( m_gameplayManager.IsPaused() )
+            {
+                ResumeGameplay();
+            }
+            else
+            {
+                PauseGameplay();
+            }
+        }
+    }
+
     public void PauseGameplay()
     {
         m_gameplayManager.Pause();

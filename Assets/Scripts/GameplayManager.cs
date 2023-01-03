@@ -11,6 +11,7 @@ public class GameplayManager : MonoBehaviour
 
     private bool m_isInGameplay = false;
     private bool m_isBallsMoving = false;
+    private bool m_isPaused = false;
 
     private float m_defaultBallsY = 0.032f;
     private Vector3 m_defaultCueBallPosition;
@@ -69,6 +70,8 @@ public class GameplayManager : MonoBehaviour
         return false;
     }
 
+    public bool IsPaused() { return m_isPaused; }
+
     public void EnterGamePlay()
     {
         m_isInGameplay = true;
@@ -85,6 +88,7 @@ public class GameplayManager : MonoBehaviour
 
     public void Pause()
     {
+        m_isPaused = true;
         ExitGamePlay();
     }
 
@@ -107,6 +111,7 @@ public class GameplayManager : MonoBehaviour
 
     public void Resume()
     {
+        m_isPaused = false;
         EnterGamePlay();
     }
 }
