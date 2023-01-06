@@ -11,11 +11,15 @@ public class CueBallPositionController : MonoBehaviour
     public GameObject m_cueBall; //drag and drop cue ball here in inspector
     public GameplayManager m_gameplayManager; //drag and drop GameplayManager here in inspector
 
+
+    private AvailableCueBallProvider m_availableCueBallProvider;
     private float m_defaultBallsY = 0.0f;
     private bool m_isEnabled = false;
 
     private void Start() 
     {
+        m_availableCueBallProvider = GetComponent<AvailableCueBallProvider>();
+
         m_defaultBallsY = m_gameplayManager.GetDefaultBallsY();
         m_OnChoosingPositionFinished += OnFinishedInternal;
     }
@@ -44,19 +48,11 @@ public class CueBallPositionController : MonoBehaviour
         //Move the ball with the mouse
         Vector3 mousePosition = GetMousePositionWithY(m_defaultBallsY);
         Vector3 cueBallPositionUpdate = new Vector3(mousePosition.x, m_defaultBallsY, mousePosition.z);
-        cueBallPositionUpdate = NearestAvailablePosition(cueBallPositionUpdate);
+        cueBallPositionUpdate = m_availableCueBallProvider.NearestAvailablePosition(cueBallPositionUpdate);
 
         m_cueBall.transform.position = cueBallPositionUpdate;
     }
 
-    private Vector3 NearestAvailablePosition(Vector3 cueBallPositionUpdate)
-    {
-        //avoid cueball is out of table
-        //avoid cueball is overlap with other game objects
-        //NEED TO IMPLEMENT
-
-        return cueBallPositionUpdate; //just a placeholder
-    }
 
     public bool IsEnabled() 
     { 

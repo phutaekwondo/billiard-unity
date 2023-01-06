@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7121,6 +7121,7 @@ GameObject:
   - component: {fileID: 1397757576}
   - component: {fileID: 1397757577}
   - component: {fileID: 1397757578}
+  - component: {fileID: 1397757579}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -7194,6 +7195,21 @@ MonoBehaviour:
   m_gameplayManager: {fileID: 2139609565}
   m_refereeController: {fileID: 421370889}
   m_screenManager: {fileID: 2139609564}
+--- !u!114 &1397757579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397757574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d78e2dd353526c4f9be85127207e6e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AvailableAreaSurface: {fileID: 672244246}
+  m_rack: {fileID: 667043940}
+  m_cueBall: {fileID: 2010333558}
 --- !u!1 &1399802719
 GameObject:
   m_ObjectHideFlags: 0
@@ -10742,7 +10758,6 @@ MonoBehaviour:
   m_playerController: {fileID: 1397757578}
   m_cueBall: {fileID: 2010333558}
   m_rack: {fileID: 667043940}
-  m_rackGenerator: {fileID: 667043942}
 --- !u!1 &2146864657
 GameObject:
   m_ObjectHideFlags: 0
