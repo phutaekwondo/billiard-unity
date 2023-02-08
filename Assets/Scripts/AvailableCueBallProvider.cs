@@ -30,10 +30,13 @@ public class AvailableCueBallProvider : MonoBehaviour
 
     public Vector3 NearestAvailablePosition(Vector3 cueBallPositionUpdate)
     {
+        //NEED TO IMPLEMENT
         //avoid cueball is out of table
         Vector3 nearestPosition = NearestPositionInAvailableArea(cueBallPositionUpdate);
         //avoid cueball is overlap with other game objects
-        //NEED TO IMPLEMENT
+        ////avoid cueball is overlap with other balls
+        ////avoid cueball is overlap rails
+
 
         return nearestPosition; //just a placeholder
     }

@@ -2,31 +2,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //REFERENCES
     public GameManager m_gameManager = null; // drag and drop the GameManager in the inspector
     public GameplayManager m_gameplayManager; // drag GameplayManager into this field in the inspector
     public RefereeController m_refereeController; // drag RefereeController into this field in the inspector
     public ScreenManager m_screenManager; // drag ScreenManager into this field in the inspector
-
     protected ShootController m_shootController;
     protected CueBallPositionController m_cueBallPositionController;
+    [SerializeField] protected RackPhysicsController m_rackPhysicsController;
 
+    //VARIABLES
     private PlayerControllerState m_state;
     private bool m_isEnabled = true;
 
-    private void Start() 
+    //PUBLIC METHODS
+    public PlayerControllerState GetPlayerControllerState()
     {
-        m_shootController = GetComponent<ShootController>();
-        m_shootController.m_OnShoot += OnShoot;
-        m_cueBallPositionController = GetComponent<CueBallPositionController>();
-        m_cueBallPositionController.m_OnChoosingPositionFinished += OnChoosingPositionFinished;
-        m_gameplayManager.m_OnGameplayRestart += Restart;
-        m_state = new PlayerControllerState_Aiming(this);
-    }
-
-    private void Update() 
-    {
-        if ( !m_isEnabled ) return;
-        m_state = m_state.Update();
+        return m_state;
     }
 
     public void Restart()
@@ -46,6 +38,23 @@ public class PlayerController : MonoBehaviour
         m_state.SetEnablements();
     }
 
+    //PRIVATE METHODS
+    private void Start() 
+    {
+        m_shootController = GetComponent<ShootController>();
+        m_shootController.m_OnShoot += OnShoot;
+        m_cueBallPositionController = GetComponent<CueBallPositionController>();
+        m_cueBallPositionController.m_OnChoosingPositionFinished += OnChoosingPositionFinished;
+        m_gameplayManager.m_OnGameplayRestart += Restart;
+        m_state = new PlayerControllerState_Aiming(this);
+    }
+
+    private void Update() 
+    {
+        if ( !m_isEnabled ) return;
+        m_state = m_state.Update();
+    }
+
     private void OnChoosingPositionFinished()
     {
         m_state = new PlayerControllerState_Aiming(this);
@@ -57,7 +66,9 @@ public class PlayerController : MonoBehaviour
         m_state = new PlayerControllerState_WaitingForBallsStop(this);
     }
 
-    abstract class PlayerControllerState
+    //SUPPORT CLASS
+
+    public abstract class PlayerControllerState
     {
         protected PlayerController m_playerController;
         protected ShootController m_shootController;
@@ -96,6 +107,7 @@ public class PlayerController : MonoBehaviour
     {
         public PlayerControllerState_Aiming(PlayerController playerController) : base(playerController)
         {
+            playerController.m_rackPhysicsController.SetAllBallsIsKinematic(false);
         }
 
         public override PlayerControllerState Update()
@@ -114,6 +126,7 @@ public class PlayerController : MonoBehaviour
     {
         public PlayerControllerState_WaitingForBallsStop(PlayerController playerController) : base(playerController)
         {
+            playerController.m_rackPhysicsController.SetAllBallsIsKinematic(false);
         }
 
         public override PlayerControllerState Update()
@@ -139,6 +152,7 @@ public class PlayerController : MonoBehaviour
     {
         public PlayerControllerState_ChoosingCueBallPosition(PlayerController playerController) : base(playerController)
         {
+            playerController.m_rackPhysicsController.SetAllBallsIsKinematic(true);
         }
         public override PlayerControllerState Update()
         {

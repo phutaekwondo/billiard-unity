@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3853,6 +3853,7 @@ GameObject:
   m_Component:
   - component: {fileID: 667043941}
   - component: {fileID: 667043942}
+  - component: {fileID: 667043943}
   m_Layer: 0
   m_Name: Rack
   m_TagString: Untagged
@@ -3907,6 +3908,18 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 3e65b2d6f45d5854b9121e80be98e750, type: 2}
   - {fileID: 2100000, guid: bf60776860b564349a3aa9794a2b023e, type: 2}
   - {fileID: 2100000, guid: 52d339ed377049b4c8b5c55de0ceb0a6, type: 2}
+--- !u!114 &667043943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667043940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88eb22864ec30aa4684bd83a24b1e923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &668074870
 GameObject:
   m_ObjectHideFlags: 0
@@ -7195,6 +7208,7 @@ MonoBehaviour:
   m_gameplayManager: {fileID: 2139609565}
   m_refereeController: {fileID: 421370889}
   m_screenManager: {fileID: 2139609564}
+  m_rackPhysicsController: {fileID: 667043943}
 --- !u!114 &1397757579
 MonoBehaviour:
   m_ObjectHideFlags: 0
