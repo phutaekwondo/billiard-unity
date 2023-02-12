@@ -61,13 +61,14 @@ public class CueBallPositionController : MonoBehaviour
 
     public void SetCueBallPhysicsEnabled(bool isEnabled)
     {
+        Rigidbody cueBallRigidbody = m_cueBall.GetComponent<Rigidbody>();
         if ( !isEnabled )
         {
-            m_cueBall.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            m_cueBall.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            cueBallRigidbody.velocity = Vector3.zero;
+            cueBallRigidbody.angularVelocity = Vector3.zero;
         }
-        m_cueBall.GetComponent<Rigidbody>().isKinematic = !isEnabled;
-        m_cueBall.GetComponent<Rigidbody>().detectCollisions = isEnabled;
+        cueBallRigidbody.isKinematic = !isEnabled;
+        m_cueBall.GetComponent<Collider>().isTrigger = !isEnabled;
     }
 
     public void Disable()
