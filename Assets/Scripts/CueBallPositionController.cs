@@ -8,7 +8,8 @@ public class CueBallPositionController : MonoBehaviour
 {
     public event CueBallPositionControllerEvent m_OnChoosingPositionFinished;
 
-    public GameObject m_cueBall; //drag and drop cue ball here in inspector
+    public GameObject m_cueBallGO; //drag and drop cue ball here in inspector
+    private CueBall m_cueBall;
     public GameplayManager m_gameplayManager; //drag and drop GameplayManager here in inspector
 
 
@@ -18,6 +19,7 @@ public class CueBallPositionController : MonoBehaviour
 
     private void Start() 
     {
+        m_cueBall = m_cueBallGO.GetComponent<CueBall>();
         m_availableCueBallProvider = GetComponent<AvailableCueBallProvider>();
 
         m_defaultBallsY = m_gameplayManager.GetDefaultBallsY();
@@ -50,7 +52,7 @@ public class CueBallPositionController : MonoBehaviour
         Vector3 cueBallPositionUpdate = new Vector3(mousePosition.x, m_defaultBallsY, mousePosition.z);
         cueBallPositionUpdate = m_availableCueBallProvider.NearestAvailablePosition(cueBallPositionUpdate);
 
-        m_cueBall.transform.position = cueBallPositionUpdate;
+        m_cueBallGO.transform.position = cueBallPositionUpdate;
     }
 
 
@@ -61,14 +63,7 @@ public class CueBallPositionController : MonoBehaviour
 
     public void SetCueBallPhysicsEnabled(bool isEnabled)
     {
-        Rigidbody cueBallRigidbody = m_cueBall.GetComponent<Rigidbody>();
-        if ( !isEnabled )
-        {
-            cueBallRigidbody.velocity = Vector3.zero;
-            cueBallRigidbody.angularVelocity = Vector3.zero;
-        }
-        cueBallRigidbody.isKinematic = !isEnabled;
-        m_cueBall.GetComponent<Collider>().isTrigger = !isEnabled;
+        m_cueBall.SetCueBallPhysicsEnabled(isEnabled);
     }
 
     public void Disable()
