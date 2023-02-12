@@ -107,7 +107,6 @@ public class PlayerController : MonoBehaviour
     {
         public PlayerControllerState_Aiming(PlayerController playerController) : base(playerController)
         {
-            playerController.m_rackPhysicsController.SetAllBallsIsKinematic(false);
         }
 
         public override PlayerControllerState Update()
@@ -126,7 +125,6 @@ public class PlayerController : MonoBehaviour
     {
         public PlayerControllerState_WaitingForBallsStop(PlayerController playerController) : base(playerController)
         {
-            playerController.m_rackPhysicsController.SetAllBallsIsKinematic(false);
         }
 
         public override PlayerControllerState Update()
@@ -152,7 +150,6 @@ public class PlayerController : MonoBehaviour
     {
         public PlayerControllerState_ChoosingCueBallPosition(PlayerController playerController) : base(playerController)
         {
-            playerController.m_rackPhysicsController.SetAllBallsIsKinematic(true);
         }
         public override PlayerControllerState Update()
         {
