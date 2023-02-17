@@ -19,6 +19,7 @@ public class GameplayManager : MonoBehaviour
     private void Start() 
     {
         m_defaultCueBallPosition = m_cueBall.transform.position;
+        m_isPaused = false;
     }
 
     private void Update() 
@@ -104,6 +105,8 @@ public class GameplayManager : MonoBehaviour
         m_cueBall.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
         //...
+        //reset the state
+        Start();
 
         EnterGamePlay();
     }
