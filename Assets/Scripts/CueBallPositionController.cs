@@ -45,14 +45,17 @@ public class CueBallPositionController : MonoBehaviour
 
     public void UpdateCueBallPosition()
     {
+        //need to use raycast in this function
         if ( !m_isEnabled ) return;
 
         //Move the ball with the mouse
         Vector3 mousePosition = GetMousePositionWithY(m_defaultBallsY);
-        Vector3 cueBallPositionUpdate = new Vector3(mousePosition.x, m_defaultBallsY, mousePosition.z);
-        cueBallPositionUpdate = m_availableCueBallProvider.NearestAvailablePosition(cueBallPositionUpdate);
+        mousePosition = new Vector3(mousePosition.x, m_defaultBallsY, mousePosition.z);
+        mousePosition = m_availableCueBallProvider.NearestAvailablePosition(mousePosition);
 
-        m_cueBallGO.transform.position = cueBallPositionUpdate;
+        m_cueBallGO.transform.position = mousePosition;
+
+        //if current cueball position is overlapping with other balls, choose the nearest available position
     }
 
 

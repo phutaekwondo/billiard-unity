@@ -25,9 +25,6 @@ public class CueBall : MonoBehaviour
     }
     private void Update() 
     {
-        if ( m_overlappingChecker.IsOverlapping() )
-        {
-            m_rackPhysicsController.SetAllBallsIsKinematic(true);
-        }
+        m_rackPhysicsController.SetAllBallsIsKinematic(m_overlappingChecker.IsOverlapping());
     }
 }
