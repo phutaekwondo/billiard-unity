@@ -40,7 +40,11 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         foreach ( Circle circle in dangerousCircles )
         {
-            Vector2 nearestAvailablePosition = GetNearestAvailablePositionWithCircle(circle, rawPosition2D, dangerousCircles);
+            Tuple<Vector2,bool> tupleNearestAvailablePosition = GetNearestAvailablePositionWithCircle(circle, rawPosition2D, dangerousCircles);
+            if (tupleNearestAvailablePosition.Item2)
+            {
+                return new Vector3(tupleNearestAvailablePosition.Item1.x, rawPosition.y, tupleNearestAvailablePosition.Item1.y);
+            }
         }
 
         //we need to remove this when we finish the algoritm
@@ -69,15 +73,77 @@ public class AvailableCueBallProvider : MonoBehaviour
         return true;
     }
 
-    private Vector2 GetNearestAvailablePositionWithCircle(Circle circle, Vector2 rawPosition2D, List<Circle> dangerousCircles)
+    private Tuple<Vector2,bool> GetNearestAvailablePositionWithCircle(Circle circle, Vector2 rawPosition2D, List<Circle> dangerousCircles)
+    {
+        List<OverlapRange> overlapRanges = GetListOfOverlapRanges(circle, dangerousCircles);
+        if (overlapRanges.Count == 1 && overlapRanges[0].m_min == 0 && overlapRanges[0].m_max == 360)
+        {
+            return new Tuple<Vector2, bool>(rawPosition2D, false);
+        }
+        else
+        {
+            //find the nearest position on the circle
+            Vector2 nearestPosition;
+            float angleWithCenterOfCircle = circle.AngleWithPoint(rawPosition2D);  
+            //the nearest angle 
+            foreach ( OverlapRange overlapRange in overlapRanges )
+            {
+                if (overlapRange.IsInRange(angleWithCenterOfCircle))
+                {
+                    float nearestAngle = overlapRange.GetNearestLimit(angleWithCenterOfCircle);
+                    //return the position in nearestAngle
+                    nearestPosition = circle.GetPointWithAngle(nearestAngle);
+                    return new Tuple<Vector2, bool>(nearestPosition, true);
+                }
+            }
+            nearestPosition = circle.GetPointWithAngle(angleWithCenterOfCircle);
+            return new Tuple<Vector2, bool>(nearestPosition, true);
+        }
+    }
+
+    private List<OverlapRange> GetListOfOverlapRanges(Circle circle, List<Circle> dangerousCircles)
     {
         List<OverlapRange> overlapRanges = new List<OverlapRange>();
         foreach( Circle otherCircle in dangerousCircles )
         {
-            //mid angle should between 0 and 360
+            if (otherCircle.m_center != circle.m_center)
+            {
+                //mid angle should between 0 and 36
+                Vector2 otherCenter = otherCircle.m_center;
+                float midAngle = circle.AngleWithPoint(otherCenter);
 
+                float distanceFrom2Center = Vector2.Distance(circle.m_center, otherCenter);
+                float circleRadius = circle.m_radius;
+
+                float halfWideAngle = Mathf.Asin(distanceFrom2Center / circleRadius) * Mathf.Rad2Deg;
+
+                OverlapRange overlapRange = new OverlapRange(midAngle-halfWideAngle, midAngle+halfWideAngle);
+                overlapRanges.Add(overlapRange);
+            }
         }
 
+        List<OverlapRange> mergedRanges = new List<OverlapRange>();
+        //merge the overlap ranges
+        for ( int i = 0; i < overlapRanges.Count - 1; i++ )
+        {
+            bool isMerged = false;
+            for ( int j = i+1; j < overlapRanges.Count - 1; j++ )
+            {
+                //is mergeable to i
+                if ( overlapRanges[i].IsMergeable(overlapRanges[j]) )
+                {
+                    isMerged = true;
+                    //merge to j
+                    overlapRanges[j].MergeFrom(overlapRanges[i]);
+                }
+            }
+            if (!isMerged)
+            {
+                mergedRanges.Add(overlapRanges[i]);
+            }
+        }
+
+        return mergedRanges;
     }
 
     private List<Circle> SortCirlcesByDistanceWithPoint(List<Circle> dangerousCircles, Vector2 rawPosition)
@@ -156,6 +222,23 @@ public class AvailableCueBallProvider : MonoBehaviour
             this.m_center = center;
             this.m_radius = radius;
         }
+
+        public float AngleWithPoint( Vector2 point )
+        {
+            //angle should between 0 and 36
+            float angle = Vector2.Angle(point - this.m_center, Vector2.right);
+            if (point.y < this.m_center.y)
+            {
+                angle = 360 - angle;
+            }
+
+            return angle;
+        }
+
+        public Vector2 GetPointWithAngle(float angle)
+        {
+            throw new NotImplementedException();
+        }
     }
     struct OverlapRange
     {
@@ -167,6 +250,45 @@ public class AvailableCueBallProvider : MonoBehaviour
         {
             this.m_min = min;
             this.m_max = max;
+        }
+
+        public bool IsMergeable(OverlapRange other)
+        {
+            if (this.m_min < other.m_min && this.m_max > other.m_min)
+            {
+                return true;
+            }
+            if (this.m_min < other.m_max && this.m_max > other.m_max)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void MergeFrom(OverlapRange other)
+        {
+            this.m_max = other.m_max > this.m_max ? other.m_max : this.m_max;
+            this.m_min = other.m_min < this.m_min ? other.m_min : this.m_min;
+        }
+
+        public bool IsInRange(float angle)
+        {
+            if (angle >= this.m_min && angle <= this.m_max)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public float GetNearestLimit(float angle)
+        {
+            float minDistance = Mathf.Abs(angle - this.m_min);
+            float maxDistance = Mathf.Abs(angle - this.m_max);
+            if (minDistance < maxDistance)
+            {
+                return this.m_min;
+            }
+            return this.m_max;
         }
     }
 }
