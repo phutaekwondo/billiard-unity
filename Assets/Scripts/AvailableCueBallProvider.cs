@@ -75,6 +75,12 @@ public class AvailableCueBallProvider : MonoBehaviour
     private Tuple<Vector2,bool> GetNearestAvailablePositionWithCircle(Circle circle, Vector2 rawPosition2D, List<Circle> dangerousCircles)
     {
         List<OverlapRange> overlapRanges = GetListOfOverlapRanges(circle, dangerousCircles);
+        //debug
+        for ( int i =0; i<overlapRanges.Count;i++)
+        {
+            Debug.Log(overlapRanges[i].m_min.ToString() + " " + overlapRanges[i].m_max.ToString()); // checked: NaN NaN
+        }
+
         if (overlapRanges.Count == 1 && overlapRanges[0].m_min == 0 && overlapRanges[0].m_max == 360)
         {
             return new Tuple<Vector2, bool>(rawPosition2D, false);
