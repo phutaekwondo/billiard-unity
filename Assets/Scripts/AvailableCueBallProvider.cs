@@ -102,6 +102,7 @@ public class AvailableCueBallProvider : MonoBehaviour
 
     private List<OverlapRange> GetListOfOverlapRanges(Circle circle, List<Circle> dangerousCircles)
     {
+        // TODO: need to check the rails
         List<OverlapRange> overlapRanges = new List<OverlapRange>();
         foreach( Circle otherCircle in dangerousCircles )
         {
