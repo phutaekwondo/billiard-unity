@@ -24,7 +24,6 @@ public class AvailableCueBallProvider : MonoBehaviour
 
     public Vector3 NearestAvailablePosition(Vector3 rawPosition)
     {
-        //NEED TO IMPLEMENT
         Vector2 rawPosition2D = new Vector2(rawPosition.x, rawPosition.z);
 
 
@@ -64,7 +63,7 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         foreach ( Circle circle in dangerousCircles )
         {
-            if (Vector2.Distance(position, circle.m_center) < circle.m_radius)
+            if (circle.isInCircle(position))
             {
                 return false;
             }
@@ -190,7 +189,7 @@ public class AvailableCueBallProvider : MonoBehaviour
         for ( int i = 0; i < m_rack.transform.childCount; i++ )
         {
             GameObject ball = m_rack.transform.GetChild(i).gameObject;
-            Circle ballCircle = new Circle((Vector2)ball.transform.position, m_ballRadius*2);
+            Circle ballCircle = new Circle(new Vector2(ball.transform.position.x, ball.transform.position.z), m_ballRadius*2);
             dangerousCircles.Add(ballCircle);
         }
         return dangerousCircles;
@@ -223,6 +222,12 @@ public class AvailableCueBallProvider : MonoBehaviour
             this.m_radius = radius;
         }
 
+        public bool isInCircle(Vector2 point)
+        {
+            float distance = Vector2.Distance(m_center, point);
+            return distance <= m_radius;
+        }
+
         public float AngleWithPoint( Vector2 point )
         {
             //angle should between 0 and 36
@@ -237,7 +242,10 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         public Vector2 GetPointWithAngle(float angle)
         {
-            throw new NotImplementedException();
+            //angle to vector
+            Vector2 angleVector = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            Vector2 point = this.m_center + angleVector * this.m_radius;
+            return point;
         }
     }
     struct OverlapRange
