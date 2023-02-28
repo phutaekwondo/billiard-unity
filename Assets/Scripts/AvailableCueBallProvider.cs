@@ -75,11 +75,6 @@ public class AvailableCueBallProvider : MonoBehaviour
     private Tuple<Vector2,bool> GetNearestAvailablePositionWithCircle(Circle circle, Vector2 rawPosition2D, List<Circle> dangerousCircles)
     {
         List<OverlapRange> overlapRanges = GetListOfOverlapRanges(circle, dangerousCircles);
-        //debug
-        // for ( int i =0; i<overlapRanges.Count;i++)
-        // {
-        //     Debug.Log(overlapRanges[i].m_min.ToString() + " " + overlapRanges[i].m_max.ToString()); // checked: NaN NaN
-        // }
 
         if (overlapRanges.Count == 1 && overlapRanges[0].m_min == 0 && overlapRanges[0].m_max == 360)
         {
@@ -121,17 +116,15 @@ public class AvailableCueBallProvider : MonoBehaviour
                 float distanceFrom2Center = Vector2.Distance(circle.m_center, otherCenter);
                 float circleRadius = circle.m_radius;
 
-                float halfWideAngle = Mathf.Asin(distanceFrom2Center / circleRadius) * Mathf.Rad2Deg;
+                if (distanceFrom2Center < circleRadius*2)
+                {
+                    float halfWideAngle = Mathf.Asin((distanceFrom2Center/2) / circleRadius) * Mathf.Rad2Deg;
 
-                OverlapRange overlapRange = new OverlapRange(midAngle-halfWideAngle, midAngle+halfWideAngle);
-                overlapRanges.Add(overlapRange);
+                    OverlapRange overlapRange = new OverlapRange(midAngle-halfWideAngle, midAngle+halfWideAngle);
+                    overlapRanges.Add(overlapRange);
+                }
             }
         }
-        // debug
-        // foreach (OverlapRange overlapRange in overlapRanges)
-        // {
-        //     Debug.Log(overlapRange.m_min.ToString() + " " + overlapRange.m_max.ToString()); checked: NaN NaN
-        // }
 
         List<OverlapRange> mergedRanges = new List<OverlapRange>();
         //merge the overlap ranges
