@@ -76,10 +76,10 @@ public class AvailableCueBallProvider : MonoBehaviour
     {
         List<OverlapRange> overlapRanges = GetListOfOverlapRanges(circle, dangerousCircles);
         //debug
-        for ( int i =0; i<overlapRanges.Count;i++)
-        {
-            Debug.Log(overlapRanges[i].m_min.ToString() + " " + overlapRanges[i].m_max.ToString()); // checked: NaN NaN
-        }
+        // for ( int i =0; i<overlapRanges.Count;i++)
+        // {
+        //     Debug.Log(overlapRanges[i].m_min.ToString() + " " + overlapRanges[i].m_max.ToString()); // checked: NaN NaN
+        // }
 
         if (overlapRanges.Count == 1 && overlapRanges[0].m_min == 0 && overlapRanges[0].m_max == 360)
         {
@@ -127,6 +127,11 @@ public class AvailableCueBallProvider : MonoBehaviour
                 overlapRanges.Add(overlapRange);
             }
         }
+        // debug
+        // foreach (OverlapRange overlapRange in overlapRanges)
+        // {
+        //     Debug.Log(overlapRange.m_min.ToString() + " " + overlapRange.m_max.ToString()); checked: NaN NaN
+        // }
 
         List<OverlapRange> mergedRanges = new List<OverlapRange>();
         //merge the overlap ranges
