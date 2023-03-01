@@ -111,6 +111,7 @@ public class AvailableCueBallProvider : MonoBehaviour
     private List<OverlapRange> GetListOfOverlapRanges(Circle circle, List<Circle> dangerousCircles)
     {
         // TODO: need to check the rails
+        // PROBLEM: when the dangerous circle center is inside circle, the algorithm will not work
         List<OverlapRange> overlapRanges = new List<OverlapRange>();
         foreach( Circle otherCircle in dangerousCircles )
         {
