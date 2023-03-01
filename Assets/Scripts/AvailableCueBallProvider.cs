@@ -112,12 +112,13 @@ public class AvailableCueBallProvider : MonoBehaviour
     {
         // TODO: need to check the rails
         // PROBLEM: when the dangerous circle center is inside circle, the algorithm will not work
+        // PROBLEM: sometime it return range with max over 360
         List<OverlapRange> overlapRanges = new List<OverlapRange>();
         foreach( Circle otherCircle in dangerousCircles )
         {
             if (otherCircle.m_center != circle.m_center)
             {
-                //mid angle should between 0 and 36
+                //mid angle should between 0 and 360
                 Vector2 otherCenter = otherCircle.m_center;
                 float midAngle = circle.AngleWithPoint(otherCenter);
 
