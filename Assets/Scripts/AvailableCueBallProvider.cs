@@ -76,13 +76,6 @@ public class AvailableCueBallProvider : MonoBehaviour
     {
         List<OverlapRange> overlapRanges = GetListOfOverlapRanges(circle, dangerousCircles);
 
-        //debug
-        // Debug.Log("overlapRanges.Count: " + overlapRanges.Count); // checked = 0, when there is a overlap circle situation
-        // for ( int  i = 0; i < overlapRanges.Count; i++ )
-        // {
-        //     Debug.Log(i.ToString() + " " + overlapRanges[i].m_max.ToString() + " " + overlapRanges[i].m_min.ToString());
-        // }
-
         if (overlapRanges.Count == 1 && overlapRanges[0].m_min == 0 && overlapRanges[0].m_max == 360)
         {
             return new Tuple<Vector2, bool>(rawPosition2D, false);
