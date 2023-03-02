@@ -112,7 +112,6 @@ public class AvailableCueBallProvider : MonoBehaviour
     {
         // TODO: need to check the rails
         // PROBLEM: when the dangerous circle center is inside circle, the algorithm will not work
-        // PROBLEM: sometime it return range with max over 360
         List<OverlapRange> overlapRanges = new List<OverlapRange>();
         foreach( Circle otherCircle in dangerousCircles )
         {
@@ -128,8 +127,22 @@ public class AvailableCueBallProvider : MonoBehaviour
                 if (distanceFrom2Center < circleRadius*2)
                 {
                     float halfWideAngle = Mathf.Asin((distanceFrom2Center/2) / circleRadius) * Mathf.Rad2Deg;
+                    float rangeMin = midAngle - halfWideAngle;
+                    float rangeMax = midAngle + halfWideAngle;
 
-                    OverlapRange overlapRange = new OverlapRange(midAngle-halfWideAngle, midAngle+halfWideAngle);
+                    if (rangeMin < 0)
+                    {
+                        OverlapRange belowZeroRange = new OverlapRange(360 + rangeMin, 360);
+                        overlapRanges.Add(belowZeroRange);
+                        rangeMin = 0;
+                    }
+                    if (rangeMax > 360)
+                    {
+                        OverlapRange above360Range = new OverlapRange(0, rangeMax - 360);
+                        overlapRanges.Add(above360Range);
+                        rangeMax = 360;
+                    }
+                    OverlapRange overlapRange = new OverlapRange(rangeMax, rangeMin);
                     overlapRanges.Add(overlapRange);
                 }
             }
@@ -137,10 +150,10 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         List<OverlapRange> mergedRanges = new List<OverlapRange>();
         //merge the overlap ranges
-        for ( int i = 0; i < overlapRanges.Count - 1; i++ )
+        for ( int i = 0; i < overlapRanges.Count; i++ )
         {
             bool isMerged = false;
-            for ( int j = i+1; j < overlapRanges.Count - 1; j++ )
+            for ( int j = i+1; j < overlapRanges.Count; j++ )
             {
                 //is mergeable to i
                 if ( overlapRanges[i].IsMergeable(overlapRanges[j]) )
@@ -155,7 +168,6 @@ public class AvailableCueBallProvider : MonoBehaviour
                 mergedRanges.Add(overlapRanges[i]);
             }
         }
-
         return mergedRanges;
     }
 
