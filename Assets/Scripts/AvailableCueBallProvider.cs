@@ -124,7 +124,7 @@ public class AvailableCueBallProvider : MonoBehaviour
 
                 if (distanceFrom2Center < circleRadius*2)
                 {
-                    float halfWideAngle = Mathf.Asin((distanceFrom2Center/2) / circleRadius) * Mathf.Rad2Deg;
+                    float halfWideAngle = Mathf.Acos((distanceFrom2Center/2) / circleRadius) * Mathf.Rad2Deg;
                     float rangeMin = midAngle - halfWideAngle;
                     float rangeMax = midAngle + halfWideAngle;
 
