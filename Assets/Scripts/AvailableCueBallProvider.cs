@@ -93,7 +93,57 @@ public class AvailableCueBallProvider : MonoBehaviour
             {
                 if (overlapRange.IsInRange(angleWithCenterOfCircle))
                 {
-                    float nearestAngle = overlapRange.GetNearestLimit(angleWithCenterOfCircle);
+                    float nearestAngle;
+                    if (overlapRange.m_min == 0 || overlapRange.m_max == 360)//overlapRange at start or end
+                    {
+                        bool isOverlapRangeAtStart = overlapRange.m_min == 0;
+                        bool hasOtherRange = false;
+                        float maxAngle = 0, minAngle = 0;
+                        //find end range
+                        foreach (OverlapRange findingOtherRange in overlapRanges)
+                        {
+                            if (findingOtherRange.m_max == 360 && isOverlapRangeAtStart)
+                            {
+                                hasOtherRange = true;
+                                maxAngle = overlapRange.m_max;
+                                minAngle = findingOtherRange.m_min - 360;
+                            }
+                            else if (findingOtherRange.m_min == 0 && !isOverlapRangeAtStart)
+                            {
+                                hasOtherRange = true;
+                                maxAngle = findingOtherRange.m_max + 360;
+                                minAngle = overlapRange.m_min;
+                            }
+                        }
+                        if (hasOtherRange)
+                        {
+                            if (Math.Abs(minAngle - angleWithCenterOfCircle) < Math.Abs(maxAngle - angleWithCenterOfCircle))
+                            {
+                                nearestAngle = minAngle;
+                            }
+                            else
+                            {
+                                nearestAngle = maxAngle;
+                            }
+
+                            if (nearestAngle < 0)
+                            {
+                                nearestAngle += 360;
+                            }
+                            else if (nearestAngle > 360)
+                            {
+                                nearestAngle -= 360;
+                            }
+                        }
+                        else
+                        {
+                            nearestAngle = overlapRange.GetNearestLimit(angleWithCenterOfCircle);
+                        }
+                    }
+                    else
+                    {
+                        nearestAngle = overlapRange.GetNearestLimit(angleWithCenterOfCircle);
+                    }
                     nearestPosition = circle.GetPointWithAngle(nearestAngle);
                     return new Tuple<Vector2, bool>(nearestPosition, true);
                 }
