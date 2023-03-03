@@ -75,10 +75,19 @@ public class AvailableCueBallProvider : MonoBehaviour
     private Tuple<Vector2,bool> GetNearestAvailablePositionWithCircle(Circle circle, Vector2 rawPosition2D, List<Circle> dangerousCircles)
     {
         List<OverlapRange> overlapRanges = GetListOfOverlapRanges(circle, dangerousCircles);
-        //PROBLEM: overlapRanges now work fine, but this function still not working right
-        //PROBLEM: we need to check the case that we have range limit at 0 or 360
 
-        if (overlapRanges.Count == 1 && overlapRanges[0].m_min == 0 && overlapRanges[0].m_max == 360)
+        bool isFullyOverlapCircle = false;
+
+        foreach ( OverlapRange range in overlapRanges )
+        {
+            if (range.IsFullRound())
+            {
+                isFullyOverlapCircle = true;
+                break;
+            }
+        }
+
+        if (isFullyOverlapCircle)
         {
             return new Tuple<Vector2, bool>(rawPosition2D, false);
         }
@@ -354,6 +363,11 @@ public class AvailableCueBallProvider : MonoBehaviour
                 return true;
             }
             return false;
+        }
+
+        public bool IsFullRound ()
+        {
+            return this.m_max - this.m_min >= 360;
         }
 
         public float GetNearestLimit(float angle)
