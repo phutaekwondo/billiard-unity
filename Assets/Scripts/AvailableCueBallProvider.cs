@@ -78,8 +78,10 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         bool isFullyOverlapCircle = false;
 
+        Debug.Log("overlapRanges.Count: " + overlapRanges.Count);
         foreach ( OverlapRange range in overlapRanges )
         {
+            Debug.Log("range: " + range.m_max + " " + range.m_min);
             if (range.IsFullRound())
             {
                 isFullyOverlapCircle = true;
@@ -89,10 +91,12 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         if (isFullyOverlapCircle)
         {
+            Debug.Log("isFullyOverlapCircle");
             return new Tuple<Vector2, bool>(rawPosition2D, false);
         }
         else
         {
+            Debug.Log("not isFullyOverlapCircle");
             //find the nearest position on the circle
             Vector2 nearestPosition;
             float angleWithCenterOfCircle = circle.AngleWithPoint(rawPosition2D);  
@@ -339,11 +343,11 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         public bool IsMergeable(OverlapRange other)
         {
-            if (this.m_min < other.m_min && this.m_max > other.m_min)
+            if (this.IsContain(other.m_min))
             {
                 return true;
             }
-            if (this.m_min < other.m_max && this.m_max > other.m_max)
+            if (this.IsContain(other.m_max))
             {
                 return true;
             }
@@ -358,11 +362,7 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         public bool IsContain(float angle)
         {
-            if (angle >= this.m_min && angle <= this.m_max)
-            {
-                return true;
-            }
-            return false;
+            return (angle >= this.m_min && angle <= this.m_max);
         }
 
         public bool IsFullRound ()
