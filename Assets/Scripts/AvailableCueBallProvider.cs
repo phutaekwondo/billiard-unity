@@ -326,7 +326,7 @@ public class AvailableCueBallProvider : MonoBehaviour
             return point;
         }
     }
-    struct OverlapRange
+    class OverlapRange
     {
         //should be in degree
         public float m_min;
