@@ -89,12 +89,10 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         if (isFullyOverlapCircle)
         {
-            Debug.Log("isFullyOverlapCircle");
             return new Tuple<Vector2, bool>(rawPosition2D, false);
         }
         else
         {
-            Debug.Log("not isFullyOverlapCircle");
             //find the nearest position on the circle
             Vector2 nearestPosition;
             float angleWithCenterOfCircle = circle.AngleWithPoint(rawPosition2D);  
@@ -201,12 +199,6 @@ public class AvailableCueBallProvider : MonoBehaviour
             }
         }
 
-        Debug.Log("overlapRanges count: " + overlapRanges.Count);
-        foreach (OverlapRange range in overlapRanges)
-        {
-            Debug.Log("range: " + range.m_min + " - " + range.m_max);
-        }
-
         List<OverlapRange> mergedRanges = new List<OverlapRange>();
         //merge the overlap ranges
         for ( int i = 0; i < overlapRanges.Count; i++ )
@@ -227,7 +219,6 @@ public class AvailableCueBallProvider : MonoBehaviour
                 mergedRanges.Add(overlapRanges[i]);
             }
         }
-        Debug.Log("mergedRanges count: " + mergedRanges.Count);
         return mergedRanges;
     }
 
