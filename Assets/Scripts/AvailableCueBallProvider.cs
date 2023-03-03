@@ -76,6 +76,7 @@ public class AvailableCueBallProvider : MonoBehaviour
     {
         List<OverlapRange> overlapRanges = GetListOfOverlapRanges(circle, dangerousCircles);
         //PROBLEM: overlapRanges now work fine, but this function still not working right
+        //PROBLEM: we need to check the case that we have range limit at 0 or 360
         Debug.Log("overlapRanges.Count: " + overlapRanges.Count);
         for (int i = 0; i < overlapRanges.Count; i++)
         {
