@@ -77,11 +77,6 @@ public class AvailableCueBallProvider : MonoBehaviour
         List<OverlapRange> overlapRanges = GetListOfOverlapRanges(circle, dangerousCircles);
         //PROBLEM: overlapRanges now work fine, but this function still not working right
         //PROBLEM: we need to check the case that we have range limit at 0 or 360
-        Debug.Log("overlapRanges.Count: " + overlapRanges.Count);
-        for (int i = 0; i < overlapRanges.Count; i++)
-        {
-            Debug.Log("overlapRanges[" + i + "]: " + overlapRanges[i].m_min + " - " + overlapRanges[i].m_max);
-        }
 
         if (overlapRanges.Count == 1 && overlapRanges[0].m_min == 0 && overlapRanges[0].m_max == 360)
         {
@@ -99,7 +94,6 @@ public class AvailableCueBallProvider : MonoBehaviour
                 if (overlapRange.IsInRange(angleWithCenterOfCircle))
                 {
                     float nearestAngle = overlapRange.GetNearestLimit(angleWithCenterOfCircle);
-                    //return the position in nearestAngle
                     nearestPosition = circle.GetPointWithAngle(nearestAngle);
                     return new Tuple<Vector2, bool>(nearestPosition, true);
                 }
