@@ -117,13 +117,12 @@ public class AvailableCueBallProvider : MonoBehaviour
             {
                 //mid angle should between 0 and 360
                 Vector2 otherCenter = otherCircle.m_center;
-                float midAngle = circle.AngleWithPoint(otherCenter);
-
                 float distanceFrom2Center = Vector2.Distance(circle.m_center, otherCenter);
                 float circleRadius = circle.m_radius;
 
                 if (distanceFrom2Center < circleRadius*2)
                 {
+                    float midAngle = circle.AngleWithPoint(otherCenter);
                     float halfWideAngle = Mathf.Acos((distanceFrom2Center/2) / circleRadius) * Mathf.Rad2Deg;
                     float rangeMin = midAngle - halfWideAngle;
                     float rangeMax = midAngle + halfWideAngle;
