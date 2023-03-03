@@ -91,7 +91,7 @@ public class AvailableCueBallProvider : MonoBehaviour
             //the nearest angle 
             foreach ( OverlapRange overlapRange in overlapRanges )
             {
-                if (overlapRange.IsInRange(angleWithCenterOfCircle))
+                if (overlapRange.IsContain(angleWithCenterOfCircle))
                 {
                     float nearestAngle;
                     if (overlapRange.m_min == 0 || overlapRange.m_max == 360)//overlapRange at start or end
@@ -347,7 +347,7 @@ public class AvailableCueBallProvider : MonoBehaviour
             this.m_min = other.m_min < this.m_min ? other.m_min : this.m_min;
         }
 
-        public bool IsInRange(float angle)
+        public bool IsContain(float angle)
         {
             if (angle >= this.m_min && angle <= this.m_max)
             {
