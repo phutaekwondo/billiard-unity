@@ -78,10 +78,8 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         bool isFullyOverlapCircle = false;
 
-        Debug.Log("overlapRanges.Count: " + overlapRanges.Count);
         foreach ( OverlapRange range in overlapRanges )
         {
-            Debug.Log("range: " + range.m_max + " " + range.m_min);
             if (range.IsFullRound())
             {
                 isFullyOverlapCircle = true;
@@ -203,6 +201,12 @@ public class AvailableCueBallProvider : MonoBehaviour
             }
         }
 
+        Debug.Log("overlapRanges count: " + overlapRanges.Count);
+        foreach (OverlapRange range in overlapRanges)
+        {
+            Debug.Log("range: " + range.m_min + " - " + range.m_max);
+        }
+
         List<OverlapRange> mergedRanges = new List<OverlapRange>();
         //merge the overlap ranges
         for ( int i = 0; i < overlapRanges.Count; i++ )
@@ -223,8 +227,10 @@ public class AvailableCueBallProvider : MonoBehaviour
                 mergedRanges.Add(overlapRanges[i]);
             }
         }
+        Debug.Log("mergedRanges count: " + mergedRanges.Count);
         return mergedRanges;
     }
+
 
     private List<Circle> SortCirlcesByDistanceWithPoint(List<Circle> dangerousCircles, Vector2 rawPosition)
     {
@@ -343,15 +349,7 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         public bool IsMergeable(OverlapRange other)
         {
-            if (this.IsContain(other.m_min))
-            {
-                return true;
-            }
-            if (this.IsContain(other.m_max))
-            {
-                return true;
-            }
-            return false;
+            return this.IsContain(other.m_min) || this.IsContain(other.m_max) || other.IsContain(this.m_min) || other.IsContain(this.m_max);
         }
 
         public void MergeFrom(OverlapRange other)
