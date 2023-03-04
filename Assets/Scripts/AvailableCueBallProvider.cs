@@ -10,15 +10,16 @@ public class AvailableCueBallProvider : MonoBehaviour
     public GameObject m_cueBall; //drag and drop here in inspector
 
     private float m_ballRadius;
-    private float m_maxZ, m_minZ, m_maxX, m_minX;
+    private float m_maxY, m_minY, m_maxX, m_minX;
+    private const float FULL_ROUND_DEGREE = 360f;
 
     public Vector3 NearestPositionInAvailableArea( Vector3 position )
     {
         Vector3 nearestPosition = position;
         if ( position.x > m_maxX ) nearestPosition.x = m_maxX;
         if ( position.x < m_minX ) nearestPosition.x = m_minX;
-        if ( position.z > m_maxZ ) nearestPosition.z = m_maxZ;
-        if ( position.z < m_minZ ) nearestPosition.z = m_minZ;
+        if ( position.z > m_maxY ) nearestPosition.z = m_maxY;
+        if ( position.z < m_minY ) nearestPosition.z = m_minY;
         return nearestPosition;
     }
 
@@ -58,8 +59,8 @@ public class AvailableCueBallProvider : MonoBehaviour
     {
         if ( position.x > m_maxX ) return false;
         if ( position.x < m_minX ) return false;
-        if ( position.y > m_maxZ ) return false;
-        if ( position.y < m_minZ ) return false;
+        if ( position.y > m_maxY ) return false;
+        if ( position.y < m_minY ) return false;
 
         foreach ( Circle circle in dangerousCircles )
         {
@@ -103,7 +104,7 @@ public class AvailableCueBallProvider : MonoBehaviour
                 if (overlapRange.IsContain(angleWithCenterOfCircle))
                 {
                     float nearestAngle;
-                    if (overlapRange.m_min == 0 || overlapRange.m_max == 360)//overlapRange at start or end
+                    if (overlapRange.m_min == 0 || overlapRange.m_max == FULL_ROUND_DEGREE)//overlapRange at start or end
                     {
                         bool isOverlapRangeAtStart = overlapRange.m_min == 0;
                         bool hasOtherRange = false;
@@ -111,16 +112,16 @@ public class AvailableCueBallProvider : MonoBehaviour
                         //find end range
                         foreach (OverlapRange findingOtherRange in overlapRanges)
                         {
-                            if (findingOtherRange.m_max == 360 && isOverlapRangeAtStart)
+                            if (findingOtherRange.m_max == FULL_ROUND_DEGREE && isOverlapRangeAtStart)
                             {
                                 hasOtherRange = true;
                                 maxAngle = overlapRange.m_max;
-                                minAngle = findingOtherRange.m_min - 360;
+                                minAngle = findingOtherRange.m_min - FULL_ROUND_DEGREE;
                             }
                             else if (findingOtherRange.m_min == 0 && !isOverlapRangeAtStart)
                             {
                                 hasOtherRange = true;
-                                maxAngle = findingOtherRange.m_max + 360;
+                                maxAngle = findingOtherRange.m_max + FULL_ROUND_DEGREE;
                                 minAngle = overlapRange.m_min;
                             }
                         }
@@ -137,11 +138,11 @@ public class AvailableCueBallProvider : MonoBehaviour
 
                             if (nearestAngle < 0)
                             {
-                                nearestAngle += 360;
+                                nearestAngle += FULL_ROUND_DEGREE;
                             }
-                            else if (nearestAngle > 360)
+                            else if (nearestAngle > FULL_ROUND_DEGREE)
                             {
-                                nearestAngle -= 360;
+                                nearestAngle -= FULL_ROUND_DEGREE;
                             }
                         }
                         else
@@ -165,6 +166,50 @@ public class AvailableCueBallProvider : MonoBehaviour
     {
         // TODO: need to check the rails
         List<OverlapRange> overlapRanges = new List<OverlapRange>();
+        //check rails
+        //max Y
+        if (Math.Abs(m_maxY - circle.m_center.y) < circle.m_radius) // if MaxY line cut the circle
+        {
+            float halfWideAngle = Mathf.Acos((m_maxY - circle.m_center.y) / circle.m_radius) * Mathf.Rad2Deg;
+            if (halfWideAngle > 90)
+            {
+                overlapRanges.Add(new OverlapRange(0, 90 + halfWideAngle));
+                overlapRanges.Add(new OverlapRange(FULL_ROUND_DEGREE - (90 - halfWideAngle), FULL_ROUND_DEGREE));
+            }
+            else
+            {
+                overlapRanges.Add(new OverlapRange(90 - halfWideAngle, 90 + halfWideAngle));
+            }
+        }
+        //min Y
+        if (Math.Abs(m_minY - circle.m_center.y) < circle.m_radius) // if MinY line cut the circle
+        {
+            float halfWideAngle = Mathf.Acos((m_minY - circle.m_center.y) / circle.m_radius) * Mathf.Rad2Deg;
+            if (halfWideAngle > 90)
+            {
+                overlapRanges.Add(new OverlapRange( 270 - halfWideAngle, FULL_ROUND_DEGREE));
+                overlapRanges.Add(new OverlapRange(0,(270 + halfWideAngle)-FULL_ROUND_DEGREE));
+            }
+            else
+            {
+                overlapRanges.Add(new OverlapRange(270 - halfWideAngle, 270 + halfWideAngle));
+            }
+        }
+        //max X
+        if (Math.Abs(m_maxX - circle.m_center.x) < circle.m_radius) // if MaxX line cut the circle
+        {
+            float halfWideAngle = Mathf.Acos((m_maxX - circle.m_center.x) / circle.m_radius) * Mathf.Rad2Deg;
+            overlapRanges.Add(new OverlapRange(0, halfWideAngle));
+            overlapRanges.Add(new OverlapRange(FULL_ROUND_DEGREE - halfWideAngle, FULL_ROUND_DEGREE));
+        }
+        //min X
+        if (Math.Abs(m_minX - circle.m_center.x) < circle.m_radius) // if MinX line cut the circle
+        {
+            float halfWideAngle = Mathf.Acos((m_minX - circle.m_center.x) / circle.m_radius) * Mathf.Rad2Deg;
+            overlapRanges.Add(new OverlapRange(180 - halfWideAngle, 180 + halfWideAngle));
+        }
+
+        //check other balls
         foreach( Circle otherCircle in dangerousCircles )
         {
             if (otherCircle.m_center != circle.m_center)
@@ -277,8 +322,8 @@ public class AvailableCueBallProvider : MonoBehaviour
     {
         m_maxX = m_AvailableAreaSurface.transform.position.x + m_AvailableAreaSurface.transform.localScale.x / 2;
         m_minX = m_AvailableAreaSurface.transform.position.x - m_AvailableAreaSurface.transform.localScale.x / 2;
-        m_maxZ = m_AvailableAreaSurface.transform.position.z + m_AvailableAreaSurface.transform.localScale.z / 2;
-        m_minZ = m_AvailableAreaSurface.transform.position.z - m_AvailableAreaSurface.transform.localScale.z / 2;
+        m_maxY = m_AvailableAreaSurface.transform.position.z + m_AvailableAreaSurface.transform.localScale.z / 2;
+        m_minY = m_AvailableAreaSurface.transform.position.z - m_AvailableAreaSurface.transform.localScale.z / 2;
 
         m_ballRadius = m_cueBall.transform.localScale.x / 2;
     }
