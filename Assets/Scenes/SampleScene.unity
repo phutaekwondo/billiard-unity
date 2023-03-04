@@ -7527,6 +7527,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AvailableAreaSurface: {fileID: 672244246}
+  upperRail: {fileID: 753723232}
+  lowerRail: {fileID: 176908147}
+  leftRail: {fileID: 916445633}
+  rightRail: {fileID: 997976727}
   m_rack: {fileID: 667043940}
   m_cueBall: {fileID: 2010333558}
 --- !u!1 &1399802719

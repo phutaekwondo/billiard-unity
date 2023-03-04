@@ -6,6 +6,10 @@ using UnityEngine;
 public class AvailableCueBallProvider : MonoBehaviour
 {
     public GameObject m_AvailableAreaSurface; //drag and drop here in inspector
+    public GameObject upperRail;
+    public GameObject lowerRail;
+    public GameObject leftRail;
+    public GameObject rightRail;
     public GameObject m_rack; //drag and drop here in inspector
     public GameObject m_cueBall; //drag and drop here in inspector
 
@@ -25,7 +29,8 @@ public class AvailableCueBallProvider : MonoBehaviour
 
     public Vector3 NearestAvailablePosition(Vector3 rawPosition)
     {
-        Vector2 rawPosition2D = new Vector2(rawPosition.x, rawPosition.z);
+        Vector3 nearestPositionInArea = NearestPositionInAvailableArea(rawPosition);
+        Vector2 rawPosition2D = new Vector2(nearestPositionInArea.x, nearestPositionInArea.z);
 
 
         //Get group of dangerous circles
@@ -33,25 +38,26 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         if (IsPositionAvailable(rawPosition2D, dangerousCircles))
         {
-            return rawPosition;
+            return new Vector3(rawPosition2D.x, 0, rawPosition2D.y);
         }
 
         dangerousCircles = SortCirlcesByDistanceWithPoint(dangerousCircles, rawPosition2D);
 
         foreach ( Circle circle in dangerousCircles )
         {
-            Tuple<Vector2,bool> tupleNearestAvailablePosition = GetNearestAvailablePositionWithCircle(circle, rawPosition2D, dangerousCircles);
-            if (tupleNearestAvailablePosition.Item2)
+            if (circle.isInCircle(rawPosition2D))
             {
-                return new Vector3(tupleNearestAvailablePosition.Item1.x, rawPosition.y, tupleNearestAvailablePosition.Item1.y);
-            }
+                Tuple<Vector2,bool> tupleNearestAvailablePosition = GetNearestAvailablePositionWithCircle(circle, rawPosition2D, dangerousCircles);
+                if (tupleNearestAvailablePosition.Item2)
+                {
+                    return new Vector3(tupleNearestAvailablePosition.Item1.x, rawPosition.y, tupleNearestAvailablePosition.Item1.y);
+                }
+            }   
         }
 
         //we need to remove this when we finish the algoritm
         //avoid cueball is out of table
-        Vector3 nearestPosition = NearestPositionInAvailableArea(rawPosition);
-
-        return nearestPosition; //just a placeholder
+        return nearestPositionInArea; //just a placeholder
     }
 
     //PRIVATE METHODS
@@ -164,7 +170,6 @@ public class AvailableCueBallProvider : MonoBehaviour
 
     private List<OverlapRange> GetListOfOverlapRanges(Circle circle, List<Circle> dangerousCircles)
     {
-        // TODO: need to check the rails
         List<OverlapRange> overlapRanges = new List<OverlapRange>();
         //check rails
         //max Y
@@ -184,7 +189,7 @@ public class AvailableCueBallProvider : MonoBehaviour
         //min Y
         if (Math.Abs(m_minY - circle.m_center.y) < circle.m_radius) // if MinY line cut the circle
         {
-            float halfWideAngle = Mathf.Acos((m_minY - circle.m_center.y) / circle.m_radius) * Mathf.Rad2Deg;
+            float halfWideAngle = Mathf.Acos((circle.m_center.y - m_minY) / circle.m_radius) * Mathf.Rad2Deg;
             if (halfWideAngle > 90)
             {
                 overlapRanges.Add(new OverlapRange( 270 - halfWideAngle, FULL_ROUND_DEGREE));
@@ -205,7 +210,7 @@ public class AvailableCueBallProvider : MonoBehaviour
         //min X
         if (Math.Abs(m_minX - circle.m_center.x) < circle.m_radius) // if MinX line cut the circle
         {
-            float halfWideAngle = Mathf.Acos((m_minX - circle.m_center.x) / circle.m_radius) * Mathf.Rad2Deg;
+            float halfWideAngle = Mathf.Acos((circle.m_center.x - m_minX) / circle.m_radius) * Mathf.Rad2Deg;
             overlapRanges.Add(new OverlapRange(180 - halfWideAngle, 180 + halfWideAngle));
         }
 
@@ -320,12 +325,15 @@ public class AvailableCueBallProvider : MonoBehaviour
 
     private void Start() 
     {
-        m_maxX = m_AvailableAreaSurface.transform.position.x + m_AvailableAreaSurface.transform.localScale.x / 2;
-        m_minX = m_AvailableAreaSurface.transform.position.x - m_AvailableAreaSurface.transform.localScale.x / 2;
-        m_maxY = m_AvailableAreaSurface.transform.position.z + m_AvailableAreaSurface.transform.localScale.z / 2;
-        m_minY = m_AvailableAreaSurface.transform.position.z - m_AvailableAreaSurface.transform.localScale.z / 2;
-
         m_ballRadius = m_cueBall.transform.localScale.x / 2;
+        // m_maxX = m_AvailableAreaSurface.transform.position.x + m_AvailableAreaSurface.transform.localScale.x / 2;
+        // m_minX = m_AvailableAreaSurface.transform.position.x - m_AvailableAreaSurface.transform.localScale.x / 2;
+        // m_maxY = m_AvailableAreaSurface.transform.position.z + m_AvailableAreaSurface.transform.localScale.z / 2;
+        // m_minY = m_AvailableAreaSurface.transform.position.z - m_AvailableAreaSurface.transform.localScale.z / 2;
+        m_maxY = upperRail.transform.position.z - (upperRail.transform.localScale.z / 2) - m_ballRadius;
+        m_minY = lowerRail.transform.position.z + (lowerRail.transform.localScale.z / 2) + m_ballRadius;
+        m_maxX = rightRail.transform.position.x - (rightRail.transform.localScale.z / 2) - m_ballRadius; //get the z scale because the rail is rotated
+        m_minX = leftRail.transform.position.x  + (leftRail.transform.localScale.z  / 2) + m_ballRadius; //get the z scale because the rail is rotated
     }
 
     private void Update()
