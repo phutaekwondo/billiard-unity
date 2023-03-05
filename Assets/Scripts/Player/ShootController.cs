@@ -5,6 +5,7 @@ public delegate void ShootControllerEventHandler();
 
 public class ShootController : MonoBehaviour
 {
+    [SerializeField] private CueStick m_cueStick;
     public Image m_powerbarMask; // drag and drop the PowerbarMask in the inspector
     public GameObject m_aimPoint; // drag and drop the AimPoint in the inspector
     public GameObject m_cueBall; // drag and drop the CueBall in the inspector
@@ -116,10 +117,7 @@ public class ShootController : MonoBehaviour
         if ( !m_isAbleToShoot ) return;
 
         //get the vector from the aim point to the ball
-        Vector3 direction = m_aimPoint.transform.position - m_cueBall.transform.position;
-        direction.y = 0;
-        //normalize the vector
-        direction.Normalize();
+        Vector3 direction = GetAimingDirection();
         //multiply the vector by the power
         direction *= m_power;
         //apply the force to the cue ball
@@ -133,6 +131,14 @@ public class ShootController : MonoBehaviour
         if ( value > 1 ) value = 1;
         if ( value < 0 ) value = 0;
         m_powerbarMask.fillAmount = value;
+    }
+
+    private Vector3 GetAimingDirection()
+    {
+        Vector3 direction = m_aimPoint.transform.position - m_cueBall.transform.position;
+        direction.y = 0;
+        direction.Normalize();
+        return direction;
     }
 
 
