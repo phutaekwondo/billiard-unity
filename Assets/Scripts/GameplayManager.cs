@@ -41,7 +41,7 @@ public class GameplayManager : MonoBehaviour
 
     private bool IsBallsMoving_Calculate()
     {
-        float speedThreshord = 0.01f;
+        float speedThreshord = 0.005f;
 
         bool IsMovingBall(GameObject ball)
         {
