@@ -37,7 +37,7 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         if (IsPositionAvailable(rawPosition2D, dangerousCircles))
         {
-            return new Vector3(rawPosition2D.x, 0, rawPosition2D.y);
+            return new Vector3(rawPosition2D.x, rawPosition.y, rawPosition2D.y);
         }
 
         dangerousCircles = SortCirlcesByDistanceWithPoint(dangerousCircles, rawPosition2D);
