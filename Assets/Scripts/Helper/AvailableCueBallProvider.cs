@@ -45,7 +45,7 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         foreach ( Circle circle in dangerousCircles )
         {
-            if (circle.isInCircle(rawPosition2D))
+            if (circle.IsContain(rawPosition2D))
             {
                 Tuple<Vector2,bool> tupleNearestAvailablePosition = GetNearestAvailablePositionWithCircle(circle, rawPosition2D, dangerousCircles);
                 if (tupleNearestAvailablePosition.Item2)
@@ -70,7 +70,7 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         foreach ( Circle circle in dangerousCircles )
         {
-            if (circle.isInCircle(position))
+            if (circle.IsContain(position))
             {
                 return false;
             }
@@ -353,7 +353,7 @@ public class AvailableCueBallProvider : MonoBehaviour
             this.m_radius = radius;
         }
 
-        public bool isInCircle(Vector2 point)
+        public bool IsContain(Vector2 point)
         {
             float distance = Vector2.Distance(m_center, point);
             return distance <= m_radius;
