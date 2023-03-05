@@ -8,8 +8,8 @@ public class CueStick : MonoBehaviour
 
     //VIRAIBLES
     private float m_cueStickLength;
-    private const float MIN_AIMING_DISTANCE_FROM_HEAD = 0.5f;
-    private const float MAX_AIMING_DISTANCE_FROM_HEAD = 1f;
+    [SerializeField] private float MIN_AIMING_DISTANCE_FROM_HEAD = 0.5f;
+    [SerializeField] private float MAX_AIMING_DISTANCE_FROM_HEAD = 1f;
     private float m_power = 0f;
     private Vector3 m_aimingDirection = Vector3.zero;
     private Vector3 m_aimingPoint = Vector3.zero;
@@ -19,6 +19,11 @@ public class CueStick : MonoBehaviour
     private void Start() 
     {
         m_cueStickLength = Vector3.Distance( m_bumper.transform.position, m_tip.transform.position );
+        Debug.Log("CueStick length: " + m_cueStickLength);
+        //test
+        m_aimingDirection = new Vector3(1,0,1);
+        m_aimingPoint = new Vector3(0,0,0);
+        UpdateCueStickTransform();
     }
 
     //PUBLIC METHODS
@@ -48,9 +53,12 @@ public class CueStick : MonoBehaviour
         //position
         Vector3 tipPosition = m_aimingPoint - m_aimingDirection * (MIN_AIMING_DISTANCE_FROM_HEAD + m_power * (MAX_AIMING_DISTANCE_FROM_HEAD - MIN_AIMING_DISTANCE_FROM_HEAD));
         Vector3 bumperPosition = tipPosition - m_aimingDirection * m_cueStickLength;
-        transform.position = bumperPosition;
+        Vector3 middlePosition = (tipPosition + bumperPosition) / 2;
+
+        transform.position = new Vector3( middlePosition.x, transform.position.y, middlePosition.z );
 
         //rotation
         //TODO: just rotate y axis
+        transform.LookAt(tipPosition);
     }
 }
