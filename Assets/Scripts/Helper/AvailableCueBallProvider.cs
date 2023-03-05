@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class AvailableCueBallProvider : MonoBehaviour
 {
-    public GameObject m_AvailableAreaSurface; //drag and drop here in inspector
     public GameObject upperRail;
     public GameObject lowerRail;
     public GameObject leftRail;
@@ -326,10 +325,6 @@ public class AvailableCueBallProvider : MonoBehaviour
     private void Start() 
     {
         m_ballRadius = m_cueBall.transform.localScale.x / 2;
-        // m_maxX = m_AvailableAreaSurface.transform.position.x + m_AvailableAreaSurface.transform.localScale.x / 2;
-        // m_minX = m_AvailableAreaSurface.transform.position.x - m_AvailableAreaSurface.transform.localScale.x / 2;
-        // m_maxY = m_AvailableAreaSurface.transform.position.z + m_AvailableAreaSurface.transform.localScale.z / 2;
-        // m_minY = m_AvailableAreaSurface.transform.position.z - m_AvailableAreaSurface.transform.localScale.z / 2;
         m_maxY = upperRail.transform.position.z - (upperRail.transform.localScale.z / 2) - m_ballRadius;
         m_minY = lowerRail.transform.position.z + (lowerRail.transform.localScale.z / 2) + m_ballRadius;
         m_maxX = rightRail.transform.position.x - (rightRail.transform.localScale.z / 2) - m_ballRadius; //get the z scale because the rail is rotated
