@@ -7221,7 +7221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d78e2dd353526c4f9be85127207e6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AvailableAreaSurface: {fileID: 672244246}
   upperRail: {fileID: 753723232}
   lowerRail: {fileID: 176908147}
   leftRail: {fileID: 916445633}
