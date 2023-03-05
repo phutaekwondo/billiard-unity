@@ -54,8 +54,6 @@ public class CueBallPositionController : MonoBehaviour
         mousePosition = m_availableCueBallProvider.NearestAvailablePosition(mousePosition);
 
         m_cueBallGO.transform.position = mousePosition;
-
-        //if current cueball position is overlapping with other balls, choose the nearest available position
     }
 
 
