@@ -23,4 +23,8 @@ public class CueStick : MonoBehaviour
     {
         throw new System.NotImplementedException();
     }
+    public void SetVisibility(bool visible)
+    {
+        throw new System.NotImplementedException();
+    }
 }
