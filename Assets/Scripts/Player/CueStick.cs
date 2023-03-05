@@ -25,6 +25,6 @@ public class CueStick : MonoBehaviour
     }
     public void SetVisibility(bool visible)
     {
-        throw new System.NotImplementedException();
+        GetComponent<MeshRenderer>().enabled = visible;
     }
 }
