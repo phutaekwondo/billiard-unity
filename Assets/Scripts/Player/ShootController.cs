@@ -37,6 +37,11 @@ public class ShootController : MonoBehaviour
 
         // update aim visibility depend on the ability to shoot
         SetAimVisibility( m_isAbleToShoot );
+        if (m_isAbleToShoot)
+        {
+            //update the cuestick transform
+            m_cueStick.SetAim(GetAimingDirection(), m_cueBall.transform.position);
+        }
 
         // update the powerbar mask
         SetPowerbarMask( m_power / m_maxPower );

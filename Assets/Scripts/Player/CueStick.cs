@@ -12,14 +12,18 @@ public class CueStick : MonoBehaviour
     [SerializeField] private float MAX_AIMING_DISTANCE_FROM_HEAD = 1f;
     private float m_power = 0f;
     private Vector3 m_aimingDirection = Vector3.zero;
-    private Vector3 m_aimingPoint = Vector3.zero;
+    private Vector3 m_cueBallPosition = Vector3.zero;
     private Vector3 DEFAULT_AIMING_DIRECTION = new Vector3(0,0,1);
 
     //PRIVATE METHODS
+    private void Update() 
+    {
+        UpdateCueStickTransform();
+    }
     private void UpdateCueStickTransform()
     {
         //position
-        Vector3 tipPosition = m_aimingPoint - m_aimingDirection * (MIN_AIMING_DISTANCE_FROM_HEAD + m_power * (MAX_AIMING_DISTANCE_FROM_HEAD - MIN_AIMING_DISTANCE_FROM_HEAD));
+        Vector3 tipPosition = m_cueBallPosition - m_aimingDirection * (MIN_AIMING_DISTANCE_FROM_HEAD + m_power * (MAX_AIMING_DISTANCE_FROM_HEAD - MIN_AIMING_DISTANCE_FROM_HEAD));
         Vector3 bumperPosition = tipPosition - m_aimingDirection * m_cueStickLength;
 
         transform.position = new Vector3( bumperPosition.x, transform.position.y, bumperPosition.z );
@@ -30,18 +34,18 @@ public class CueStick : MonoBehaviour
     }
 
     //PUBLIC METHODS
-    public void SetAim(Vector3 direction, Vector3 point)
+    public void SetAim(Vector3 direction, Vector3 cueballPostition)
     {
         SetAimDirection(direction);
-        SetAimPoint(point);
+        SetAimPoint(cueballPostition);
     }
     public void SetAimDirection(Vector3 aimingDirection)
     {
         this.m_aimingDirection = aimingDirection;
     }
-    public void SetAimPoint(Vector3 aimPoint)
+    public void SetAimPoint(Vector3 cueBallPosition)
     {
-        this.m_aimingPoint = aimPoint;
+        this.m_cueBallPosition = cueBallPosition;
     }
     //power only between 0 and 1
     public void SetAimingPower(float power)
