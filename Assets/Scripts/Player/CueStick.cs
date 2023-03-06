@@ -16,6 +16,10 @@ public class CueStick : MonoBehaviour
     private Vector3 DEFAULT_AIMING_DIRECTION = new Vector3(0,0,1);
 
     //PRIVATE METHODS
+    private void Start() 
+    {
+        m_cueStickLength = Vector3.Distance(m_bumper.transform.position, m_tip.transform.position);
+    }
     private void Update() 
     {
         UpdateCueStickTransform();
