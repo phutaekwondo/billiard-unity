@@ -36,14 +36,7 @@ public class ShootController : MonoBehaviour
         m_state = m_state.Update();
 
         // update aim visibility depend on the ability to shoot
-        if ( m_isAbleToShoot )
-        {
-            ShowAim();
-        }
-        else
-        {
-            HideAim();
-        }
+        SetAimVisibility( m_isAbleToShoot );
 
         // update the powerbar mask
         SetPowerbarMask( m_power / m_maxPower );
@@ -73,7 +66,7 @@ public class ShootController : MonoBehaviour
     public void Disable()
     {
         m_isEnabled = false;
-        HideAim();
+        SetAimVisibility( false );
     }
 
     private void SetAimVisibility( bool isVisible )
@@ -83,16 +76,6 @@ public class ShootController : MonoBehaviour
         m_cueStick.SetVisibility(isVisible);
         //set mouse cursor visibility
         Cursor.visible = !isVisible;
-    }
-
-    public void ShowAim()
-    {
-        SetAimVisibility( true );
-    }
-
-    public void HideAim()
-    {
-        SetAimVisibility( false );
     }
 
     public void IncreasePower()

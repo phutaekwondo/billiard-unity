@@ -37,15 +37,18 @@ public class CueStick : MonoBehaviour
     }
     public void SetAimDirection(Vector3 aimingDirection)
     {
-        throw new System.NotImplementedException();
+        this.m_aimingDirection = aimingDirection;
     }
     public void SetAimPoint(Vector3 aimPoint)
     {
-        throw new System.NotImplementedException();
+        this.m_aimingPoint = aimPoint;
     }
-    public void SetAimingDistance(float aimingDistance)
+    //power only between 0 and 1
+    public void SetAimingPower(float power)
     {
-        throw new System.NotImplementedException();
+        this.m_power = power;
+        if (m_power < 0f) m_power = 0f;
+        if (m_power > 1f) m_power = 1f;
     }
     public void SetVisibility(bool visible)
     {
