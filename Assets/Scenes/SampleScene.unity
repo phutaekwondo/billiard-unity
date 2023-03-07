@@ -7039,7 +7039,7 @@ MonoBehaviour:
   m_bumper: {fileID: 1894371408}
   m_tip: {fileID: 1578188095}
   MIN_AIMING_DISTANCE_FROM_HEAD: 0.06
-  MAX_AIMING_DISTANCE_FROM_HEAD: 1
+  MAX_AIMING_DISTANCE_FROM_HEAD: 0.48
 --- !u!1 &1353891208
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,6 +41,7 @@ public class ShootController : MonoBehaviour
         {
             //update the cuestick transform
             m_cueStick.SetAim(GetAimingDirection(), m_cueBall.transform.position);
+            m_cueStick.SetAimingPower(m_power/m_maxPower);
         }
 
         // update the powerbar mask
