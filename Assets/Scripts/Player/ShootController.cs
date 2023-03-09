@@ -6,6 +6,7 @@ public delegate void ShootControllerEventHandler();
 public class ShootController : MonoBehaviour
 {
     [SerializeField] private CueStick m_cueStick;
+    [SerializeField] private AimLineTracker m_aimLineTracker;
     public Image m_powerbarMask; // drag and drop the PowerbarMask in the inspector
     public GameObject m_aimPoint; // drag and drop the AimPoint in the inspector
     public GameObject m_cueBall; // drag and drop the CueBall in the inspector
@@ -57,6 +58,11 @@ public class ShootController : MonoBehaviour
     public void SetAbleToShoot( bool isAbleToShoot )
     {
         m_isAbleToShoot = isAbleToShoot;
+    }
+
+    public void SetAbleToChangeAimDirection( bool isAbleToChangeAimDirection )
+    {
+        m_aimLineTracker.SetEnable( isAbleToChangeAimDirection );
     }
 
     public bool IsEnable()
@@ -150,6 +156,7 @@ public class ShootController : MonoBehaviour
         public ShootControllerState_Static(ShootController shootController) : base(shootController)
         {
             m_shootController.SetAbleToShoot(true);
+            m_shootController.SetAbleToChangeAimDirection(true);
         }
 
         public override ShootControllerState Update()
@@ -175,6 +182,7 @@ public class ShootController : MonoBehaviour
         public ShootControllerState_IncreasingPower(ShootController shootController) : base(shootController)
         {
             m_shootController.SetAbleToShoot(true);
+            m_shootController.SetAbleToChangeAimDirection(false);
         }
 
         public override ShootControllerState Update()
@@ -207,6 +215,7 @@ public class ShootController : MonoBehaviour
         public ShootControllerState_BallsMoving(ShootController shootController) : base(shootController)
         {
             m_shootController.SetAbleToShoot(false);
+            m_shootController.SetAbleToChangeAimDirection(false);
         }
 
         public override ShootControllerState Update()

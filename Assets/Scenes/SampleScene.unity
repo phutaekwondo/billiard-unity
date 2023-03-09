@@ -7319,6 +7319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_cueStick: {fileID: 1324966604}
+  m_aimLineTracker: {fileID: 613303566}
   m_powerbarMask: {fileID: 938458308}
   m_aimPoint: {fileID: 1707453244}
   m_cueBall: {fileID: 2010333558}

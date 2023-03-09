@@ -10,6 +10,12 @@ public class AimLineTracker : MonoBehaviour
 
     private LineRenderer m_lineRenderer = null; // The line renderer
     private float m_aimPointY = 0;
+    private bool IsEnable = true;
+
+    public void SetEnable(bool enable)
+    {
+        IsEnable = enable;
+    }
 
     private void Start() {
         if (m_cueBall == null) {
@@ -30,6 +36,8 @@ public class AimLineTracker : MonoBehaviour
     }
 
     private void Update() {
+        if (!IsEnable) return;
+        
         UpdateAimPointPosition();
         AimLineUpdatePosition();
     }
