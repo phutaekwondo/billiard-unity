@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static MouseTrackingHelper;
 
 public delegate void ShootControllerEventHandler();
 
@@ -42,7 +43,7 @@ public class ShootController : MonoBehaviour
         {
             //update the cuestick transform
             m_cueStick.SetAim(GetAimingDirection(), m_cueBall.transform.position);
-            m_cueStick.SetAimingPower(m_power/m_maxPower);
+            m_cueStick.SetAimingPowerRate(m_power/m_maxPower);
         }
 
         // update the powerbar mask
@@ -88,6 +89,25 @@ public class ShootController : MonoBehaviour
         m_cueStick.SetVisibility(isVisible);
         //set mouse cursor visibility
         Cursor.visible = !isVisible;
+    }
+
+    public float GetMaxPullDistance()
+    {
+        return m_cueStick.GetMaxPullDistance();
+    }
+    public void SetPowerRate(float powerRate)
+    {
+        if ( powerRate > 1f ) powerRate = 1f;
+        else if ( powerRate < 0.0f ) powerRate = 0.0f;
+        SetPower( powerRate * m_maxPower );
+    }
+    public void SetPower(float power)
+    {
+        m_power = power;
+        if ( m_power > m_maxPower ) m_power = m_maxPower;
+        if ( m_power < 0 ) m_power = 0;
+
+        m_cueStick.SetAimingPowerRate(m_power/m_maxPower);
     }
 
     public void IncreasePower()
@@ -179,10 +199,12 @@ public class ShootController : MonoBehaviour
 
     class ShootControllerState_IncreasingPower : ShootControllerState
     {
+        private Vector3 m_aimPointStartPosition = Vector3.zero;
         public ShootControllerState_IncreasingPower(ShootController shootController) : base(shootController)
         {
             m_shootController.SetAbleToShoot(true);
             m_shootController.SetAbleToChangeAimDirection(false);
+            m_aimPointStartPosition = MouseTrackingHelper.GetBallOnTablePositionWithMouse();
         }
 
         public override ShootControllerState Update()
@@ -190,7 +212,23 @@ public class ShootController : MonoBehaviour
             //hanlde input
             if (Input.GetMouseButton(0))
             {
-                m_shootController.IncreasePower();
+                //old power-up mechanic
+                // m_shootController.IncreasePower();
+
+                //power-up pull-back mechanic
+                Vector3 currentMousePosition = MouseTrackingHelper.GetBallOnTablePositionWithMouse();
+                Vector3 projectWithAimDirection = Vector3.Project(currentMousePosition - m_aimPointStartPosition, m_shootController.GetAimingDirection());
+                float pullDistance = projectWithAimDirection.magnitude;
+                //if the pull direction is opposite to the aiming direction, set the power
+                if ( Vector3.Dot(projectWithAimDirection, m_shootController.GetAimingDirection() ) < 0 ) 
+                {
+                    m_shootController.SetPowerRate(pullDistance / m_shootController.GetMaxPullDistance());
+                }
+                else 
+                {
+                    m_shootController.SetPowerRate(0);
+                }
+
                 return this;
             }
             else if (Input.GetMouseButtonUp(0))

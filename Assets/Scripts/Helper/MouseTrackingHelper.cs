@@ -1,7 +1,13 @@
 using UnityEngine;
+using static GameConfig;
 
 class MouseTrackingHelper
 {
+    static public Vector3 GetBallOnTablePositionWithMouse()
+    {
+        return GetMousePositionWithY(GameConfig.m_ballOnTableYPosition);
+    }
+
     static public Vector3 GetMousePositionOnPlane(Plane plane)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
