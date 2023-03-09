@@ -157,7 +157,7 @@ public class ShootController : MonoBehaviour
             //hanlde input
             if (Input.GetMouseButtonDown(0))
             {
-                return new ShootControllerState_IncreasePower(m_shootController);
+                return new ShootControllerState_IncreasingPower(m_shootController);
             }
 
             // if balls are moving, go to the balls moving state
@@ -170,9 +170,9 @@ public class ShootController : MonoBehaviour
         }
     }
 
-    class ShootControllerState_IncreasePower : ShootControllerState
+    class ShootControllerState_IncreasingPower : ShootControllerState
     {
-        public ShootControllerState_IncreasePower(ShootController shootController) : base(shootController)
+        public ShootControllerState_IncreasingPower(ShootController shootController) : base(shootController)
         {
             m_shootController.SetAbleToShoot(true);
         }
