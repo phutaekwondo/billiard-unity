@@ -10,7 +10,6 @@ public class GameplayManager : MonoBehaviour
     public event OnGameplayEvent m_OnGameplayRestart;
 
     private bool m_isInGameplay = false;
-    private bool m_isBallsMoving = false;
     private bool m_isPaused = false;
 
     private float m_defaultBallsY = 0.032f;
@@ -22,11 +21,6 @@ public class GameplayManager : MonoBehaviour
         m_isPaused = false;
     }
 
-    private void Update() 
-    {
-        m_isBallsMoving = IsBallsMoving_Calculate();
-    }
-
     public float GetDefaultBallsY()
     {
         return m_defaultBallsY;
@@ -36,7 +30,7 @@ public class GameplayManager : MonoBehaviour
 
     public bool IsBallsMoving()
     {
-        return m_isBallsMoving;
+        return IsBallsMoving_Calculate();
     }
 
     private bool IsBallsMoving_Calculate()
