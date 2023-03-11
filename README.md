@@ -1,3 +1,5 @@
+![preview](https://raw.githubusercontent.com/phutaekwondo/billiard-unity/main/preview.gif)
+
 # Requirements
 
 - Unity Editor 2021.3.15f1
