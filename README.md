@@ -19,4 +19,4 @@ https://trello.com/b/pbLy6PS1/billiard-unity
 
 # Start Working
 
-Just open project and hit play, moron.
+Just open project and hit play.
