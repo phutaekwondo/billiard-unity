@@ -38,14 +38,13 @@ public class RackGenerator : MonoBehaviour
 
         SetColorForMaterials();
         Generate15BallsPositionList();
-        GenerateRack15Balls();
+        GenerateRack();
     }
-
     private void LateUpdate() {
         if (isReseting)
         {
             //generate new rack of balls
-            GenerateRack15Balls();
+            GenerateRack();
 
             isReseting = false;
         }
@@ -64,6 +63,17 @@ public class RackGenerator : MonoBehaviour
 
         isReseting = true; // generate new rack of balls in LateUpdate()
     }
+    private void GenerateRack()
+    {
+        if (GameConfig.m_rackType == RackType.NineBalls)
+        {
+            GenerateRack9Balls();
+        }
+        else if (GameConfig.m_rackType == RackType.FifteenBalls)
+        {
+            GenerateRack15Balls();
+        }
+    }
 
     void SetColorForMaterials()
     {
@@ -80,7 +90,10 @@ public class RackGenerator : MonoBehaviour
         m_ballMaterials[6].color = m_ballMaterials[14].color = BROWN;
         m_ballMaterials[7].color = BLACK;
     }
-
+    private void GenerateRack9Balls()
+    {
+        throw new System.NotImplementedException();
+    }
     private void GenerateRack15Balls()
     {
         if (m_rack == null)
@@ -152,4 +165,9 @@ public class RackGenerator : MonoBehaviour
         }
     }
 
+    public enum RackType
+    {
+        NineBalls,
+        FifteenBalls
+    }
 }
