@@ -25,7 +25,6 @@ public class RackGenerator : MonoBehaviour
     bool isReseting = false;
 
     private void Start() {
-        //set the ball radius
         if (m_ballPrefab != null)
         {
             m_ballRadius = m_ballPrefab.transform.localScale.x / 2;
@@ -43,7 +42,6 @@ public class RackGenerator : MonoBehaviour
     private void LateUpdate() {
         if (isReseting)
         {
-            //generate new rack of balls
             GenerateRack();
 
             isReseting = false;
@@ -52,7 +50,6 @@ public class RackGenerator : MonoBehaviour
 
     public void ResetRack() 
     {
-        //destroy all target balls
         foreach (Transform ball in m_rack.transform)
         {
             if (ball.tag == "TargetBall")
@@ -65,6 +62,11 @@ public class RackGenerator : MonoBehaviour
     }
     private void GenerateRack()
     {
+        if (m_rack == null)
+        {
+            throw new System.Exception("Rack prefab is null");
+        }
+
         if (GameConfig.m_rackType == RackType.NineBalls)
         {
             GenerateRack9Balls();
@@ -93,15 +95,12 @@ public class RackGenerator : MonoBehaviour
     private void GenerateRack9Balls()
     {
         throw new System.NotImplementedException();
+        //get list of position
+        //generate 9 balls in m_rack with the positions in that list
+        //set the balls's material
     }
     private void GenerateRack15Balls()
     {
-        if (m_rack == null)
-        {
-            throw new System.Exception("Rack prefab is null");
-        }
-
-        //generate 15 balls in m_rack with the positions in m_ballsPositionList
         for (int i = 0; i < 15; i++)
         {
             GameObject ball = Instantiate(m_ballPrefab, m_rack.transform);
@@ -109,11 +108,9 @@ public class RackGenerator : MonoBehaviour
             //random rotation
             ball.transform.Rotate(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
 
-            //set the tag of the ball is "TargetBall"
             ball.tag = "TargetBall";
         }
 
-        //set the materials for the balls
         if ( m_ballMaterials.Count != 15)
         {
             throw new System.Exception("Ball materials count is not 15 when generating 15-balls-rack");
