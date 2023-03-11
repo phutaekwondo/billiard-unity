@@ -331,12 +331,6 @@ public class AvailableCueBallProvider : MonoBehaviour
         m_minX = leftRail.transform.position.x  + (leftRail.transform.localScale.z  / 2) + m_ballRadius; //get the z scale because the rail is rotated
     }
 
-    private void Update()
-    {
-        //DEBUG
-        // Debug.Log(GetDangerousCircles().Count);
-    }
-
     private struct Circle
     {
         public Vector2 m_center;
