@@ -3,7 +3,7 @@ using UnityEngine;
 public delegate void OnGameplayEvent();
 public class GameplayManager : MonoBehaviour
 {
-    public PlayerController m_playerController = null; // drag and drop the player controller in the inspector
+    public Player m_playerController = null; // drag and drop the player controller in the inspector
     public GameObject m_cueBall = null;
     public GameObject m_rack = null;
 

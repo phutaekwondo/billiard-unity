@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class Player : MonoBehaviour
 {
     //REFERENCES
     public GameManager m_gameManager = null; // drag and drop the GameManager in the inspector
@@ -70,13 +70,13 @@ public class PlayerController : MonoBehaviour
 
     public abstract class PlayerControllerState
     {
-        protected PlayerController m_playerController;
+        protected Player m_playerController;
         protected ShootController m_shootController;
         protected CueBallPositionController m_cueBallPositionController;
         protected GameplayManager m_gameplayManager;
         protected RefereeController m_refereeController;
 
-        public PlayerControllerState(PlayerController playerController)
+        public PlayerControllerState(Player playerController)
         {
             m_playerController = playerController;
             m_shootController = playerController.m_shootController;
@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
     class PlayerControllerState_Aiming : PlayerControllerState
     {
-        public PlayerControllerState_Aiming(PlayerController playerController) : base(playerController)
+        public PlayerControllerState_Aiming(Player playerController) : base(playerController)
         {
         }
 
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
     class PlayerControllerState_WaitingForBallsStop : PlayerControllerState
     {
-        public PlayerControllerState_WaitingForBallsStop(PlayerController playerController) : base(playerController)
+        public PlayerControllerState_WaitingForBallsStop(Player playerController) : base(playerController)
         {
         }
 
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
     class PlayerControllerState_ChoosingCueBallPosition : PlayerControllerState
     {
-        public PlayerControllerState_ChoosingCueBallPosition(PlayerController playerController) : base(playerController)
+        public PlayerControllerState_ChoosingCueBallPosition(Player playerController) : base(playerController)
         {
         }
         public override PlayerControllerState Update()
