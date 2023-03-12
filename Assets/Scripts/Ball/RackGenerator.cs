@@ -92,47 +92,69 @@ public class RackGenerator : MonoBehaviour
         m_ballMaterials[6].color = m_ballMaterials[14].color = BROWN;
         m_ballMaterials[7].color = BLACK;
     }
-    private void GenerateRack9Balls()
+    private void GenerateBallsWithPositions(List<Vector2> positionList)
     {
-        throw new System.NotImplementedException();
-        //get list of position
-        //generate 9 balls in m_rack with the positions in that list
-        //set the balls's material
-    }
-    private void GenerateRack15Balls()
-    {
-        for (int i = 0; i < 15; i++)
+        foreach ( Vector2 position in positionList)
         {
             GameObject ball = Instantiate(m_ballPrefab, m_rack.transform);
-            ball.transform.localPosition = new Vector3( m_15BallsPositionList[i].y, m_ballRadius, m_15BallsPositionList[i].x);
+            ball.transform.localPosition = new Vector3( position.y, m_ballRadius, position.x);
             //random rotation
             ball.transform.Rotate(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
 
             ball.tag = "TargetBall";
         }
-
-        if ( m_ballMaterials.Count != 15)
+    }
+    private void SetMaterialForBalls(List<int> materialIndexes)
+    {
+        if (materialIndexes.Count != m_rack.transform.childCount)
         {
-            throw new System.Exception("Ball materials count is not 15 when generating 15-balls-rack");
+            throw new System.Exception("Material indexes count is not equal to rack's child count");
         }
-
         // read the comments below to understand the array "ballsNumberOrder"
-        int[] ballsNumberOrder = new int[15] { 1,9,6,2,8,14,10,7,15,5,3,11,12,4,13};
         // this array is storing the number on the balls
         // and the index show the order of the balls
         // below "rack" is using index to show the how the index refers to the position of the ball
+        //
+        // fifteen balls rack
         // (14) (13) (12) (11) (10)
         //  (9)  (8)  (7)  (6)
         //   (5)  (4)  (3)
         //    (2)  (1)
         //     (0) 
+        // nine balls rack
+        //       (8)          
+        //     (7)(6)     
+        //   (5)(4)(3)
+        //    (2)(1)
+        //     (0) 
 
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < materialIndexes.Count; i++)
         {
-            m_rack.transform.GetChild(i).GetComponent<Renderer>().material = m_ballMaterials[ballsNumberOrder[i]-1];
+            m_rack.transform.GetChild(i).GetComponent<Renderer>().material = m_ballMaterials[materialIndexes[i]-1];
         }
     }
+    private void GenerateRack9Balls()
+    {
+        //get list of position
+        int[] takePositionIndexes = new int[] { 0, 1, 2, 3, 4, 5, 7, 8, 12 }; 
+        List<Vector2> positionList = new List<Vector2>();
+        for (int i = 0; i < takePositionIndexes.Length; i++)
+        {
+            positionList.Add(m_15BallsPositionList[takePositionIndexes[i]]);
+        }
+        //generate 9 balls in m_rack with the positions in that list
+        GenerateBallsWithPositions(positionList);
+        //set the balls's material
+        List<int> materialIndexes = new List<int>() {1,2,3,4,9,5,6,7,8};
+        SetMaterialForBalls(materialIndexes);
+    }
+    private void GenerateRack15Balls()
+    {
+        GenerateBallsWithPositions(m_15BallsPositionList);
 
+        List<int> materialIndexes = new List<int>(){1,9,6,2,8,14,10,7,15,5,3,11,12,4,13};
+        SetMaterialForBalls(materialIndexes);
+    }
     private void Generate15BallsPositionList()
     {
         //generate 15 balls position
