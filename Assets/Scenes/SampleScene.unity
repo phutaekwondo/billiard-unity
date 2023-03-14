@@ -4641,6 +4641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_cueBall: {fileID: 2010333558}
+  m_imaginationBall: {fileID: 992587278}
 --- !u!1 &753723232
 GameObject:
   m_ObjectHideFlags: 0
@@ -6178,7 +6179,7 @@ MeshRenderer:
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
