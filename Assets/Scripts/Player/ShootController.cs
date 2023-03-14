@@ -150,10 +150,7 @@ public class ShootController : MonoBehaviour
 
     private Vector3 GetAimingDirection()
     {
-        Vector3 direction = m_aimer.GetAimDirection();
-        direction.y = 0;
-        direction.Normalize();
-        return direction;
+        return m_aimer.GetAimingDirection();
     }
 
 

@@ -2,8 +2,12 @@ using UnityEngine;
 
 public class Aimer : MonoBehaviour
 {
-    public Vector3 GetAimDirection()
+    [SerializeField] GameObject m_cueBall;
+    public Vector3 GetAimingDirection()
     {
-        throw new System.NotImplementedException();
+        Vector3 direction = MouseTrackingHelper.GetBallOnTablePositionWithMouse() - m_cueBall.transform.position;
+        direction.y = 0;
+        direction.Normalize();
+        return direction;
     }
 }
