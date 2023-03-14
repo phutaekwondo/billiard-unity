@@ -8,8 +8,8 @@ public class ShootController : MonoBehaviour
 {
     [SerializeField] private CueStick m_cueStick;
     [SerializeField] private AimLineTracker m_aimLineTracker;
+    [SerializeField] private Aimer m_aimer;
     public Image m_powerbarMask; // drag and drop the PowerbarMask in the inspector
-    public GameObject m_aimPoint; // drag and drop the AimPoint in the inspector
     public GameObject m_cueBall; // drag and drop the CueBall in the inspector
     public LineRenderer m_aimLineRenderer; // drag and drop the LineRenderer in the inspector
     public GameplayManager m_gameplayManager; // drag and drop the GameplayManager in the inspector
@@ -85,7 +85,6 @@ public class ShootController : MonoBehaviour
     private void SetAimVisibility( bool isVisible )
     {
         m_aimLineRenderer.enabled = isVisible;
-        m_aimPoint.SetActive(isVisible);
         m_cueStick.SetVisibility(isVisible);
         //set mouse cursor visibility
         Cursor.visible = !isVisible;
@@ -151,7 +150,7 @@ public class ShootController : MonoBehaviour
 
     private Vector3 GetAimingDirection()
     {
-        Vector3 direction = m_aimPoint.transform.position - m_cueBall.transform.position;
+        Vector3 direction = m_aimer.GetAimDirection();
         direction.y = 0;
         direction.Normalize();
         return direction;
