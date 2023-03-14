@@ -11,4 +11,16 @@ public class Aimer : MonoBehaviour
         direction.Normalize();
         return direction;
     }
+    public void SetAimingVisibility(bool visible)
+    {
+        throw new System.NotImplementedException();
+    }
+    public void UpdateAimingComponents()
+    {
+        //update imagination ball position
+        //aimline 
+        //cueball move direction
+        //tagetball move direction
+        throw new System.NotImplementedException();
+    }
 }
