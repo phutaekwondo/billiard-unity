@@ -48,7 +48,7 @@ public class RackGenerator : MonoBehaviour
         }
     }
 
-    public void ResetRack() 
+    public void ClearRack()
     {
         foreach (Transform ball in m_rack.transform)
         {
@@ -58,6 +58,11 @@ public class RackGenerator : MonoBehaviour
             }
         }
 
+    }
+
+    public void ResetRack() 
+    {
+        ClearRack();
         isReseting = true; // generate new rack of balls in LateUpdate()
     }
     private void GenerateRack()
@@ -133,7 +138,7 @@ public class RackGenerator : MonoBehaviour
             m_rack.transform.GetChild(i).GetComponent<Renderer>().material = m_ballMaterials[materialIndexes[i]-1];
         }
     }
-    private void GenerateRack9Balls()
+    public void GenerateRack9Balls()
     {
         //get list of position
         int[] takePositionIndexes = new int[] { 0, 1, 2, 3, 4, 5, 7, 8, 12 }; 
@@ -148,7 +153,7 @@ public class RackGenerator : MonoBehaviour
         List<int> materialIndexes = new List<int>() {1,2,3,4,9,5,6,7,8};
         SetMaterialForBalls(materialIndexes);
     }
-    private void GenerateRack15Balls()
+    public void GenerateRack15Balls()
     {
         GenerateBallsWithPositions(m_15BallsPositionList);
 
