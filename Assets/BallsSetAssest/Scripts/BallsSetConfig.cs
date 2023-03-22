@@ -80,7 +80,6 @@ public class BallsSetConfig : MonoBehaviour
         {
             positionList = m_15BallsPositionList;
         }
-        Debug.Log(positionList);
         for ( int i = 0; i < positionList.Count && i < this.transform.childCount; i++)
         {
             Vector3 position = positionList[i];
