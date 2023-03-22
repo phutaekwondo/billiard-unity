@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+namespace BallsSetAsset
+{
+
 public class BallsSetConfig : MonoBehaviour
 {
     public enum SetType
@@ -89,4 +92,6 @@ public class BallsSetConfig : MonoBehaviour
             ballTransform.localScale = new Vector3( m_ballRadius*2,m_ballRadius*2,m_ballRadius*2 );
         }
     }
+}
+
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+namespace BallsSetAsset
+{
+
 [CustomEditor(typeof(BallsSetConfig))]
 public class BallsSetConfigEditor : Editor {
     public override void OnInspectorGUI() {
@@ -15,4 +18,6 @@ public class BallsSetConfigEditor : Editor {
             m_ballsSetConfig.SetBallsRadius();
         }
     }
+}
+
 }
