@@ -8,11 +8,11 @@ public class BallsSetConfig : MonoBehaviour
         Nine,
         Fifteen
     }
-    private float m_ballRadius = 0.032f;
+    private float m_ballRadius = 0.5f;
     private SetType m_type = SetType.Nine;
     List<Vector2> m_15BallsPositionList = new List<Vector2>();
     [Tooltip("To apply this radius, Click the \"Set Balls Radius\" button")]
-    [SerializeField] float m_configBallRadius = 0.032f;
+    [SerializeField] float m_configBallRadius = 0.5f;
 
     //private methods
     private void Start() 
