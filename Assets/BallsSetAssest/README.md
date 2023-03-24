@@ -20,7 +20,8 @@ This asset pack incuded:
 + A Set15Balls prefab (for Eight Balls Pool Game)
 + Demo Scene which simply set both sets above in a plane
 + Textures
-+ Balls Shader (which help you custom the color or texture of the balls)
++ Balls Shader (Balls Materials\Balls Shader.shadergraph)
++ Scripts (Scripts\*.cs)
 
 # Change the balls's size
 The balls-set prefabs have been attached with BallsSetConfig which help you change the balls's size if you want to scale them to fit in your setted up enviroment.
