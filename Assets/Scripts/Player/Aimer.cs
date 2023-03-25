@@ -27,7 +27,23 @@ public class Aimer : MonoBehaviour
     {
         throw new System.NotImplementedException();
     }
-    public void UpdateAimingComponents()
+    //private method
+    private void Update() 
+    {
+        if (m_isAiming)
+        {
+            UpdateAimDirection();
+            UpdateAimingComponents();
+        }
+    }
+    private void UpdateAimDirection()
+    {
+        Vector3 direction = MouseTrackingHelper.GetBallOnTablePositionWithMouse() - m_cueBall.transform.position;
+        direction.y = 0;
+        direction.Normalize();
+        m_aimDirection = direction;
+    }
+    private void UpdateAimingComponents()
     {
         List<Circle> targetBallHitZones = m_geometrySlave.GetDangerousCircles();
         targetBallHitZones = m_geometrySlave.SortCirlcesByDistanceWithCueBall(targetBallHitZones);
@@ -37,31 +53,18 @@ public class Aimer : MonoBehaviour
         //tagetball move direction
         throw new System.NotImplementedException();
     }
-
-    //private method
-    private void UpdateAimDirection()
-    {
-        Vector3 direction = MouseTrackingHelper.GetBallOnTablePositionWithMouse() - m_cueBall.transform.position;
-        direction.y = 0;
-        direction.Normalize();
-        m_aimDirection = direction;
-    }
-    private void Update() 
-    {
-        if (m_isAiming)
-        {
-            UpdateAimDirection();
-            UpdateAimingComponents();
-        }
-    }
-    private Tuple<Nullable<Circle>,bool> HittedTargetCirlce(List<Circle> hitZones)
+    private Tuple<Circle?,bool> HittedTargetCirlce(List<Circle> hitZones)
     {
         Vector2 startPoint = new Vector2(m_cueBall.transform.position.x, m_cueBall.transform.position.z);
         Vector2 aimDireciton = new Vector2(m_aimDirection.x, m_aimDirection.z);
         foreach (Circle hitZone in hitZones)
         {
-            //if (hit), then return (hitZone, true)
+            Vector2 prjCenterOnAimLine = (Vector2)Vector3.Project(hitZone.m_center - startPoint, aimDireciton) + startPoint;
+            if (hitZone.IsContain(prjCenterOnAimLine)) //hit
+            {
+                return new Tuple<Circle?, bool>(hitZone,true);
+            }
         }
-        return new Tuple<Nullable<Circle>,bool>(null, false);
+        return new Tuple<Circle?,bool>(null, false);
     }
 }
