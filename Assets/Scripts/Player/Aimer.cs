@@ -47,13 +47,21 @@ public class Aimer : MonoBehaviour
     {
         List<Circle> targetBallHitZones = m_geometrySlave.GetDangerousCircles();
         targetBallHitZones = m_geometrySlave.SortCirlcesByDistanceWithCueBall(targetBallHitZones);
-        //update imagination ball position
+        Vector2? hittedPointWithTargetZone = HittedPointTargetZone(targetBallHitZones);
+        if (hittedPointWithTargetZone != null)
+        {
+
+        }
+        else
+        {
+
+        }
         //aimline 
         //cueball move direction
         //tagetball move direction
         throw new System.NotImplementedException();
     }
-    private Tuple<Circle?,bool> HittedTargetCirlce(List<Circle> hitZones)
+    private Vector2? HittedPointTargetZone(List<Circle> hitZones)
     {
         Vector2 startPoint = new Vector2(m_cueBall.transform.position.x, m_cueBall.transform.position.z);
         Vector2 aimDireciton = new Vector2(m_aimDirection.x, m_aimDirection.z);
@@ -62,9 +70,11 @@ public class Aimer : MonoBehaviour
             Vector2 prjCenterOnAimLine = (Vector2)Vector3.Project(hitZone.m_center - startPoint, aimDireciton) + startPoint;
             if (hitZone.IsContain(prjCenterOnAimLine)) //hit
             {
-                return new Tuple<Circle?, bool>(hitZone,true);
+                float disFromCenterToPrj = Vector2.Distance(prjCenterOnAimLine, hitZone.m_center);
+                float disFromPrjToHitPoint = Mathf.Sqrt(Mathf.Pow(hitZone.m_radius,2) - Mathf.Pow(disFromCenterToPrj*disFromCenterToPrj,2));
+                return prjCenterOnAimLine - (aimDireciton.normalized*disFromPrjToHitPoint);
             }
         }
-        return new Tuple<Circle?,bool>(null, false);
+        return null;
     }
 }
