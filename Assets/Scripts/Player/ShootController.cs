@@ -7,7 +7,7 @@ public delegate void ShootControllerEventHandler();
 public class ShootController : MonoBehaviour
 {
     [SerializeField] private CueStick m_cueStick;
-    [SerializeField] private AimLineTracker m_aimLineTracker;
+    // [SerializeField] private AimLineTracker m_aimLineTracker;
     [SerializeField] private Aimer m_aimer;
     public Image m_powerbarMask; // drag and drop the PowerbarMask in the inspector
     public GameObject m_cueBall; // drag and drop the CueBall in the inspector
@@ -63,7 +63,7 @@ public class ShootController : MonoBehaviour
 
     public void SetAbleToChangeAimDirection( bool isAbleToChangeAimDirection )
     {
-        m_aimLineTracker.SetEnable( isAbleToChangeAimDirection );
+        // m_aimLineTracker.SetEnable( isAbleToChangeAimDirection );
     }
 
     public bool IsEnable()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GeometrySlave;
 
 public class AvailableCueBallProvider : MonoBehaviour
 {
@@ -9,12 +10,11 @@ public class AvailableCueBallProvider : MonoBehaviour
     public GameObject lowerRail;
     public GameObject leftRail;
     public GameObject rightRail;
-    public GameObject m_rack; //drag and drop here in inspector
     public GameObject m_cueBall; //drag and drop here in inspector
+    [SerializeField] GeometrySlave m_geometrySlave;
 
     private float m_ballRadius;
     private float m_maxY, m_minY, m_maxX, m_minX;
-    private const float FULL_ROUND_DEGREE = 360f;
 
     public Vector3 NearestPositionInAvailableArea( Vector3 position )
     {
@@ -32,15 +32,15 @@ public class AvailableCueBallProvider : MonoBehaviour
         Vector2 rawPosition2D = new Vector2(nearestPositionInArea.x, nearestPositionInArea.z);
 
 
-        //Get group of dangerous circles
-        List<Circle> dangerousCircles  = GetDangerousCircles();
+        //Get group of dangerous circle
+        List<Circle> dangerousCircles  = m_geometrySlave.GetDangerousCircles();
 
         if (IsPositionAvailable(rawPosition2D, dangerousCircles))
         {
             return new Vector3(rawPosition2D.x, rawPosition.y, rawPosition2D.y);
         }
 
-        dangerousCircles = SortCirlcesByDistanceWithPoint(dangerousCircles, rawPosition2D);
+        dangerousCircles = m_geometrySlave.SortCirlcesByDistanceWithPoint(dangerousCircles, rawPosition2D);
 
         foreach ( Circle circle in dangerousCircles )
         {
@@ -272,56 +272,6 @@ public class AvailableCueBallProvider : MonoBehaviour
     }
 
 
-    private List<Circle> SortCirlcesByDistanceWithPoint(List<Circle> dangerousCircles, Vector2 rawPosition)
-    {
-        float[] distances = new float[dangerousCircles.Count];
-        float[] indexes = new float[dangerousCircles.Count];
-
-        for (int i = 0; i < dangerousCircles.Count; i++)
-        {
-            distances[i] = Vector2.Distance(dangerousCircles[i].m_center, rawPosition);
-            indexes[i] = i;
-        }
-
-        //sort distances
-        for (int i = 0; i < distances.Length; i++)
-        {
-            for (int j = i + 1; j < distances.Length; j++)
-            {
-                if (distances[i] > distances[j])
-                {
-                    float temp = distances[i];
-                    distances[i] = distances[j];
-                    distances[j] = temp;
-
-                    temp = indexes[i];
-                    indexes[i] = indexes[j];
-                    indexes[j] = temp;
-                }
-            }
-        }
-
-        List<Circle> sortedCircles = new List<Circle>();
-        for (int i = 0; i < indexes.Length; i++)
-        {
-            sortedCircles.Add(dangerousCircles[(int)indexes[i]]);
-        }
-        return sortedCircles;
-    }
-
-    private List<Circle> GetDangerousCircles()
-    {
-        List<Circle> dangerousCircles = new List<Circle>();
-        //for each ball in rack
-        for ( int i = 0; i < m_rack.transform.childCount; i++ )
-        {
-            GameObject ball = m_rack.transform.GetChild(i).gameObject;
-            Circle ballCircle = new Circle(new Vector2(ball.transform.position.x, ball.transform.position.z), m_ballRadius*2);
-            dangerousCircles.Add(ballCircle);
-        }
-        return dangerousCircles;
-    }
-
     private void Start() 
     {
         m_ballRadius = m_cueBall.transform.localScale.x / 2;
@@ -331,85 +281,4 @@ public class AvailableCueBallProvider : MonoBehaviour
         m_minX = leftRail.transform.position.x  + (leftRail.transform.localScale.z  / 2) + m_ballRadius; //get the z scale because the rail is rotated
     }
 
-    private struct Circle
-    {
-        public Vector2 m_center;
-        public float m_radius;
-
-        public Circle(Vector2 center, float radius)
-        {
-            this.m_center = center;
-            this.m_radius = radius;
-        }
-
-        public bool IsContain(Vector2 point)
-        {
-            float distance = Vector2.Distance(m_center, point);
-            return distance <= m_radius;
-        }
-
-        public float AngleWithPoint( Vector2 point )
-        {
-            //angle should between 0 and 36
-            float angle = Vector2.Angle(point - this.m_center, Vector2.right);
-            if (point.y < this.m_center.y)
-            {
-                angle = 360 - angle;
-            }
-
-            return angle;
-        }
-
-        public Vector2 GetPointWithAngle(float angle)
-        {
-            //angle to vector
-            Vector2 angleVector = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-            Vector2 point = this.m_center + angleVector * this.m_radius;
-            return point;
-        }
-    }
-    class OverlapRange
-    {
-        //should be in degree
-        public float m_min;
-        public float m_max;
-
-        public OverlapRange(float min, float max)
-        {
-            this.m_min = min;
-            this.m_max = max;
-        }
-
-        public bool IsMergeable(OverlapRange other)
-        {
-            return this.IsContain(other.m_min) || this.IsContain(other.m_max) || other.IsContain(this.m_min) || other.IsContain(this.m_max);
-        }
-
-        public void MergeFrom(OverlapRange other)
-        {
-            this.m_max = other.m_max > this.m_max ? other.m_max : this.m_max;
-            this.m_min = other.m_min < this.m_min ? other.m_min : this.m_min;
-        }
-
-        public bool IsContain(float angle)
-        {
-            return (angle >= this.m_min && angle <= this.m_max);
-        }
-
-        public bool IsFullRound ()
-        {
-            return this.m_max - this.m_min >= 360;
-        }
-
-        public float GetNearestLimit(float angle)
-        {
-            float minDistance = Mathf.Abs(angle - this.m_min);
-            float maxDistance = Mathf.Abs(angle - this.m_max);
-            if (minDistance < maxDistance)
-            {
-                return this.m_min;
-            }
-            return this.m_max;
-        }
-    }
 }
