@@ -12,6 +12,7 @@ public class Aimer : MonoBehaviour
     [SerializeField] GameObject m_targetBallMoveDirectionLine;
     [SerializeField] GeometrySlave m_geometrySlave;
     private bool m_isAiming = true; // ablity to chagne aim direction
+    private AimVisualizeType m_aimVisualType;
     private Vector3 m_aimDirection = Vector3.zero;
 
     //public method
@@ -23,9 +24,30 @@ public class Aimer : MonoBehaviour
     {
         return m_aimDirection;
     }
-    public void SetAimingVisibility(bool visible)
+    public void SetVisibility(bool visible)
     {
-        throw new System.NotImplementedException();
+        if (visible)
+        {
+            m_imaginationBall.            GetComponent<MeshRenderer>().enabled = true;
+            m_aimDirectionLine.           GetComponent<MeshRenderer>().enabled = true;
+            m_cueBallMoveDirectionLine.   GetComponent<MeshRenderer>().enabled = true;
+            m_aimDirectionLine.GetComponent<MeshRenderer>().enabled = true;
+            if (m_aimVisualType == AimVisualizeType.HitRail)
+            {
+                m_targetBallMoveDirectionLine.GetComponent<MeshRenderer>().enabled = false;
+            }
+            else if (m_aimVisualType == AimVisualizeType.HitTargetBall)
+            {
+                m_targetBallMoveDirectionLine.GetComponent<MeshRenderer>().enabled = true;
+            }
+        }
+        else
+        {
+            m_imaginationBall.            GetComponent<MeshRenderer>().enabled = false;
+            m_aimDirectionLine.           GetComponent<MeshRenderer>().enabled = false;
+            m_cueBallMoveDirectionLine.   GetComponent<MeshRenderer>().enabled = false;
+            m_targetBallMoveDirectionLine.GetComponent<MeshRenderer>().enabled = false;
+        }
     }
     //private method
     private void Update() 
@@ -50,11 +72,13 @@ public class Aimer : MonoBehaviour
         Vector2? hittedPointWithTargetZone = HittedPointTargetZone(targetBallHitZones);
         if (hittedPointWithTargetZone != null)
         {
-
+            m_aimVisualType = AimVisualizeType.HitTargetBall;
+            //todo
         }
         else
         {
-
+            m_aimVisualType = AimVisualizeType.HitRail;
+            //todo
         }
         //aimline 
         //cueball move direction
@@ -76,5 +100,11 @@ public class Aimer : MonoBehaviour
             }
         }
         return null;
+    }
+
+    enum AimVisualizeType
+    {
+        HitTargetBall,
+        HitRail
     }
 }
