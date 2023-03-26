@@ -80,9 +80,6 @@ public class Aimer : MonoBehaviour
             m_aimVisualType = AimVisualizeType.HitRail;
             //todo
         }
-        //aimline 
-        //cueball move direction
-        //tagetball move direction
         throw new System.NotImplementedException();
     }
     private Circle? HittedTargetZone(List<Circle> hitZones)
