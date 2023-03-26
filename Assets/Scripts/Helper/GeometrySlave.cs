@@ -101,6 +101,29 @@ public class GeometrySlave : MonoBehaviour
             return point;
         }
     }
+    public class StraightRay2D
+    {
+        public Vector2 m_start;
+        public Vector2 m_direction;
+        public bool IsCut(LineSegment2D seg)
+        {
+            return seg.IsCut(this);
+        }
+    }
+    public class LineSegment2D
+    {
+        public Vector2 m_start;
+        public Vector2 m_end;
+        public bool IsCut(StraightRay2D ray)
+        {
+            float shouldBeTotal = Vector2.Angle(m_start-ray.m_start, m_end - ray.m_start);
+            float total = 
+                Vector2.Angle(m_start - ray.m_start,ray.m_direction) 
+                + Vector2.Angle(m_end-ray.m_start, ray.m_direction);
+
+            return total <= shouldBeTotal;
+        }
+    }
     public class OverlapRange
     {
         //should be in degree

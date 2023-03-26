@@ -32,14 +32,15 @@ public class Aimer : MonoBehaviour
             m_imaginationBall.            GetComponent<MeshRenderer>().enabled = true;
             m_aimDirectionLine.           GetComponent<MeshRenderer>().enabled = true;
             m_cueBallMoveDirectionLine.   GetComponent<MeshRenderer>().enabled = true;
-            m_aimDirectionLine.GetComponent<MeshRenderer>().enabled = true;
+            m_targetBallMoveDirectionLine.GetComponent<MeshRenderer>().enabled = true;
             if (m_aimVisualType == AimVisualizeType.HitRail)
             {
                 m_targetBallMoveDirectionLine.GetComponent<MeshRenderer>().enabled = false;
             }
-            else if (m_aimVisualType == AimVisualizeType.HitTargetBall)
+            else if (m_aimVisualType == AimVisualizeType.HitNothing)
             {
-                m_targetBallMoveDirectionLine.GetComponent<MeshRenderer>().enabled = true;
+                m_targetBallMoveDirectionLine.GetComponent<MeshRenderer>().enabled = false;
+                m_cueBallMoveDirectionLine.   GetComponent<MeshRenderer>().enabled = false;
             }
         }
         else
@@ -73,7 +74,7 @@ public class Aimer : MonoBehaviour
         targetBallHitZones = m_geometrySlave.SortCirlcesByDistanceWithCueBall(targetBallHitZones);
         Tuple<Circle?,Vector2?> hittedTargetZoneTuple = HittedTargetZone(targetBallHitZones);
         Circle? hittedZone = hittedTargetZoneTuple.Item1;
-        if (hittedZone != null)
+        if (hittedZone != null) // hit target ball
         {
             m_aimVisualType = AimVisualizeType.HitTargetBall;
             Vector2 hitPoint = hittedTargetZoneTuple.Item2.HasValue ? hittedTargetZoneTuple.Item2.Value : Vector2.zero; // it shouldn't be zero
@@ -90,13 +91,12 @@ public class Aimer : MonoBehaviour
 
             //update aim visualize component
         }
-        else
+        else //hit the rail or not
         {
             m_aimVisualType = AimVisualizeType.HitRail;
-            //todo
+            //todo: find hit point on the rail
         }
         SetVisibility(true);
-        throw new System.NotImplementedException();
     }
     private Tuple<Circle?,Vector2?> HittedTargetZone(List<Circle> hitZones)
     {
@@ -119,6 +119,7 @@ public class Aimer : MonoBehaviour
     enum AimVisualizeType
     {
         HitTargetBall,
-        HitRail
+        HitRail,
+        HitNothing
     }
 }
