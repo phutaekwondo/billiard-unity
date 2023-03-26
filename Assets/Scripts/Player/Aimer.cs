@@ -83,8 +83,12 @@ public class Aimer : MonoBehaviour
             Vector2 cueballDirection = 
                 ((m_aimDirection2D + cueballPotentialDirection).magnitude > (m_aimDirection2D-cueballPotentialDirection).magnitude) ?
                 cueballPotentialDirection : -cueballPotentialDirection;
+            cueballDirection.Normalize();
             
             //target ball direction
+            Vector2 targetBallDirectin = -(hitPoint - hittedZone.Value.m_center).normalized;
+
+            //update aim visualize component
         }
         else
         {
