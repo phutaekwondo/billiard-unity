@@ -4648,6 +4648,7 @@ MonoBehaviour:
   m_aimDirectionLine: {fileID: 2110488466}
   m_cueBallMoveDirectionLine: {fileID: 1061942419}
   m_targetBallMoveDirectionLine: {fileID: 1729951568}
+  m_geometrySlave: {fileID: 1433342156}
 --- !u!1 &753723232
 GameObject:
   m_ObjectHideFlags: 0
@@ -7927,6 +7928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd62653ac528674dbe1e31bc918940e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_cueBall: {fileID: 0}
   m_rack: {fileID: 667043940}
 --- !u!4 &1433342157
 Transform:
