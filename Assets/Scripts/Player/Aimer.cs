@@ -69,11 +69,13 @@ public class Aimer : MonoBehaviour
     {
         List<Circle> targetBallHitZones = m_geometrySlave.GetDangerousCircles();
         targetBallHitZones = m_geometrySlave.SortCirlcesByDistanceWithCueBall(targetBallHitZones);
-        Circle? hittedTargetZone = HittedTargetZone(targetBallHitZones);
+        Tuple<Circle?,Vector2?> hittedTargetZoneTuple = HittedTargetZone(targetBallHitZones);
+        Circle? hittedTargetZone = hittedTargetZoneTuple.Item1;
         if (hittedTargetZone != null)
         {
             m_aimVisualType = AimVisualizeType.HitTargetBall;
-            //todo
+            Vector2 hitPoint = hittedTargetZoneTuple.Item2.HasValue ? hittedTargetZoneTuple.Item2.Value : Vector2.zero; // it shouldn't be zero
+            //todo: calculate cueball and target ball direction
         }
         else
         {
@@ -82,7 +84,7 @@ public class Aimer : MonoBehaviour
         }
         throw new System.NotImplementedException();
     }
-    private Circle? HittedTargetZone(List<Circle> hitZones)
+    private Tuple<Circle?,Vector2?> HittedTargetZone(List<Circle> hitZones)
     {
         Vector2 startPoint = new Vector2(m_cueBall.transform.position.x, m_cueBall.transform.position.z);
         Vector2 aimDireciton = new Vector2(m_aimDirection.x, m_aimDirection.z);
@@ -91,13 +93,13 @@ public class Aimer : MonoBehaviour
             Vector2 prjCenterOnAimLine = (Vector2)Vector3.Project(hitZone.m_center - startPoint, aimDireciton) + startPoint;
             if (hitZone.IsContain(prjCenterOnAimLine)) //hit
             {
-                // float disFromCenterToPrj = Vector2.Distance(prjCenterOnAimLine, hitZone.m_center);
-                // float disFromPrjToHitPoint = Mathf.Sqrt(Mathf.Pow(hitZone.m_radius,2) - Mathf.Pow(disFromCenterToPrj*disFromCenterToPrj,2));
-                // return prjCenterOnAimLine - (aimDireciton.normalized*disFromPrjToHitPoint);
-                return hitZone;
+                float disFromCenterToPrj = Vector2.Distance(prjCenterOnAimLine, hitZone.m_center);
+                float disFromPrjToHitPoint = Mathf.Sqrt(Mathf.Pow(hitZone.m_radius,2) - Mathf.Pow(disFromCenterToPrj*disFromCenterToPrj,2));
+                Vector2 hitPoint = prjCenterOnAimLine - (aimDireciton.normalized*disFromPrjToHitPoint);
+                return new Tuple<Circle?, Vector2?> (hitZone,hitPoint);
             }
         }
-        return null;
+        return new Tuple<Circle?,Vector2?> (null,null);
     }
 
     enum AimVisualizeType
