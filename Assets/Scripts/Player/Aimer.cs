@@ -86,7 +86,7 @@ public class Aimer : MonoBehaviour
             cueballDirection.Normalize();
             
             //target ball direction
-            Vector2 targetBallDirectin = -(hitPoint - hittedZone.Value.m_center).normalized;
+            Vector2 targetBallDirection = -(hitPoint - hittedZone.Value.m_center).normalized;
 
             //update aim visualize component
         }
@@ -95,6 +95,7 @@ public class Aimer : MonoBehaviour
             m_aimVisualType = AimVisualizeType.HitRail;
             //todo
         }
+        SetVisibility(true);
         throw new System.NotImplementedException();
     }
     private Tuple<Circle?,Vector2?> HittedTargetZone(List<Circle> hitZones)
