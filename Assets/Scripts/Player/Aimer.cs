@@ -14,6 +14,7 @@ public class Aimer : MonoBehaviour
     private bool m_isAiming = true; // ablity to chagne aim direction
     private AimVisualizeType m_aimVisualType;
     private Vector3 m_aimDirection = Vector3.zero;
+    private Vector2 m_aimDirection2D = Vector2.zero;
 
     //public method
     public void SetAbleToChangeAimDirection(bool enable)
@@ -64,18 +65,26 @@ public class Aimer : MonoBehaviour
         direction.y = 0;
         direction.Normalize();
         m_aimDirection = direction;
+        m_aimDirection2D = new Vector2(m_aimDirection.x,m_aimDirection.z);
     }
     private void UpdateAimingComponents()
     {
         List<Circle> targetBallHitZones = m_geometrySlave.GetDangerousCircles();
         targetBallHitZones = m_geometrySlave.SortCirlcesByDistanceWithCueBall(targetBallHitZones);
         Tuple<Circle?,Vector2?> hittedTargetZoneTuple = HittedTargetZone(targetBallHitZones);
-        Circle? hittedTargetZone = hittedTargetZoneTuple.Item1;
-        if (hittedTargetZone != null)
+        Circle? hittedZone = hittedTargetZoneTuple.Item1;
+        if (hittedZone != null)
         {
             m_aimVisualType = AimVisualizeType.HitTargetBall;
             Vector2 hitPoint = hittedTargetZoneTuple.Item2.HasValue ? hittedTargetZoneTuple.Item2.Value : Vector2.zero; // it shouldn't be zero
             //todo: calculate cueball and target ball direction
+            //cueball direction
+            Vector2 cueballPotentialDirection = Vector2.Perpendicular(hitPoint - hittedZone.Value.m_center);
+            Vector2 cueballDirection = 
+                ((m_aimDirection2D + cueballPotentialDirection).magnitude > (m_aimDirection2D-cueballPotentialDirection).magnitude) ?
+                cueballPotentialDirection : -cueballPotentialDirection;
+            
+            //target ball direction
         }
         else
         {
