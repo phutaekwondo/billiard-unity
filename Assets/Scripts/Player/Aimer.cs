@@ -95,6 +95,7 @@ public class Aimer : MonoBehaviour
         {
             m_aimVisualType = AimVisualizeType.HitRail;
             //todo: find hit point on the rail
+            List<LineSegment2D> railLineSegments = m_geometrySlave.GetRailLineSegments2D();
         }
         SetVisibility(true);
     }

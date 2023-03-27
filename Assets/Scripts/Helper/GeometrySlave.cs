@@ -10,6 +10,10 @@ public class GeometrySlave : MonoBehaviour
     public static float FULL_ROUND_DEGREE = 360f;
 
     //public method
+    public List<LineSegment2D> GetRailLineSegments2D()
+    {
+        throw new System.NotImplementedException();
+    }
     public List<Circle> SortCirlcesByDistanceWithCueBall(List<Circle> dangerousCircles)
     {
         return SortCirlcesByDistanceWithPoint(dangerousCircles, new Vector2(m_cueBall.transform.position.x, m_cueBall.transform.position.z));
