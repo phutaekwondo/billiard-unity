@@ -29,7 +29,7 @@ public class AvailableCueBallProvider : MonoBehaviour
     public Vector3 NearestAvailablePosition(Vector3 rawPosition)
     {
         Vector3 nearestPositionInArea = NearestPositionInAvailableArea(rawPosition);
-        Vector2 rawPosition2D = new Vector2(nearestPositionInArea.x, nearestPositionInArea.z);
+        Vector2 rawPosition2D = GeometrySlave.To2D(nearestPositionInArea);
 
 
         //Get group of dangerous circle
@@ -37,7 +37,7 @@ public class AvailableCueBallProvider : MonoBehaviour
 
         if (IsPositionAvailable(rawPosition2D, dangerousCircles))
         {
-            return new Vector3(rawPosition2D.x, rawPosition.y, rawPosition2D.y);
+            return GeometrySlave.To3D(rawPosition2D,rawPosition.y);
         }
 
         dangerousCircles = m_geometrySlave.SortCirlcesByDistanceWithPoint(dangerousCircles, rawPosition2D);
@@ -49,7 +49,7 @@ public class AvailableCueBallProvider : MonoBehaviour
                 Tuple<Vector2,bool> tupleNearestAvailablePosition = GetNearestAvailablePositionWithCircle(circle, rawPosition2D, dangerousCircles);
                 if (tupleNearestAvailablePosition.Item2)
                 {
-                    return new Vector3(tupleNearestAvailablePosition.Item1.x, rawPosition.y, tupleNearestAvailablePosition.Item1.y);
+                    return GeometrySlave.To3D(tupleNearestAvailablePosition.Item1, rawPosition.y);
                 }
             }   
         }

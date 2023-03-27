@@ -10,13 +10,21 @@ public class GeometrySlave : MonoBehaviour
     public static float FULL_ROUND_DEGREE = 360f;
 
     //public method
+    public static Vector2 To2D(Vector3 vec)
+    {
+        return new Vector2(vec.x, vec.z);
+    }
+    public static Vector3 To3D(Vector2 vec, float y)
+    {
+        return new Vector3(vec.x,y,vec.y);
+    }
     public List<LineSegment2D> GetRailLineSegments2D()
     {
         throw new System.NotImplementedException();
     }
     public List<Circle> SortCirlcesByDistanceWithCueBall(List<Circle> dangerousCircles)
     {
-        return SortCirlcesByDistanceWithPoint(dangerousCircles, new Vector2(m_cueBall.transform.position.x, m_cueBall.transform.position.z));
+        return SortCirlcesByDistanceWithPoint(dangerousCircles, To2D(m_cueBall.transform.position));
     }
     public List<Circle> SortCirlcesByDistanceWithPoint(List<Circle> dangerousCircles, Vector2 rawPosition)
     {
@@ -61,7 +69,7 @@ public class GeometrySlave : MonoBehaviour
         for ( int i = 0; i < m_rack.transform.childCount; i++ )
         {
             GameObject ball = m_rack.transform.GetChild(i).gameObject;
-            Circle ballCircle = new Circle(new Vector2(ball.transform.position.x, ball.transform.position.z), m_ballRadius*2);
+            Circle ballCircle = new Circle(To2D(ball.transform.position), m_ballRadius*2);
             dangerousCircles.Add(ballCircle);
         }
         return dangerousCircles;

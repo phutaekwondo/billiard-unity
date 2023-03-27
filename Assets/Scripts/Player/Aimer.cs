@@ -66,7 +66,7 @@ public class Aimer : MonoBehaviour
         direction.y = 0;
         direction.Normalize();
         m_aimDirection = direction;
-        m_aimDirection2D = new Vector2(m_aimDirection.x,m_aimDirection.z);
+        m_aimDirection2D = GeometrySlave.To2D(m_aimDirection);
     }
     private void UpdateAimingComponents()
     {
@@ -96,21 +96,22 @@ public class Aimer : MonoBehaviour
             m_aimVisualType = AimVisualizeType.HitRail;
             //todo: find hit point on the rail
             List<LineSegment2D> railLineSegments = m_geometrySlave.GetRailLineSegments2D();
+            StraightRay2D cueballShotRay = 
+                new StraightRay2D(GeometrySlave.To2D(m_cueBall.transform.position), m_aimDirection2D);
         }
         SetVisibility(true);
     }
     private Tuple<Circle?,Vector2?> HittedTargetZone(List<Circle> hitZones)
     {
-        Vector2 startPoint = new Vector2(m_cueBall.transform.position.x, m_cueBall.transform.position.z);
-        Vector2 aimDireciton = new Vector2(m_aimDirection.x, m_aimDirection.z);
+        Vector2 startPoint = GeometrySlave.To2D(m_cueBall.transform.position);
         foreach (Circle hitZone in hitZones)
         {
-            Vector2 prjCenterOnAimLine = (Vector2)Vector3.Project(hitZone.m_center - startPoint, aimDireciton) + startPoint;
+            Vector2 prjCenterOnAimLine = (Vector2)Vector3.Project(hitZone.m_center - startPoint, m_aimDirection2D) + startPoint;
             if (hitZone.IsContain(prjCenterOnAimLine)) //hit
             {
                 float disFromCenterToPrj = Vector2.Distance(prjCenterOnAimLine, hitZone.m_center);
                 float disFromPrjToHitPoint = Mathf.Sqrt(Mathf.Pow(hitZone.m_radius,2) - Mathf.Pow(disFromCenterToPrj*disFromCenterToPrj,2));
-                Vector2 hitPoint = prjCenterOnAimLine - (aimDireciton.normalized*disFromPrjToHitPoint);
+                Vector2 hitPoint = prjCenterOnAimLine - (m_aimDirection2D.normalized*disFromPrjToHitPoint);
                 return new Tuple<Circle?, Vector2?> (hitZone,hitPoint);
             }
         }
