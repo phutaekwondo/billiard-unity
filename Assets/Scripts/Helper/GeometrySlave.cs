@@ -109,6 +109,11 @@ public class GeometrySlave : MonoBehaviour
     {
         public Vector2 m_start;
         public Vector2 m_direction;
+        public StraightRay2D(Vector2 start, Vector2 direction)
+        {
+            m_start = start;
+            m_direction = direction;
+        }
         public bool IsCut(LineSegment2D seg)
         {
             return seg.IsCut(this);
@@ -118,6 +123,11 @@ public class GeometrySlave : MonoBehaviour
     {
         public Vector2 m_start;
         public Vector2 m_end;
+        public LineSegment2D(Vector2 start, Vector2 end)
+        {
+            m_start = start;
+            m_end = end;
+        }
         public bool IsCut(StraightRay2D ray)
         {
             float shouldBeTotal = Vector2.Angle(m_start-ray.m_start, m_end - ray.m_start);
