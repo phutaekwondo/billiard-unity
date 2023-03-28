@@ -29,26 +29,26 @@ public class Aimer : MonoBehaviour
     {
         if (visible)
         {
-            m_imaginationBall.            GetComponent<MeshRenderer>().enabled = true;
-            m_aimDirectionLine.           GetComponent<MeshRenderer>().enabled = true;
-            m_cueBallMoveDirectionLine.   GetComponent<MeshRenderer>().enabled = true;
-            m_targetBallMoveDirectionLine.GetComponent<MeshRenderer>().enabled = true;
+            m_imaginationBall.            GetComponent<Renderer>().enabled = true;
+            m_aimDirectionLine.           GetComponent<Renderer>().enabled = true;
+            m_cueBallMoveDirectionLine.   GetComponent<Renderer>().enabled = true;
+            m_targetBallMoveDirectionLine.GetComponent<Renderer>().enabled = true;
             if (m_aimVisualType == AimVisualizeType.HitRail)
             {
-                m_targetBallMoveDirectionLine.GetComponent<MeshRenderer>().enabled = false;
+                m_targetBallMoveDirectionLine.GetComponent<Renderer>().enabled = false;
             }
             else if (m_aimVisualType == AimVisualizeType.HitNothing)
             {
-                m_targetBallMoveDirectionLine.GetComponent<MeshRenderer>().enabled = false;
-                m_cueBallMoveDirectionLine.   GetComponent<MeshRenderer>().enabled = false;
+                m_targetBallMoveDirectionLine.GetComponent<Renderer>().enabled = false;
+                m_cueBallMoveDirectionLine.   GetComponent<Renderer>().enabled = false;
             }
         }
         else
         {
-            m_imaginationBall.            GetComponent<MeshRenderer>().enabled = false;
-            m_aimDirectionLine.           GetComponent<MeshRenderer>().enabled = false;
-            m_cueBallMoveDirectionLine.   GetComponent<MeshRenderer>().enabled = false;
-            m_targetBallMoveDirectionLine.GetComponent<MeshRenderer>().enabled = false;
+            m_imaginationBall.            GetComponent<Renderer>().enabled = false;
+            m_aimDirectionLine.           GetComponent<Renderer>().enabled = false;
+            m_cueBallMoveDirectionLine.   GetComponent<Renderer>().enabled = false;
+            m_targetBallMoveDirectionLine.GetComponent<Renderer>().enabled = false;
         }
     }
     //private method
