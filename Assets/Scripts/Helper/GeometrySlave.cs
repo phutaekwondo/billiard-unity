@@ -12,6 +12,8 @@ public class GeometrySlave : MonoBehaviour
     [SerializeField] GameObject m_negZLongRail2;
     [SerializeField] GameObject m_posXShortRail;
     [SerializeField] GameObject m_negZShortRail;
+
+    private List<LineSegment2D> m_railLineSegments;
     private float m_ballRadius = GameConfig.m_ballRadius;
     public static float FULL_ROUND_DEGREE = 360f;
 
@@ -26,7 +28,7 @@ public class GeometrySlave : MonoBehaviour
     }
     public List<LineSegment2D> GetRailLineSegments2D()
     {
-        throw new System.NotImplementedException();
+        return m_railLineSegments;
     }
     public List<Circle> SortCirlcesByDistanceWithCueBall(List<Circle> dangerousCircles)
     {
@@ -79,6 +81,42 @@ public class GeometrySlave : MonoBehaviour
             dangerousCircles.Add(ballCircle);
         }
         return dangerousCircles;
+    }
+
+    //PRIVATE METHOD
+    private void Start() 
+    {
+        //calculate rail line segments
+        //posZLongRail1
+        Transform now = m_posZLongRail1.transform;
+        Vector2 start = new Vector2(now.position.x - now.lossyScale.x/2, now.position.z - now.lossyScale.z/2 - m_ballRadius);
+        Vector2 end   = new Vector2(now.position.x + now.lossyScale.x/2, now.position.z - now.lossyScale.z/2 - m_ballRadius);
+        m_railLineSegments.Add(new LineSegment2D(start, end));
+        //posZLongRail2
+        now = m_posZLongRail2.transform;
+        start = new Vector2(now.position.x - now.lossyScale.x/2, now.position.z - now.lossyScale.z/2 - m_ballRadius);
+        end   = new Vector2(now.position.x + now.lossyScale.x/2, now.position.z - now.lossyScale.z/2 - m_ballRadius);
+        m_railLineSegments.Add(new LineSegment2D(start, end));
+        //negZLongRail1
+        now = m_negZLongRail1.transform;
+        start = new Vector2(now.position.x - now.lossyScale.x/2, now.position.z + now.lossyScale.z/2 + m_ballRadius);
+        end   = new Vector2(now.position.x + now.lossyScale.x/2, now.position.z + now.lossyScale.z/2 + m_ballRadius);
+        m_railLineSegments.Add(new LineSegment2D(start, end));
+        //negZLongRail2
+        now = m_negZLongRail2.transform;
+        start = new Vector2(now.position.x - now.lossyScale.x/2, now.position.z + now.lossyScale.z/2 + m_ballRadius);
+        end   = new Vector2(now.position.x + now.lossyScale.x/2, now.position.z + now.lossyScale.z/2 + m_ballRadius);
+        m_railLineSegments.Add(new LineSegment2D(start, end));
+        //posXShortRail
+        now = m_posXShortRail.transform;
+        start = new Vector2(now.position.z - now.lossyScale.z/2, now.position.x - now.lossyScale.x/2 - m_ballRadius);
+        end   = new Vector2(now.position.z + now.lossyScale.z/2, now.position.x - now.lossyScale.x/2 - m_ballRadius);
+        m_railLineSegments.Add(new LineSegment2D(start, end));
+        //negZShortRail
+        now = m_negZShortRail.transform;
+        start = new Vector2(now.position.z - now.lossyScale.z/2, now.position.x + now.lossyScale.x/2 + m_ballRadius);
+        end   = new Vector2(now.position.z + now.lossyScale.z/2, now.position.x + now.lossyScale.x/2 + m_ballRadius);
+        m_railLineSegments.Add(new LineSegment2D(start, end));
     }
 
     //sub-classes
