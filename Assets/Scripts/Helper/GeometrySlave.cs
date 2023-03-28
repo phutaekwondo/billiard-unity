@@ -6,6 +6,12 @@ public class GeometrySlave : MonoBehaviour
 {
     [SerializeField] GameObject m_cueBall;
     [SerializeField] GameObject m_rack;
+    [SerializeField] GameObject m_posZLongRail1;
+    [SerializeField] GameObject m_posZLongRail2;
+    [SerializeField] GameObject m_negZLongRail1;
+    [SerializeField] GameObject m_negZLongRail2;
+    [SerializeField] GameObject m_posXShortRail;
+    [SerializeField] GameObject m_negZShortRail;
     private float m_ballRadius = GameConfig.m_ballRadius;
     public static float FULL_ROUND_DEGREE = 360f;
 

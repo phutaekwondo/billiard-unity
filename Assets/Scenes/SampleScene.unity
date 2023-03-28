@@ -7930,6 +7930,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_cueBall: {fileID: 2010333558}
   m_rack: {fileID: 667043940}
+  m_posZLongRail1: {fileID: 753723232}
+  m_posZLongRail2: {fileID: 1992480095}
+  m_negZLongRail1: {fileID: 176908147}
+  m_negZLongRail2: {fileID: 2066642077}
+  m_posXShortRail: {fileID: 916445633}
+  m_negZShortRail: {fileID: 997976727}
 --- !u!4 &1433342157
 Transform:
   m_ObjectHideFlags: 0
