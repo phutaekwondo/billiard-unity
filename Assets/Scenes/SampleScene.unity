@@ -5900,7 +5900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &966985318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5913,7 +5913,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90e1d7c91745134ba0e600f98da362b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_simpleSpherePrefab: {fileID: 0}
+  m_simpleSpherePrefab: {fileID: 1736995856815063451, guid: 07f8d504d1bc8c24294f48ff7295e535,
+    type: 3}
   m_geometrySlave: {fileID: 1433342156}
 --- !u!4 &966985319
 Transform:
