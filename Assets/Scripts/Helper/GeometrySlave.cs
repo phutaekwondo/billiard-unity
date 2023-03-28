@@ -201,6 +201,11 @@ public class GeometrySlave : MonoBehaviour
 
             return total <= shouldBeTotal;
         }
+        
+        public Vector2? CutPoint(StraightRay2D ray)
+        {
+            throw new System.NotImplementedException();
+        }
     }
     public class OverlapRange
     {

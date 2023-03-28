@@ -98,6 +98,15 @@ public class Aimer : MonoBehaviour
             List<LineSegment2D> railLineSegments = m_geometrySlave.GetRailLineSegments2D();
             StraightRay2D cueballShotRay = 
                 new StraightRay2D(GeometrySlave.To2D(m_cueBall.transform.position), m_aimDirection2D);
+
+            foreach (LineSegment2D railLineSegment in railLineSegments)
+            {
+                Vector2? hitPoint = railLineSegment.CutPoint(cueballShotRay);
+                if (hitPoint.HasValue)
+                {
+                    //todo
+                }
+            }
         }
         SetVisibility(true);
     }
