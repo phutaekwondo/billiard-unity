@@ -204,6 +204,16 @@ public class GeometrySlave : MonoBehaviour
         
         public Vector2? CutPoint(StraightRay2D ray)
         {
+            //here some math formula
+            // C: ray start
+            // V: Ray direction
+            // A: line segment start
+            // B: line segment end
+            // name the point we finding as D
+            // D = C + tV
+            //      Cx(Ay-By) + Cy(Bx-Ax) + AxBy - AyBx
+            // t =  -----------------------------------
+            //      Vx(By-Ay) + Vy(Ax-Bx)
             throw new System.NotImplementedException();
         }
     }
