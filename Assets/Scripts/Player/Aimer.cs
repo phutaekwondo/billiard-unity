@@ -126,6 +126,28 @@ public class Aimer : MonoBehaviour
         Vector2? targetBallDirection
     )
     {
+        LineRenderer lr = m_aimDirectionLine.GetComponent<LineRenderer>();
+        lr.positionCount = 2;
+        lr.SetPosition(0, m_cueBall.transform.position);
+        lr.SetPosition(1, GeometrySlave.To3D(hitPosition, m_cueBall.transform.position.y));
+
+        m_imaginationBall.transform.position = GeometrySlave.To3D(hitPosition, m_cueBall.transform.position.y);
+
+        if (cueBallDirection.HasValue)
+        {
+            lr = m_cueBallMoveDirectionLine.GetComponent<LineRenderer>();
+            lr.positionCount = 2;
+            lr.SetPosition(0, GeometrySlave.To3D(hitPosition, m_cueBall.transform.position.y));
+            lr.SetPosition(1, GeometrySlave.To3D(hitPosition + cueBallDirection.Value, m_cueBall.transform.position.y));
+        }
+
+        if (targetBallPosition.HasValue && targetBallDirection.HasValue)
+        {
+            lr = m_targetBallMoveDirectionLine.GetComponent<LineRenderer>();
+            lr.positionCount = 2;
+            lr.SetPosition(0, GeometrySlave.To3D(targetBallPosition.Value, m_cueBall.transform.position.y));
+            lr.SetPosition(1, GeometrySlave.To3D(targetBallPosition.Value + targetBallDirection.Value, m_cueBall.transform.position.y));
+        }
     }
     private Tuple<Circle?,Vector2?> HittedTargetZone(List<Circle> hitZones)
     {
