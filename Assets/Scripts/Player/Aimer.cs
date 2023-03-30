@@ -100,21 +100,23 @@ public class Aimer : MonoBehaviour
             StraightRay2D cueballShotRay = 
                 new StraightRay2D(GeometrySlave.To2D(m_cueBall.transform.position), m_aimDirection2D);
 
+            bool isHitRail = false;
             foreach (LineSegment2D railLineSegment in railLineSegments)
             {
                 Vector2? hitPosition = railLineSegment.CutPoint(cueballShotRay);
                 if (hitPosition.HasValue)
                 {
+                    isHitRail = true;
                     //todo
                     Vector2 cueBallDirection = railLineSegment.ReflectVector(m_aimDirection2D);
                     //update aim visualize component
                     UpdateAimVisualizeComponent(hitPosition.Value, null, cueBallDirection,null);
                 }
-                else
-                {
-                    m_aimVisualType = AimVisualizeType.HitNothing;
-                    UpdateAimVisualizeComponent(To2D(MouseTrackingHelper.GetBallOnTablePositionWithMouse()),null,null,null);
-                }
+            }
+            if(!isHitRail)
+            {
+                m_aimVisualType = AimVisualizeType.HitNothing;
+                UpdateAimVisualizeComponent(To2D(MouseTrackingHelper.GetBallOnTablePositionWithMouse()),null,null,null);
             }
         }
         SetVisibility(true);
