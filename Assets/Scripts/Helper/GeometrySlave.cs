@@ -215,7 +215,7 @@ public class GeometrySlave : MonoBehaviour
             //      Cx(Ay-By) + Cy(Bx-Ax) + AxBy - AyBx
             // t =  -----------------------------------
             //      Vx(By-Ay) + Vy(Ax-Bx)
-            if (IsCut(ray)) return null;
+            if (!IsCut(ray)) return null;
             Vector2 C = ray.m_start;
             Vector2 V = ray.m_direction;
             Vector2 A = m_start;
