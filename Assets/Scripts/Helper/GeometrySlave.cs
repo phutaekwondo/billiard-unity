@@ -194,7 +194,8 @@ public class GeometrySlave : MonoBehaviour
         }
         public bool IsCut(StraightRay2D ray)
         {
-            float shouldBeTotal = Vector2.Angle(m_start-ray.m_start, m_end - ray.m_start);
+            float magicNumberToFixAngleError = 0.001f;
+            float shouldBeTotal = Vector2.Angle(m_start-ray.m_start, m_end - ray.m_start) + magicNumberToFixAngleError;
             float total = 
                 Vector2.Angle(m_start - ray.m_start,ray.m_direction) 
                 + Vector2.Angle(m_end-ray.m_start, ray.m_direction);
