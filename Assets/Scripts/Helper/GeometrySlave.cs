@@ -204,7 +204,8 @@ public class GeometrySlave : MonoBehaviour
         }
         public Vector2 ReflectVector(Vector2 vec)
         {
-            throw new System.NotImplementedException();
+            Vector2 prj = (Vector2)Vector3.Project(vec, m_end - m_start);
+            return vec + 2 * (prj-vec);
         }
         public Vector2? CutPoint(StraightRay2D ray)
         {
