@@ -214,7 +214,13 @@ public class GeometrySlave : MonoBehaviour
             //      Cx(Ay-By) + Cy(Bx-Ax) + AxBy - AyBx
             // t =  -----------------------------------
             //      Vx(By-Ay) + Vy(Ax-Bx)
-            throw new System.NotImplementedException();
+            if (IsCut(ray)) return null;
+            Vector2 C = ray.m_start;
+            Vector2 V = ray.m_direction;
+            Vector2 A = m_start;
+            Vector2 B = m_end;
+            float t = (C.x * (A.y - B.y) + C.y * (B.x - A.x) + A.x * B.y - A.y * B.x) / (V.x * (B.y - A.y) + V.y * (A.x - B.x));
+            return C + (t * V);
         }
     }
     public class OverlapRange
