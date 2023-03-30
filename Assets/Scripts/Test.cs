@@ -40,16 +40,9 @@ public class Test : MonoBehaviour
         Vector2 cuaballPosition = GeometrySlave.To2D(m_cueBall.transform.position);
         StraightRay2D ray = new StraightRay2D(cuaballPosition, mousePosition - cuaballPosition);
 
-        LineSegment2D railLineSegment = m_railLineSegments[0];
+        // LineSegment2D railLineSegment = m_railLineSegments[0];
+        foreach (LineSegment2D railLineSegment in m_railLineSegments)
         {
-            if (railLineSegment.IsCut(ray))
-            {
-                Debug.Log("cut");
-            }
-            else
-            {
-                Debug.Log("not cut");
-            }
             Vector2? cutpoint = railLineSegment.CutPoint(ray);
             if (cutpoint.HasValue)
             {
