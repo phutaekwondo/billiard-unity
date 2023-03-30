@@ -90,6 +90,7 @@ public class Aimer : MonoBehaviour
             Vector2 targetBallDirection = -(hitPoint - hittedZone.Value.m_center).normalized;
 
             //update aim visualize component
+            UpdateAimVisualizeComponent(hitPoint, hittedZone.Value.m_center, cueballDirection, targetBallDirection);
         }
         else //hit the rail or not
         {
@@ -105,14 +106,27 @@ public class Aimer : MonoBehaviour
                 if (hitPoint.HasValue)
                 {
                     //todo
+                    Vector2 cueBallDirection = railLineSegment.ReflectVector(m_aimDirection2D);
+                    //update aim visualize component
+                    UpdateAimVisualizeComponent(hitPoint.Value, null, cueBallDirection,null);
                 }
                 else
                 {
                     m_aimVisualType = AimVisualizeType.HitNothing;
+                    UpdateAimVisualizeComponent(To2D(MouseTrackingHelper.GetBallOnTablePositionWithMouse()),null,null,null);
                 }
             }
         }
         SetVisibility(true);
+    }
+    private void UpdateAimVisualizeComponent(
+        Vector2? hitPoint, 
+        Vector2? targetBallPosition, 
+        Vector2? cueBallDirection, 
+        Vector2? targetBallDirection
+    )
+    {
+        throw new NotImplementedException();
     }
     private Tuple<Circle?,Vector2?> HittedTargetZone(List<Circle> hitZones)
     {
