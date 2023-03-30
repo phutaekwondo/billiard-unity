@@ -160,9 +160,9 @@ public class Aimer : MonoBehaviour
             if (hitZone.IsContain(prjCenterOnAimLine)) //hit
             {
                 float disFromCenterToPrj = Vector2.Distance(prjCenterOnAimLine, hitZone.m_center);
-                float disFromPrjToHitPoint = Mathf.Sqrt(Mathf.Pow(hitZone.m_radius,2) - Mathf.Pow(disFromCenterToPrj*disFromCenterToPrj,2));
-                Vector2 hitPoint = prjCenterOnAimLine - (m_aimDirection2D.normalized*disFromPrjToHitPoint);
-                return new Tuple<Circle?, Vector2?> (hitZone,hitPoint);
+                float disFromPrjToHitPoint = Mathf.Sqrt(Mathf.Pow(hitZone.m_radius,2) - Mathf.Pow(disFromCenterToPrj,2));
+                Vector2 hitPosition = prjCenterOnAimLine - (m_aimDirection2D.normalized*disFromPrjToHitPoint);
+                return new Tuple<Circle?, Vector2?> (hitZone,hitPosition);
             }
         }
         return new Tuple<Circle?,Vector2?> (null,null);
