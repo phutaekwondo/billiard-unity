@@ -106,6 +106,10 @@ public class Aimer : MonoBehaviour
                 {
                     //todo
                 }
+                else
+                {
+                    m_aimVisualType = AimVisualizeType.HitNothing;
+                }
             }
         }
         SetVisibility(true);

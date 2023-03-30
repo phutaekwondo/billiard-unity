@@ -202,7 +202,10 @@ public class GeometrySlave : MonoBehaviour
 
             return total <= shouldBeTotal;
         }
-        
+        public Vector2 ReflectVector(Vector2 vec)
+        {
+            throw new System.NotImplementedException();
+        }
         public Vector2? CutPoint(StraightRay2D ray)
         {
             //here some math formula
