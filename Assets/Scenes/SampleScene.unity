@@ -5900,7 +5900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &966985318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5916,6 +5916,7 @@ MonoBehaviour:
   m_simpleSpherePrefab: {fileID: 1736995856815063451, guid: 07f8d504d1bc8c24294f48ff7295e535,
     type: 3}
   m_geometrySlave: {fileID: 1433342156}
+  m_cueBall: {fileID: 2010333558}
 --- !u!4 &966985319
 Transform:
   m_ObjectHideFlags: 0
