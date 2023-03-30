@@ -77,20 +77,20 @@ public class Aimer : MonoBehaviour
         if (hittedZone != null) // hit target ball
         {
             m_aimVisualType = AimVisualizeType.HitTargetBall;
-            Vector2 hitPoint = hittedTargetZoneTuple.Item2.HasValue ? hittedTargetZoneTuple.Item2.Value : Vector2.zero; // it shouldn't be zero
+            Vector2 hitPosition = hittedTargetZoneTuple.Item2.HasValue ? hittedTargetZoneTuple.Item2.Value : Vector2.zero; // it shouldn't be zero
             //todo: calculate cueball and target ball direction
             //cueball direction
-            Vector2 cueballPotentialDirection = Vector2.Perpendicular(hitPoint - hittedZone.Value.m_center);
+            Vector2 cueballPotentialDirection = Vector2.Perpendicular(hitPosition - hittedZone.Value.m_center);
             Vector2 cueballDirection = 
                 ((m_aimDirection2D + cueballPotentialDirection).magnitude > (m_aimDirection2D-cueballPotentialDirection).magnitude) ?
                 cueballPotentialDirection : -cueballPotentialDirection;
             cueballDirection.Normalize();
             
             //target ball direction
-            Vector2 targetBallDirection = -(hitPoint - hittedZone.Value.m_center).normalized;
+            Vector2 targetBallDirection = -(hitPosition - hittedZone.Value.m_center).normalized;
 
             //update aim visualize component
-            UpdateAimVisualizeComponent(hitPoint, hittedZone.Value.m_center, cueballDirection, targetBallDirection);
+            UpdateAimVisualizeComponent(hitPosition, hittedZone.Value.m_center, cueballDirection, targetBallDirection);
         }
         else //hit the rail or not
         {
@@ -102,13 +102,13 @@ public class Aimer : MonoBehaviour
 
             foreach (LineSegment2D railLineSegment in railLineSegments)
             {
-                Vector2? hitPoint = railLineSegment.CutPoint(cueballShotRay);
-                if (hitPoint.HasValue)
+                Vector2? hitPosition = railLineSegment.CutPoint(cueballShotRay);
+                if (hitPosition.HasValue)
                 {
                     //todo
                     Vector2 cueBallDirection = railLineSegment.ReflectVector(m_aimDirection2D);
                     //update aim visualize component
-                    UpdateAimVisualizeComponent(hitPoint.Value, null, cueBallDirection,null);
+                    UpdateAimVisualizeComponent(hitPosition.Value, null, cueBallDirection,null);
                 }
                 else
                 {
@@ -120,13 +120,12 @@ public class Aimer : MonoBehaviour
         SetVisibility(true);
     }
     private void UpdateAimVisualizeComponent(
-        Vector2? hitPoint, 
+        Vector2 hitPosition, 
         Vector2? targetBallPosition, 
         Vector2? cueBallDirection, 
         Vector2? targetBallDirection
     )
     {
-        throw new NotImplementedException();
     }
     private Tuple<Circle?,Vector2?> HittedTargetZone(List<Circle> hitZones)
     {
