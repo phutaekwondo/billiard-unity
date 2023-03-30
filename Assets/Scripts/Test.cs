@@ -11,12 +11,14 @@ public class Test : MonoBehaviour
     [SerializeField] private GameObject m_cueBall;
     private GameObject m_simpleSphereCutPoint;
     private GameObject m_simpleSphereMouse;
+    private GameObject m_simpleSphereReflectVec;
     List<LineSegment2D> m_railLineSegments;
 
     private void Start() 
     {
         m_simpleSphereCutPoint = Instantiate(m_simpleSpherePrefab);
         m_simpleSphereMouse = Instantiate(m_simpleSpherePrefab);
+        m_simpleSphereReflectVec = Instantiate(m_simpleSpherePrefab);
         // StraightRay2D ray = new StraightRay2D(GeometrySlave.To2D(m_cueBall.transform.position), new Vector2(0,1));
         
         m_railLineSegments = m_geometrySlave.GetRailLineSegments2D();
@@ -40,6 +42,7 @@ public class Test : MonoBehaviour
         Vector2 cuaballPosition = GeometrySlave.To2D(m_cueBall.transform.position);
         StraightRay2D ray = new StraightRay2D(cuaballPosition, mousePosition - cuaballPosition);
 
+        // test cutpoint
         // LineSegment2D railLineSegment = m_railLineSegments[0];
         foreach (LineSegment2D railLineSegment in m_railLineSegments)
         {
@@ -48,6 +51,8 @@ public class Test : MonoBehaviour
             {
                 Vector2 cutpointValue = cutpoint.Value;
                 m_simpleSphereCutPoint.transform.position = To3D(cutpointValue, 0.5f);
+                Vector2 reflectVec = railLineSegment.ReflectVector(ray.m_direction);
+                m_simpleSphereReflectVec.transform.position = To3D(cutpointValue + reflectVec, 0.5f);
             }
         }
     }
