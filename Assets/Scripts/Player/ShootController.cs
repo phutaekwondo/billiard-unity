@@ -7,7 +7,6 @@ public delegate void ShootControllerEventHandler();
 public class ShootController : MonoBehaviour
 {
     [SerializeField] private CueStick m_cueStick;
-    // [SerializeField] private AimLineTracker m_aimLineTracker;
     [SerializeField] private Aimer m_aimer;
     public Image m_powerbarMask; // drag and drop the PowerbarMask in the inspector
     public GameObject m_cueBall; // drag and drop the CueBall in the inspector
@@ -63,7 +62,7 @@ public class ShootController : MonoBehaviour
 
     public void SetAbleToChangeAimDirection( bool isAbleToChangeAimDirection )
     {
-        // m_aimLineTracker.SetEnable( isAbleToChangeAimDirection );
+        m_aimer.SetAbleToChangeAimDirection( isAbleToChangeAimDirection );
     }
 
     public bool IsEnable()
@@ -86,6 +85,7 @@ public class ShootController : MonoBehaviour
     {
         m_aimLineRenderer.enabled = isVisible;
         m_cueStick.SetVisibility(isVisible);
+        m_aimer.SetVisibility(isVisible);
         //set mouse cursor visibility
         Cursor.visible = !isVisible;
     }

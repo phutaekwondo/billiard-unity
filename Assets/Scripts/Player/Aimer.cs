@@ -12,11 +12,18 @@ public class Aimer : MonoBehaviour
     [SerializeField] GameObject m_targetBallMoveDirectionLine;
     [SerializeField] GeometrySlave m_geometrySlave;
     private bool m_isAiming = true; // ablity to chagne aim direction
+    private bool m_isEnable = true; // ability to change cue ball direction
     private AimVisualizeType m_aimVisualType;
     private Vector3 m_aimDirection = Vector3.zero;
     private Vector2 m_aimDirection2D = Vector2.zero;
 
     //public method
+    public void SetEnable(bool enable)
+    {
+        m_isEnable = enable;
+        SetAbleToChangeAimDirection(enable);
+        SetVisibility(enable);
+    }
     public void SetAbleToChangeAimDirection(bool enable)
     {
         m_isAiming = enable;
@@ -54,10 +61,13 @@ public class Aimer : MonoBehaviour
     //private method
     private void Update() 
     {
-        if (m_isAiming)
+        if (m_isEnable)
         {
-            UpdateAimDirection();
-            UpdateAimingComponents();
+            if (m_isAiming)
+            {
+                UpdateAimDirection();
+                UpdateAimingComponents();
+            }
         }
     }
     private void UpdateAimDirection()
