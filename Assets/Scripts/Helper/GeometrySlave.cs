@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -161,6 +162,22 @@ public class GeometrySlave : MonoBehaviour
             return angle;
         }
 
+        public Vector2? CutPoint(StraightRay2D ray)
+        {
+            Vector2 prjCenterOnAimLine = (Vector2)Vector3.Project(m_center - ray.m_start, ray.m_direction) + ray.m_start;
+            if (IsContain(prjCenterOnAimLine)) //hit
+            {
+                float disFromCenterToPrj = Vector2.Distance(prjCenterOnAimLine, m_center);
+                float disFromPrjToHitPoint = Mathf.Sqrt(Mathf.Pow(m_radius,2) - Mathf.Pow(disFromCenterToPrj,2));
+                Vector2 hitPosition = prjCenterOnAimLine - (ray.m_direction.normalized*disFromPrjToHitPoint);
+                if (ray.IsContain(hitPosition))
+                {
+                    return hitPosition;
+                }
+            }
+            return null;
+        }
+
         public Vector2 GetPointWithAngle(float angle)
         {
             //angle to vector
@@ -181,6 +198,13 @@ public class GeometrySlave : MonoBehaviour
         public bool IsCut(LineSegment2D seg)
         {
             return seg.IsCut(this);
+        }
+
+        public bool IsContain(Vector2 point)
+        {
+            Vector2 toPoint = point - m_start;
+            float magicNumberForAngleError = 0.1f;
+            return Vector2.Angle(toPoint, m_direction) < magicNumberForAngleError;
         }
     }
     public class LineSegment2D

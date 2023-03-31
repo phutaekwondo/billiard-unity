@@ -156,12 +156,9 @@ public class Aimer : MonoBehaviour
         Vector2 startPoint = GeometrySlave.To2D(m_cueBall.transform.position);
         foreach (Circle hitZone in hitZones)
         {
-            Vector2 prjCenterOnAimLine = (Vector2)Vector3.Project(hitZone.m_center - startPoint, m_aimDirection2D) + startPoint;
-            if (hitZone.IsContain(prjCenterOnAimLine)) //hit
+            Vector2? hitPosition = hitZone.CutPoint(new StraightRay2D(startPoint, m_aimDirection2D));
+            if (hitPosition.HasValue)
             {
-                float disFromCenterToPrj = Vector2.Distance(prjCenterOnAimLine, hitZone.m_center);
-                float disFromPrjToHitPoint = Mathf.Sqrt(Mathf.Pow(hitZone.m_radius,2) - Mathf.Pow(disFromCenterToPrj,2));
-                Vector2 hitPosition = prjCenterOnAimLine - (m_aimDirection2D.normalized*disFromPrjToHitPoint);
                 return new Tuple<Circle?, Vector2?> (hitZone,hitPosition);
             }
         }
