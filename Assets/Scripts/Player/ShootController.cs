@@ -73,11 +73,14 @@ public class ShootController : MonoBehaviour
     public void Enable() 
     {
         m_isEnabled = true;
+        m_aimer.SetEnable( true );
     }
 
     public void Disable()
     {
         m_isEnabled = false;
+        // we don't need to call m_aimer.SetVisibility( false ) because it will be called in m_aimer.SetEnable( false )
+        m_aimer.SetEnable( false ); 
         SetAimVisibility( false );
     }
 
