@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
             }
             else if ( m_refereeController.IsFoul() )
             {
-                return new PlayerControllerState_ChoosingCueBallPosition(m_playerController);
+                return new PlayerControllerState_BallInHand(m_playerController);
             }
             else
             {
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
             {
                 if ( m_refereeController.IsFoul() )
                 {
-                    return new PlayerControllerState_ChoosingCueBallPosition(m_playerController);
+                    return new PlayerControllerState_BallInHand(m_playerController);
                 }
                 return new PlayerControllerState_Shooting(m_playerController);
             }
@@ -146,9 +146,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    class PlayerControllerState_ChoosingCueBallPosition : PlayerControllerState
+    class PlayerControllerState_BallInHand : PlayerControllerState
     {
-        public PlayerControllerState_ChoosingCueBallPosition(Player playerController) : base(playerController)
+        public PlayerControllerState_BallInHand(Player playerController) : base(playerController)
         {
         }
         public override PlayerControllerState Update()
