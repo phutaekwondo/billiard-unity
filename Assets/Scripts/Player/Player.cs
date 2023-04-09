@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
 
     public void Restart()
     {
-        m_state = new PlayerControllerState_Aiming(this);
+        m_state = new PlayerControllerState_Shooting(this);
     }
 
     public void Disable()
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
         m_cueBallPositionController = GetComponent<CueBallPositionController>();
         m_cueBallPositionController.m_OnChoosingPositionFinished += OnChoosingPositionFinished;
         m_gameplayManager.m_OnGameplayRestart += Restart;
-        m_state = new PlayerControllerState_Aiming(this);
+        m_state = new PlayerControllerState_Shooting(this);
     }
 
     private void Update() 
@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
 
     private void OnChoosingPositionFinished()
     {
-        m_state = new PlayerControllerState_Aiming(this);
+        m_state = new PlayerControllerState_Shooting(this);
     }
 
     private void OnShoot()
@@ -103,9 +103,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    class PlayerControllerState_Aiming : PlayerControllerState
+    class PlayerControllerState_Shooting : PlayerControllerState
     {
-        public PlayerControllerState_Aiming(Player playerController) : base(playerController)
+        public PlayerControllerState_Shooting(Player playerController) : base(playerController)
         {
         }
 
@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
                 {
                     return new PlayerControllerState_ChoosingCueBallPosition(m_playerController);
                 }
-                return new PlayerControllerState_Aiming(m_playerController);
+                return new PlayerControllerState_Shooting(m_playerController);
             }
             return this;
         }
@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
 
             if ( !m_refereeController.IsFoul() )
             {
-                return new PlayerControllerState_Aiming(m_playerController);
+                return new PlayerControllerState_Shooting(m_playerController);
             }
 
             return this;
